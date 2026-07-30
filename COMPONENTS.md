@@ -163,3 +163,144 @@ Single source for JS-rendered icons (24×24, 1.5px stroke, `currentColor`). Icon
 in `index.html` markup (nav chevrons, checklist checks, search, close) follow the same visual spec
 by hand — there's no build step to share literal markup between the two, so keep new icons visually
 consistent with the existing set rather than trying to de-duplicate the strings.
+
+## Universal Profile — `/universal-profile` (CRM dashboard)
+
+A second, self-contained page (`universal-profile/index.html`, styled by
+`design-system/dashboard.css`) implementing the Figma "Universal Profile" concept: an insurance
+agent's living view of one client/ministry account. It's an **app-shell layout**, not a marketing
+page — it doesn't use `.site-header`/`.main-nav`/`.site-footer` because its top bar has an
+entirely different nav (Overview / Active Policies / Risk Assessment / Underwriting AI / System
+Routing) and there's no page footer in the source design. It does reuse the shared tokens, fonts,
+`.btn`, and `.badge-pill` from `components.css` — see the Status note in `DESIGN.md` for how the
+source file's teal/amber/dark-slate CRM palette was re-mapped onto this project's existing
+`success`/`warning`/`brand` tokens instead of importing a second color scheme.
+
+### App shell — `.app-shell`, `.app-topbar`, `.app-sidebar`, `.app-main`
+
+- `.app-topbar` is `position: sticky`; contains the real site logo (`public/B-mutualnav.svg`), a
+  "Live Sync" status pill (`.badge-pill.badge-pill--success`), the section nav (`.app-nav__link`,
+  current page marked with `aria-current="page"`), a search input (`.app-search`, desktop-only
+  `≥1024px` — the same accepted gap as the marketing header's `.nav-search`), a notification
+  button (`.app-icon-btn`), and the account avatar (`.app-avatar`).
+- `⌘K`/`Ctrl+K` focuses the search input from anywhere on the page — wired in `js/dashboard.js`.
+  The visible `⌘K` hint (`.app-search__kbd`) is decorative text, not a live component.
+- `.app-body` is a flex row of `.app-sidebar` (260px, `position: sticky` under the top bar on
+  `≥1024px`) and `.app-main` (the flexible content column).
+- **Mobile sidebar:** below `1024px`, `.app-sidebar` becomes an off-canvas panel
+  (`transform: translateX(-100%)`, shown via `.is-open`) toggled by `#sidebar-toggle` in the top
+  bar, with a click-to-close `#sidebar-scrim` overlay. `js/dashboard.js` wires the toggle, the
+  scrim click, and `Esc` to close — mirrors the marketing site's mobile nav toggle pattern.
+- The sidebar's "Today · …" date (`#sidebar-today`) is computed client-side (like the footer year
+  on the homepage), not hardcoded — it's a small nod to the "living profile" concept.
+
+### Panel card — `.panel-card`
+
+```html
+<div class="panel-card">
+  <div class="panel-card__header">
+    <h2 class="panel-card__heading">Product Ecosystem</h2>
+    <button class="btn btn--secondary btn--sm" type="button">Add Product</button>
+  </div>
+  <div class="panel-card__body">…</div>
+</div>
+```
+
+- The one card shell every dashboard section sits in (white surface, `--radius-lg`, `--shadow-sm`,
+  `--color-border`) — reuse this instead of writing a one-off bordered `<div>` per section.
+- `.panel-card--dark` (brand-900 background, inverse text) is for the single "AI Chat Summary"
+  promo card — don't use it as a generic "dark mode" card, it's one deliberate visual accent, not a
+  pattern to spread around.
+- `.panel-card__header` / `.panel-card__footer` are optional top/bottom strips with a
+  `--color-border` divider; `.panel-card__body` is plain padding for everything else
+  (`.profile-summary`, `.stat-highlight`, etc. lay out their own content inside it).
+
+### Stat tiles — `.stat-card`, `.stat-highlight`, `.stat-block`
+
+Three related but distinct metric displays, matched to how the source design used them:
+- `.stat-card` — the "Quick stats" mini-cards (Ministry Size, Building Age, Renewal, Excess Cyber
+  Need). `.stat-card--warning` is for a signal that needs attention (maps to the `warning` semantic
+  token, not a repurposed accent color).
+- `.stat-highlight` — the large "Estimated Annual Premium" / "AI-Driven Safety Savings" figures;
+  stacks two `.stat-highlight__section`s with a divider between them.
+- `.stat-block` — the small right-aligned label/value pairs in the profile summary header (Net
+  Worth, Premium). `.stat-block__value--accent` marks the one value styled with the `success`
+  token (Premium, echoing the source's teal emphasis).
+
+### Living Profile Feed — `.feed`
+
+```html
+<div class="feed">
+  <div class="feed__header">…</div>
+  <ul class="feed__list">
+    <li class="feed__item">
+      <span class="feed__icon feed__icon--accent">…svg…</span>
+      <div>
+        <div class="feed__row">
+          <p class="feed__row-title">Campaign source: <strong>Spring Outreach 2024</strong></p>
+          <span class="feed__timestamp">2d ago</span>
+        </div>
+        <p class="feed__desc">…</p>
+      </div>
+    </li>
+  </ul>
+</div>
+```
+
+`.feed__icon--accent` (success-tinted) vs. the plain `.feed__icon` distinguishes the two source
+icon treatments (campaign vs. browse-activity) — it's a visual variant, not a status indicator.
+
+### Data table — `.data-table`
+
+Standard `<table>` wrapped in `.data-table-wrap` (`overflow-x: auto`) so it doesn't break layout on
+narrow viewports instead of trying to reflow into cards. Status cells use the existing
+`.badge-pill` variants (`--success` for Active/Opportunity, `--warning` for Pending) — there's no
+gray/inactive variant yet because the source data doesn't have one; add `.badge-pill--neutral` (see
+below) if a genuinely inactive/neutral status shows up later, don't reuse `--warning` for it.
+
+### Badge pill additions — `.badge-pill--warning`, `.badge-pill--neutral`
+
+Added to `components.css` (not `dashboard.css`) since `.badge-pill` is already a shared primitive:
+- `.badge-pill--warning` — the `warning` semantic pairing (amber surface/border/text), for
+  "Pending"-style states.
+- `.badge-pill--neutral` — a plain gray tag for attribute/signal chips that aren't a status at all
+  (e.g. "Ministry Size: High", the sidebar's "128" nav count) — deliberately colorless so it never
+  reads as a semantic state.
+
+### Progress bar — `.progress-bar`
+
+```html
+<div class="progress-bar">
+  <span class="progress-bar__track"><span class="progress-bar__fill" style="--progress: 94%"></span></span>
+  <span class="progress-bar__label">94%</span>
+</div>
+```
+
+Set `--progress` inline per instance; the fill always uses `--color-success-500` (these are
+"confidence score" bars, framed as a positive metric, not a generic progress indicator with
+variable color).
+
+### Recommendation row — `.rec-row`
+
+The "Intelligent Recommendations & Routing" panel's repeating row: a 4-column grid
+(`.rec-row__product`, `.progress-bar`, the "why" text + `.rec-row__tags`, and `.rec-owner`) that
+collapses to a single stacked column below `1024px`. `.rec-columns` renders the column headings
+above the list on `≥1024px` only (`aria-hidden="true"` — the row content is already
+self-describing via visible labels, so the column headers are a layout aid, not the only source of
+that meaning). `.rec-owner__avatar` uses initials or `?` text rather than a photo, consistent with
+this repo's no-photography-placeholder approach.
+
+### Bar chart — `.bar-chart`
+
+A deliberately simple, illustrative CSS bar chart (flex columns + `--bar-height` custom properties
+per bar), **not** a pixel-accurate reproduction of the source Figma chart — that chart is a deeply
+nested vector group that was infeasible to extract exactly, and a hand-rolled approximation that
+matches its described trend (premium rising, savings low and flat) is more honest than fabricating
+false precision. The whole plot has a single `role="img"` with a descriptive `aria-label`
+summarizing the trend in words, since the bars/gridlines carry no accessible text on their own.
+
+### Empty state — `.empty-state`
+
+Dashed-border placeholder ("Future Ecosystem Partners") for a list section with no current data —
+reuse this instead of just omitting the section, so it's clear the empty state is intentional
+rather than a bug.
