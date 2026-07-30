@@ -25,6 +25,24 @@ raise it rather than silently deviating.
 > the design — swap in real photography via the `background-image` / `<img>` slot when available.
 > Icons and the two brand logos (Brotherhood Mutual, Brotherhood Works) are simple enough
 > geometric marks that they were hand-authored as faithful inline SVG instead.
+>
+> **Second page — Universal Profile:** `/universal-profile` (`universal-profile/index.html`) is a
+> CRM-style account dashboard for insurance agents, sourced from the same Figma file's
+> `Pitch-Concepts` page (node `16:3`) — see `/figma/component-map.json` for its node mapping. Its
+> source design uses its own dark-slate/teal/amber CRM color scheme; rather than importing a
+> second palette, every color was re-mapped onto the existing token set (teal → the `success`
+> semantic, amber → `warning`, dark slate → `--color-brand-900`/text tokens), and its empty logo
+> placeholder was filled with the real `public/B-mutualnav.svg` mark. Its page-specific styles live
+> in `/design-system/dashboard.css` (parallel to `chat-widget.css`) rather than growing
+> `components.css` indefinitely — see `COMPONENTS.md` for the new primitives it introduces
+> (`.panel-card`, `.stat-card`, `.data-table`, `.progress-bar`, `.rec-row`, the bar chart, etc.).
+> Two token additions were needed to support it: `--color-warning-surface` /
+> `--color-warning-border`, filling the same 3-tier surface/border pattern `success` and `info`
+> already had. Implementing it also surfaced that the pre-existing `--color-warning-500` (`#b4790f`,
+> unused anywhere until now) only cleared 3.36:1 against its new surface — short of the 4.5:1 AA
+> floor this file requires for normal text — so it was darkened to `#8f620b` (5.36:1 on white,
+> 4.87:1 on `--color-warning-surface`) rather than shipping a token nobody could actually use at
+> body-text sizes.
 
 ## Design Principles
 
@@ -88,7 +106,9 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
   --color-success-500: #006353;
   --color-success-surface: #ebfbf8;
   --color-success-border: #aaece1;
-  --color-warning-500: #b4790f;
+  --color-warning-500: #8f620b;
+  --color-warning-surface: #fdf3e2;
+  --color-warning-border: #f0d99b;
   --color-danger-500: #b3261e;
   --color-info-500: #0071aa;
   --color-info-surface: #ebf8ff;
@@ -272,6 +292,13 @@ layering on enhancements.
   primitive (see the Status note above) — replace with a real `<img>`/`background-image` per tile
   once photography assets are available; don't build new UI on top of the placeholder styling
   itself.
+- **Universal Profile-specific primitives** (added for the `/universal-profile` CRM dashboard,
+  documented in full in `COMPONENTS.md`): `.panel-card` (the bordered white card shell used for
+  every dashboard section), `.stat-card`/`.stat-highlight` (metric tiles), `.data-table`, a CSS
+  `.progress-bar`, `.rec-row` (the recommendation-list row), `.feed` (the Living Profile Feed
+  list), and a lightweight illustrative `.bar-chart`. These live in their own
+  `design-system/dashboard.css` and read as a distinct "app" surface, not a second marketing page
+  style — don't reuse them on marketing pages without checking they still fit.
 - **The Shep chat widget** is a single, global, proactive assistant entry point — see
   `COMPONENTS.md` for its states and copy rules. Don't create a second chat/assistant surface
   without folding it into this one.

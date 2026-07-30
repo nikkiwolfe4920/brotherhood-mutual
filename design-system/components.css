@@ -110,6 +110,23 @@
   color: var(--color-brand-500);
 }
 
+.badge-pill--warning {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-surface);
+  color: var(--color-warning-500);
+}
+
+/* Plain gray tag — signal/attribute chips (e.g. "Ministry Size: High") that
+   aren't a status, so they don't borrow a semantic color. Uses
+   --color-neutral-600 rather than --color-text-secondary: the latter only
+   clears 4.1:1 against this background, short of the 4.5:1 AA floor at this
+   pill's small text size. */
+.badge-pill--neutral {
+  border-color: transparent;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-600);
+}
+
 /* ---------- Skip-nav / banner ---------- */
 .announcement-banner {
   background: var(--color-brand-900);

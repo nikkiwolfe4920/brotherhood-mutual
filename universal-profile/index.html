@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universal Profile — Grace Community Church | Brotherhood Mutual</title>
+  <meta
+    name="description"
+    content="A living, AI-enriched account profile for ministry insurance agents — policy details, risk signals, product ecosystem, and routed recommendations in one view."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/components.css" />
+  <link rel="stylesheet" href="../design-system/dashboard.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="app-topbar__row">
+        <button
+          class="app-sidebar-toggle"
+          type="button"
+          id="sidebar-toggle"
+          aria-label="Open sidebar navigation"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>
+        </button>
+
+        <a class="app-topbar__brand" href="/" aria-label="Brotherhood Mutual home">
+          <img src="../public/B-mutualnav.svg" width="150" height="28" alt="Brotherhood Mutual" />
+        </a>
+
+        <span class="badge-pill badge-pill--success">Live Sync</span>
+
+        <nav class="app-nav" aria-label="Universal profile sections">
+          <a class="app-nav__link" href="#" aria-current="page">Overview</a>
+          <a class="app-nav__link" href="#">Active Policies</a>
+          <a class="app-nav__link" href="#">Risk Assessment</a>
+          <a class="app-nav__link" href="#">Underwriting AI</a>
+          <a class="app-nav__link" href="#">System Routing</a>
+        </nav>
+
+        <div class="app-topbar__actions">
+          <form class="app-search" role="search" action="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            <label class="visually-hidden" for="dashboard-search">Search policies, agents, clients</label>
+            <input id="dashboard-search" type="search" placeholder="Search policies, agents, clients…" />
+            <span class="app-search__kbd" aria-hidden="true">⌘K</span>
+          </form>
+
+          <button class="app-icon-btn" type="button" aria-label="Notifications — 1 unread">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
+            <span class="app-icon-btn__dot" aria-hidden="true"></span>
+          </button>
+
+          <button class="app-avatar" type="button" aria-label="Your account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <div class="app-sidebar-scrim" id="sidebar-scrim" hidden></div>
+      <aside class="app-sidebar" id="app-sidebar">
+        <div class="app-sidebar__card">
+          <div class="app-sidebar__date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M8 3v4M16 3v4" /></svg>
+            <span>Today · <span id="sidebar-today"></span></span>
+          </div>
+          <div class="app-stat-tiles">
+            <div class="app-stat-tile app-stat-tile--highlight">
+              <span class="app-stat-tile__label">Meetings</span>
+              <span class="app-stat-tile__value">3</span>
+            </div>
+            <div class="app-stat-tile">
+              <span class="app-stat-tile__label">Tasks</span>
+              <span class="app-stat-tile__value">7</span>
+            </div>
+          </div>
+        </div>
+
+        <nav aria-label="Account workspace">
+          <ul class="app-sidebar__nav">
+            <li>
+              <a class="app-sidebar__nav-link" href="#" aria-current="page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="3" y="3" width="8" height="8" /><rect x="13" y="3" width="8" height="8" /><rect x="3" y="13" width="8" height="8" /><rect x="13" y="13" width="8" height="8" /></svg>
+                Overview
+              </a>
+            </li>
+            <li>
+              <a class="app-sidebar__nav-link" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M6 2h9l5 5v15H6z" /><path d="M14 2v6h6" /><path d="M9 13h6M9 17h6" /></svg>
+                Active Policies
+                <span class="badge-pill badge-pill--neutral app-sidebar__nav-count">128</span>
+              </a>
+            </li>
+            <li>
+              <a class="app-sidebar__nav-link" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
+                Risk Assessment
+              </a>
+            </li>
+            <li>
+              <a class="app-sidebar__nav-link" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></svg>
+                Underwriting AI
+              </a>
+            </li>
+            <li>
+              <a class="app-sidebar__nav-link" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M21 4v4h-4" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /><path d="M3 20v-4h4" /></svg>
+                System Routing
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="app-quick-access">
+          <span class="app-quick-access__label">Quick access</span>
+          <div class="app-quick-access__tiles">
+            <a class="app-quick-access__tile" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><circle cx="9" cy="8" r="4" /><path d="M2 21v-1a7 7 0 0 1 14 0v1" /><path d="M19 8v6M22 11h-6" /></svg>
+              Add Client
+            </a>
+            <a class="app-quick-access__tile" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="m4 15 5-5 4 4 7-8" /><path d="M14 6h6v6" /></svg>
+              Analytics
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="app-main" id="main-content">
+        <div class="app-breadcrumb">
+          <div class="app-breadcrumb__trail">
+            <a href="#">Active Policies</a>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="12" height="12"><path d="m9 6 6 6-6 6" /></svg>
+            <span class="app-breadcrumb__current">Grace Community Church</span>
+            <span class="badge-pill badge-pill--success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="11" height="11"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" /></svg>
+              AI Enriched
+            </span>
+          </div>
+          <div class="app-breadcrumb__actions">
+            <button class="btn btn--secondary btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
+              Export
+            </button>
+            <button class="btn btn--primary btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" /></svg>
+              Edit Policy
+            </button>
+          </div>
+        </div>
+
+        <div class="lead-grid">
+          <div class="panel-card">
+            <div class="panel-card__body">
+              <div class="profile-summary">
+                <div class="profile-summary__identity">
+                  <span class="profile-summary__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 11 12 4l8 7" /><path d="M6 10v10h12V10" /><path d="M12 21v-5" /></svg>
+                  </span>
+                  <div>
+                    <div class="profile-summary__name-row">
+                      <h1 class="profile-summary__name">Grace Community Church</h1>
+                      <span class="badge-pill badge-pill--success">Active Client</span>
+                    </div>
+                    <p class="profile-summary__subhead">Policy #FS-2024-8841 · Indiana, US</p>
+                  </div>
+                </div>
+                <div class="profile-summary__stats">
+                  <div class="stat-block">
+                    <span class="stat-block__label">Net Worth</span>
+                    <span class="stat-block__value">$2.4M</span>
+                  </div>
+                  <div class="stat-block">
+                    <span class="stat-block__label">Premium</span>
+                    <span class="stat-block__value stat-block__value--accent">$18.45k</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quick-stats" style="margin-top: var(--space-6);">
+                <div class="stat-card">
+                  <span class="stat-card__label">Ministry Size</span>
+                  <span class="stat-card__value">850 <span class="stat-card__unit">members</span></span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-card__label">Building Age</span>
+                  <span class="stat-card__value">24 <span class="stat-card__unit">yrs</span></span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-card__label">Renewal</span>
+                  <span class="stat-card__value">Oct 2024</span>
+                </div>
+                <div class="stat-card stat-card--warning">
+                  <span class="stat-card__label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
+                    Behavior Signal
+                  </span>
+                  <span class="stat-card__value">Excess Cyber Need</span>
+                </div>
+              </div>
+
+              <div class="feed" style="margin-top: var(--space-6);">
+                <div class="feed__header">
+                  <span class="feed__title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M3 12h4l2-7 4 14 2-7h6" /></svg>
+                    Living Profile Feed
+                  </span>
+                  <span class="feed__meta">Updated 4 min ago</span>
+                </div>
+                <ul class="feed__list">
+                  <li class="feed__item">
+                    <span class="feed__icon feed__icon--accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M5 3v18" /><path d="M5 4h11l-2 4 2 4H5" /></svg>
+                    </span>
+                    <div style="flex: 1; min-width: 0;">
+                      <div class="feed__row">
+                        <p class="feed__row-title">Campaign source: <strong>Spring Outreach 2024</strong></p>
+                        <span class="feed__timestamp">2d ago</span>
+                      </div>
+                      <p class="feed__desc">Engaged via email blast on property protection.</p>
+                    </div>
+                  </li>
+                  <li class="feed__item">
+                    <span class="feed__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="m9 9 8 3-3 1-1 3-4-7Z" /><path d="M9 9 4 4" /></svg>
+                    </span>
+                    <div style="flex: 1; min-width: 0;">
+                      <div class="feed__row">
+                        <p class="feed__row-title">Pages browsed: <strong>Roof Program, Event Liability</strong></p>
+                        <span class="feed__timestamp">1w ago</span>
+                      </div>
+                      <span class="feed__tag badge-pill badge-pill--success">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><path d="m4 15 5-5 4 4 7-8" /><path d="M14 6h6v6" /></svg>
+                        High interest in safety resources
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card panel-card--dark">
+            <div class="panel-card__body">
+              <span class="promo-card__eyebrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" /></svg>
+                AI Chat Summary
+              </span>
+              <ul class="promo-list">
+                <li class="promo-list__item">
+                  <span class="promo-list__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13"><rect x="6" y="4" width="12" height="17" rx="1" /><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" /><path d="M9 11h6M9 15h6" /></svg>
+                  </span>
+                  <p class="promo-list__text">Implementation timeline set to <strong>60 days</strong> with quarterly reviews.</p>
+                </li>
+                <li class="promo-list__item">
+                  <span class="promo-list__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13"><path d="M5 3v18" /><path d="M5 4h11l-2 4 2 4H5" /></svg>
+                  </span>
+                  <p class="promo-list__text">Priority is <strong>Cost &amp; Coverage</strong> balance across all ministries.</p>
+                </li>
+                <li class="promo-list__item">
+                  <span class="promo-list__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 6 8 7 8-7" /></svg>
+                  </span>
+                  <p class="promo-list__text">Prefers <strong>email</strong> communication for policy updates.</p>
+                </li>
+                <li class="promo-list__item">
+                  <span class="promo-list__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13"><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" /><path d="M3 20v-1a6 6 0 0 1 12 0v1" /><path d="M15 14a5 5 0 0 1 5 5v1" /></svg>
+                  </span>
+                  <p class="promo-list__text">Key stakeholders include the <strong>board of trustees</strong>.</p>
+                </li>
+                <li class="promo-list__item">
+                  <span class="promo-list__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="13" height="13"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+                  </span>
+                  <p class="promo-list__text">Deadline for renewal decision: <strong>Oct 15</strong>.</p>
+                </li>
+              </ul>
+              <div class="promo-owner">
+                <span class="promo-owner__avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+                </span>
+                <div class="promo-owner__text">
+                  <span class="promo-owner__name">Shep</span>
+                  <span class="promo-owner__role">Assigned Agent</span>
+                </div>
+                <button class="promo-owner__action" type="button" aria-label="Message Shep">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7z" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card__header">
+            <h2 class="panel-card__heading">Product Ecosystem</h2>
+            <button class="btn btn--secondary btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M12 5v14M5 12h14" /></svg>
+              Add Product
+            </button>
+          </div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Coverage Status</th>
+                  <th scope="col">Risk Match</th>
+                  <th scope="col">Premium Est.</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="data-table__product">
+                      <span class="data-table__icon data-table__icon--accent">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M4 11 12 4l8 7" /><path d="M6 10v10h12V10" /><path d="M12 21v-5" /></svg>
+                      </span>
+                      Property Protection
+                    </span>
+                  </td>
+                  <td><span class="badge-pill badge-pill--success">Active</span></td>
+                  <td>98%</td>
+                  <td class="data-table__premium">$9,200</td>
+                  <td>
+                    <button class="data-table__kebab" type="button" aria-label="More actions for Property Protection">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><circle cx="5" cy="12" r="1.3" fill="currentColor" /><circle cx="12" cy="12" r="1.3" fill="currentColor" /><circle cx="19" cy="12" r="1.3" fill="currentColor" /></svg>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="data-table__product">
+                      <span class="data-table__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" /><path d="M3 20v-1a6 6 0 0 1 12 0v1" /><path d="M15 14a5 5 0 0 1 5 5v1" /></svg>
+                      </span>
+                      Employee Benefits
+                    </span>
+                  </td>
+                  <td><span class="badge-pill badge-pill--success">Active</span></td>
+                  <td>91%</td>
+                  <td class="data-table__premium">$5,400</td>
+                  <td>
+                    <button class="data-table__kebab" type="button" aria-label="More actions for Employee Benefits">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><circle cx="5" cy="12" r="1.3" fill="currentColor" /><circle cx="12" cy="12" r="1.3" fill="currentColor" /><circle cx="19" cy="12" r="1.3" fill="currentColor" /></svg>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="data-table__product">
+                      <span class="data-table__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M12 20s-7-4.35-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 2.5C19 15.65 12 20 12 20Z" /></svg>
+                      </span>
+                      Faith Ventures
+                    </span>
+                  </td>
+                  <td><span class="badge-pill badge-pill--warning">Pending</span></td>
+                  <td>84%</td>
+                  <td class="data-table__premium">$3,850</td>
+                  <td>
+                    <button class="data-table__kebab" type="button" aria-label="More actions for Faith Ventures">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><circle cx="5" cy="12" r="1.3" fill="currentColor" /><circle cx="12" cy="12" r="1.3" fill="currentColor" /><circle cx="19" cy="12" r="1.3" fill="currentColor" /></svg>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="data-table__product">
+                      <span class="data-table__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M4 13a4 4 0 0 1 4-4h1l2-2 2 2h3a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-1v2h-2v-2H9v2H7v-2a4 4 0 0 1-3-3.9Z" /><circle cx="16" cy="12" r=".6" fill="currentColor" stroke="none" /></svg>
+                      </span>
+                      Brotherhood Retirement
+                    </span>
+                  </td>
+                  <td><span class="badge-pill badge-pill--success">Opportunity</span></td>
+                  <td>77%</td>
+                  <td class="data-table__premium">$4,100</td>
+                  <td>
+                    <button class="data-table__kebab" type="button" aria-label="More actions for Brotherhood Retirement">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><circle cx="5" cy="12" r="1.3" fill="currentColor" /><circle cx="12" cy="12" r="1.3" fill="currentColor" /><circle cx="19" cy="12" r="1.3" fill="currentColor" /></svg>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="chart-stat-grid">
+          <div class="panel-card">
+            <div class="panel-card__header" style="border-bottom: none;">
+              <div>
+                <h2 class="panel-card__heading">Premium vs. Risk Mitigation</h2>
+                <p class="panel-card__subheading">Projected annual premium against AI-driven safety savings</p>
+              </div>
+              <div class="chart-card__legend">
+                <span class="legend-item"><span class="legend-item__dot legend-item__dot--premium" aria-hidden="true"></span>Proposed Premium</span>
+                <span class="legend-item"><span class="legend-item__dot legend-item__dot--savings" aria-hidden="true"></span>Risk Savings</span>
+              </div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar-chart__inner">
+                <div class="bar-chart__plot" role="img" aria-label="Bar chart comparing proposed premium and risk savings across each month of the year; proposed premium trends upward from about $1.15M to $1.8M, while risk savings stay low and roughly flat.">
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 62%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 10%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 58%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 11%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 61%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 10%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 65%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 12%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 68%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 12%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 63%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 13%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 70%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 13%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 74%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 14%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 77%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 15%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 80%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 15%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 83%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 16%"></span></div>
+                  <div class="bar-chart__col"><span class="bar-chart__bar bar-chart__bar--premium" style="--bar-height: 90%"></span><span class="bar-chart__bar bar-chart__bar--savings" style="--bar-height: 17%"></span></div>
+                </div>
+                <div class="bar-chart__axis" aria-hidden="true">
+                  <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="stat-highlight">
+              <div class="stat-highlight__section">
+                <p class="stat-highlight__label">Estimated Annual Premium</p>
+                <p class="stat-highlight__value">$18,450.00</p>
+                <p class="stat-highlight__caption stat-highlight__caption--positive">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><path d="m6 9 6 6 6-6" /></svg>
+                  4.2% below market avg.
+                </p>
+              </div>
+              <div class="stat-highlight__section">
+                <p class="stat-highlight__label">AI-Driven Safety Savings</p>
+                <p class="stat-highlight__value stat-highlight__value--accent">$4,200.00</p>
+                <p class="stat-highlight__caption">From roof age &amp; event liability modeling</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card__header">
+            <div style="display: flex; gap: var(--space-3); align-items: flex-start;">
+              <span class="profile-summary__icon" style="width: 40px; height: 40px; background: var(--color-success-surface); color: var(--color-success-500);" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" /></svg>
+              </span>
+              <div>
+                <h2 class="panel-card__heading">Intelligent Recommendations &amp; Routing</h2>
+                <p class="panel-card__subheading">AI-matched products routed to the optimal specialist</p>
+              </div>
+            </div>
+            <div class="panel-card__actions">
+              <button class="btn btn--secondary btn--sm" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14" style="color: var(--color-success-500);"><circle cx="12" cy="12" r="9" /><path d="m8.5 12.5 2.5 2.5 5-5" /></svg>
+                Accept Routing
+              </button>
+              <button class="btn btn--secondary btn--sm" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M7 7h11l-3-3M17 17H6l3 3" /></svg>
+                Reassign Owner
+              </button>
+              <button class="btn btn--secondary btn--sm" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="3" y="9" width="18" height="6" rx="3" /><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none" /></svg>
+                Override AI
+              </button>
+            </div>
+          </div>
+
+          <div class="rec-columns" aria-hidden="true">
+            <span>Recommendation</span>
+            <span>Confidence Score</span>
+            <span>Why / Signals</span>
+            <span>Routing &amp; Owner</span>
+          </div>
+
+          <div class="rec-list">
+            <div class="rec-row">
+              <div class="rec-row__product">
+                <span class="rec-row__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="6" y="4" width="12" height="17" rx="1" /><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" /><path d="M9 11h6M9 15h6" /></svg>
+                </span>
+                <div>
+                  <p class="rec-row__title">Ministry Works Payroll</p>
+                  <p class="rec-row__subtitle">Proactive outbound selling</p>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <span class="progress-bar__track"><span class="progress-bar__fill" style="--progress: 94%"></span></span>
+                <span class="progress-bar__label">94%</span>
+              </div>
+              <div>
+                <p class="rec-row__why"><strong>Why:</strong> Non-BMIC customer potential. 850 members scale.</p>
+                <div class="rec-row__tags">
+                  <span class="badge-pill badge-pill--neutral">Multi-state compliance</span>
+                  <span class="badge-pill badge-pill--neutral">Ministry Size: High</span>
+                </div>
+              </div>
+              <div class="rec-owner">
+                <span class="rec-owner__avatar">SJ</span>
+                <div class="rec-owner__text">
+                  <span class="rec-owner__name">Sarah Jenkins</span>
+                  <span class="rec-owner__role">Ministry Works Specialist</span>
+                </div>
+                <div class="rec-owner__tag">
+                  <span class="rec-owner__tag-main">Internal Sales</span>
+                  <span class="rec-owner__tag-sub">IN Territory</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-row">
+              <div class="rec-row__product">
+                <span class="rec-row__icon rec-row__icon--accent">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M4 11 12 4l8 7" /><path d="M6 10v9h12v-9" /></svg>
+                </span>
+                <div>
+                  <p class="rec-row__title">Roof Program</p>
+                  <p class="rec-row__subtitle">Aggregator program</p>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <span class="progress-bar__track"><span class="progress-bar__fill" style="--progress: 98%"></span></span>
+                <span class="progress-bar__label">98%</span>
+              </div>
+              <div>
+                <p class="rec-row__why"><strong>Why:</strong> 24-year building age + storm exposure signals.</p>
+                <div class="rec-row__tags">
+                  <span class="badge-pill badge-pill--neutral">Building Age: 24y</span>
+                  <span class="badge-pill badge-pill--neutral">Geo: High Storm Risk</span>
+                </div>
+              </div>
+              <div class="rec-owner">
+                <span class="rec-owner__avatar">PA</span>
+                <div class="rec-owner__text">
+                  <span class="rec-owner__name">Local P&amp;C Agent</span>
+                  <span class="rec-owner__role">Existing Relationship</span>
+                </div>
+                <div class="rec-owner__tag">
+                  <span class="rec-owner__tag-main rec-owner__tag-main--neutral">Agent Owned</span>
+                  <span class="rec-owner__tag-sub">Assigned 2d ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-row">
+              <div class="rec-row__product">
+                <span class="rec-row__icon rec-row__icon--neutral">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="m3 11 18-8-8 18-2-8-8-2Z" /></svg>
+                </span>
+                <div>
+                  <p class="rec-row__title">Mission Travel</p>
+                  <p class="rec-row__subtitle">Global Mission products</p>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <span class="progress-bar__track"><span class="progress-bar__fill" style="--progress: 82%"></span></span>
+                <span class="progress-bar__label">82%</span>
+              </div>
+              <div>
+                <p class="rec-row__why"><strong>Why:</strong> Browsed &ldquo;International Mission Safety&rdquo; blog 3 times.</p>
+              </div>
+              <div class="rec-owner">
+                <span class="rec-owner__avatar">?</span>
+                <div class="rec-owner__text">
+                  <span class="rec-owner__name">Pending Assignment</span>
+                  <span class="rec-owner__role">Awaiting Specialist</span>
+                </div>
+                <div class="rec-owner__tag">
+                  <span class="rec-owner__tag-main rec-owner__tag-main--warning">Affiliate Partner</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="24" height="24"><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" /><path d="M3 20v-1a6 6 0 0 1 12 0v1" /><path d="M15 14a5 5 0 0 1 5 5v1" /></svg>
+            <p class="empty-state__heading">Future Ecosystem Partners</p>
+            <p class="empty-state__desc">No active integration signals for Cyber or HR Services currently detected.</p>
+          </div>
+
+          <div class="panel-card__footer">
+            <span class="panel-card__footer-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14" style="color: var(--color-success-500);"><circle cx="12" cy="12" r="9" /><path d="m8.5 12.5 2.5 2.5 5-5" /></svg>
+              Routing confidence <strong>96.4% Coverage Alignment</strong> · verified against 128 active policies.
+            </span>
+            <button class="btn btn--primary btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7z" /></svg>
+              Confirm &amp; Notify Agents
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/dashboard.js" type="module"></script>
+</body>
+</html>

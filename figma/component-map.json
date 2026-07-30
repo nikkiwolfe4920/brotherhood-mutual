@@ -1,175 +1,264 @@
 {
   "$schema": "Figma node-id -> implemented-component mapping for this repo",
-  "source": {
-    "file": "https://www.figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH/Untitled",
-    "fileKey": "hlV7Q6MnEMhJQpdiDSXmUH",
-    "rootNodeId": "1:2",
-    "rootNodeName": "Home - Brotherhood Mutual Insurance Company",
-    "note": "This node is a viewport-cropped capture (height 2263) of a taller scrollable page (Main Content is 4585 tall). No footer section exists in the captured file — index.html's footer is hand-authored, not a Figma implementation."
-  },
-  "mappings": [
+  "pages": [
     {
-      "nodeId": "1:6",
-      "nodeName": "Header - Main",
-      "component": "Site header",
-      "files": ["index.html", "design-system/components.css#site-header"]
+      "source": {
+        "file": "https://www.figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH/Untitled",
+        "fileKey": "hlV7Q6MnEMhJQpdiDSXmUH",
+        "rootNodeId": "1:2",
+        "rootNodeName": "Home - Brotherhood Mutual Insurance Company",
+        "note": "This node is a viewport-cropped capture (height 2263) of a taller scrollable page (Main Content is 4585 tall). No footer section exists in the captured file — index.html's footer is hand-authored, not a Figma implementation."
+      },
+      "implementedIn": "index.html",
+      "mappings": [
+        {
+          "nodeId": "1:6",
+          "nodeName": "Header - Main",
+          "component": "Site header",
+          "files": ["index.html", "design-system/components.css#site-header"]
+        },
+        {
+          "nodeId": "1:10",
+          "nodeName": "Top Navigation",
+          "component": "Utility row (Claims / Customer Logins / Request a quote)",
+          "files": ["index.html", "design-system/components.css#site-header__utility"]
+        },
+        {
+          "nodeId": "1:18",
+          "nodeName": "Section (Request a quote)",
+          "component": "Button — .btn.btn--primary.btn--sm",
+          "files": ["design-system/components.css#btn"]
+        },
+        {
+          "nodeId": "1:27",
+          "nodeName": "Link - Main Navigation Logo",
+          "component": "Brand logomark — hand-authored inline SVG (see Status note in DESIGN.md; original asset could not be downloaded, egress to figma.com is blocked in this environment)",
+          "files": ["index.html#site-logo"]
+        },
+        {
+          "nodeId": "1:57",
+          "nodeName": "List (main nav)",
+          "component": "Main nav — .main-nav, dropdown items via [data-dropdown]",
+          "files": ["index.html", "design-system/components.css#main-nav", "js/main.js"]
+        },
+        {
+          "nodeId": "1:96",
+          "nodeName": "Search",
+          "component": "Nav search — .nav-search",
+          "files": ["index.html", "design-system/components.css#nav-search"]
+        },
+        {
+          "nodeId": "1:112",
+          "nodeName": "Banner",
+          "component": "Announcement banner — .announcement-banner",
+          "files": ["index.html", "design-system/components.css#announcement-banner", "js/main.js"]
+        },
+        {
+          "nodeId": "1:127",
+          "nodeName": "Section (hero)",
+          "component": "Hero — .hero",
+          "files": ["index.html", "design-system/components.css#hero"]
+        },
+        {
+          "nodeId": "1:131",
+          "nodeName": "Serving Christian ministries for over 100 years",
+          "component": "Badge pill — .badge-pill",
+          "files": ["design-system/components.css#badge-pill"]
+        },
+        {
+          "nodeId": "1:136",
+          "nodeName": "Ministry insurance and services that are never lukewarm",
+          "component": "Hero heading — h1.hero__heading, .hero__highlight for the orange emphasis",
+          "files": ["index.html", "design-system/components.css#hero"]
+        },
+        {
+          "nodeId": "1:142",
+          "nodeName": "Because bold ministry matters.",
+          "component": "Hero subhead — .hero__subhead",
+          "files": ["design-system/components.css#hero"]
+        },
+        {
+          "nodeId": "1:147",
+          "nodeName": "Section (Request a quote, hero CTA)",
+          "component": "Button — .btn.btn--primary",
+          "files": ["design-system/components.css#btn"]
+        },
+        {
+          "nodeId": "1:157",
+          "nodeName": "Container (photo strip, 26 images)",
+          "component": "Photo marquee — .photo-marquee / .photo-tile (placeholder imagery — see Status note in DESIGN.md)",
+          "files": ["index.html", "design-system/components.css#photo-marquee"]
+        },
+        {
+          "nodeId": "1:224",
+          "nodeName": "Container (Provide)",
+          "component": "Feature split — .feature-split (light variant)",
+          "files": ["index.html", "design-system/components.css#feature-split"]
+        },
+        {
+          "nodeId": "1:235",
+          "nodeName": "Brotherhood Works (tag)",
+          "component": "Badge pill — .badge-pill.badge-pill--success",
+          "files": ["design-system/components.css#badge-pill"]
+        },
+        {
+          "nodeId": "1:239",
+          "nodeName": "Provide",
+          "component": "h2.feature-split__heading",
+          "files": ["index.html"]
+        },
+        {
+          "nodeId": "1:244",
+          "nodeName": "List (coverage bullets)",
+          "component": "Checklist — .checklist",
+          "files": ["index.html", "design-system/components.css#checklist"]
+        },
+        {
+          "nodeId": "1:289",
+          "nodeName": "Section (Care for your people)",
+          "component": "Button — .btn.btn--primary",
+          "files": ["design-system/components.css#btn"]
+        },
+        {
+          "nodeId": "1:297",
+          "nodeName": "Image (Provide media)",
+          "component": "Brotherhood Works logomark — hand-authored inline SVG pinwheel mark",
+          "files": ["index.html#feature-split__media"]
+        },
+        {
+          "nodeId": "1:298",
+          "nodeName": "Container (Protect)",
+          "component": "Feature split — .feature-split (brand variant, .section--brand)",
+          "files": ["index.html", "design-system/components.css#feature-split"]
+        },
+        {
+          "nodeId": "1:304",
+          "nodeName": "Brotherhood Mutual (tag)",
+          "component": "Badge pill — .badge-pill.badge-pill--inverse",
+          "files": ["design-system/components.css#badge-pill"]
+        },
+        {
+          "nodeId": "1:308",
+          "nodeName": "Protect",
+          "component": "h2.feature-split__heading",
+          "files": ["index.html"]
+        },
+        {
+          "nodeId": "1:313",
+          "nodeName": "List (coverage bullets, on-brand)",
+          "component": "Checklist — .checklist.checklist--inverse",
+          "files": ["index.html", "design-system/components.css#checklist"]
+        },
+        {
+          "nodeId": "1:359",
+          "nodeName": "Button (Insure your ministry)",
+          "component": "Button — .btn.btn--inverse",
+          "files": ["design-system/components.css#btn"]
+        },
+        {
+          "nodeId": "1:366",
+          "nodeName": "Image (Protect media)",
+          "component": "Brotherhood Mutual logomark — hand-authored inline SVG shield/cross mark",
+          "files": ["index.html#feature-split__media"]
+        },
+        {
+          "nodeId": "1:986",
+          "nodeName": "Let's chat! (floating chat teaser)",
+          "component": "Shep proactive chat widget — .shep (renamed/redesigned; not a literal implementation — see COMPONENTS.md for why the copy and behavior diverge from a generic chat launcher)",
+          "files": ["js/shep-chat.js", "design-system/chat-widget.css"]
+        },
+        {
+          "nodeId": "1:1003",
+          "nodeName": "Button (Privacy settings)",
+          "component": null,
+          "status": "not implemented",
+          "note": "Out of scope for this change — no cookie/consent management system exists in this repo yet to wire a real privacy-settings control to."
+        }
+      ]
     },
     {
-      "nodeId": "1:10",
-      "nodeName": "Top Navigation",
-      "component": "Utility row (Claims / Customer Logins / Request a quote)",
-      "files": ["index.html", "design-system/components.css#site-header__utility"]
-    },
-    {
-      "nodeId": "1:18",
-      "nodeName": "Section (Request a quote)",
-      "component": "Button — .btn.btn--primary.btn--sm",
-      "files": ["design-system/components.css#btn"]
-    },
-    {
-      "nodeId": "1:27",
-      "nodeName": "Link - Main Navigation Logo",
-      "component": "Brand logomark — hand-authored inline SVG (see Status note in DESIGN.md; original asset could not be downloaded, egress to figma.com is blocked in this environment)",
-      "files": ["index.html#site-logo"]
-    },
-    {
-      "nodeId": "1:57",
-      "nodeName": "List (main nav)",
-      "component": "Main nav — .main-nav, dropdown items via [data-dropdown]",
-      "files": ["index.html", "design-system/components.css#main-nav", "js/main.js"]
-    },
-    {
-      "nodeId": "1:96",
-      "nodeName": "Search",
-      "component": "Nav search — .nav-search",
-      "files": ["index.html", "design-system/components.css#nav-search"]
-    },
-    {
-      "nodeId": "1:112",
-      "nodeName": "Banner",
-      "component": "Announcement banner — .announcement-banner",
-      "files": ["index.html", "design-system/components.css#announcement-banner", "js/main.js"]
-    },
-    {
-      "nodeId": "1:127",
-      "nodeName": "Section (hero)",
-      "component": "Hero — .hero",
-      "files": ["index.html", "design-system/components.css#hero"]
-    },
-    {
-      "nodeId": "1:131",
-      "nodeName": "Serving Christian ministries for over 100 years",
-      "component": "Badge pill — .badge-pill",
-      "files": ["design-system/components.css#badge-pill"]
-    },
-    {
-      "nodeId": "1:136",
-      "nodeName": "Ministry insurance and services that are never lukewarm",
-      "component": "Hero heading — h1.hero__heading, .hero__highlight for the orange emphasis",
-      "files": ["index.html", "design-system/components.css#hero"]
-    },
-    {
-      "nodeId": "1:142",
-      "nodeName": "Because bold ministry matters.",
-      "component": "Hero subhead — .hero__subhead",
-      "files": ["design-system/components.css#hero"]
-    },
-    {
-      "nodeId": "1:147",
-      "nodeName": "Section (Request a quote, hero CTA)",
-      "component": "Button — .btn.btn--primary",
-      "files": ["design-system/components.css#btn"]
-    },
-    {
-      "nodeId": "1:157",
-      "nodeName": "Container (photo strip, 26 images)",
-      "component": "Photo marquee — .photo-marquee / .photo-tile (placeholder imagery — see Status note in DESIGN.md)",
-      "files": ["index.html", "design-system/components.css#photo-marquee"]
-    },
-    {
-      "nodeId": "1:224",
-      "nodeName": "Container (Provide)",
-      "component": "Feature split — .feature-split (light variant)",
-      "files": ["index.html", "design-system/components.css#feature-split"]
-    },
-    {
-      "nodeId": "1:235",
-      "nodeName": "Brotherhood Works (tag)",
-      "component": "Badge pill — .badge-pill.badge-pill--success",
-      "files": ["design-system/components.css#badge-pill"]
-    },
-    {
-      "nodeId": "1:239",
-      "nodeName": "Provide",
-      "component": "h2.feature-split__heading",
-      "files": ["index.html"]
-    },
-    {
-      "nodeId": "1:244",
-      "nodeName": "List (coverage bullets)",
-      "component": "Checklist — .checklist",
-      "files": ["index.html", "design-system/components.css#checklist"]
-    },
-    {
-      "nodeId": "1:289",
-      "nodeName": "Section (Care for your people)",
-      "component": "Button — .btn.btn--primary",
-      "files": ["design-system/components.css#btn"]
-    },
-    {
-      "nodeId": "1:297",
-      "nodeName": "Image (Provide media)",
-      "component": "Brotherhood Works logomark — hand-authored inline SVG pinwheel mark",
-      "files": ["index.html#feature-split__media"]
-    },
-    {
-      "nodeId": "1:298",
-      "nodeName": "Container (Protect)",
-      "component": "Feature split — .feature-split (brand variant, .section--brand)",
-      "files": ["index.html", "design-system/components.css#feature-split"]
-    },
-    {
-      "nodeId": "1:304",
-      "nodeName": "Brotherhood Mutual (tag)",
-      "component": "Badge pill — .badge-pill.badge-pill--inverse",
-      "files": ["design-system/components.css#badge-pill"]
-    },
-    {
-      "nodeId": "1:308",
-      "nodeName": "Protect",
-      "component": "h2.feature-split__heading",
-      "files": ["index.html"]
-    },
-    {
-      "nodeId": "1:313",
-      "nodeName": "List (coverage bullets, on-brand)",
-      "component": "Checklist — .checklist.checklist--inverse",
-      "files": ["index.html", "design-system/components.css#checklist"]
-    },
-    {
-      "nodeId": "1:359",
-      "nodeName": "Button (Insure your ministry)",
-      "component": "Button — .btn.btn--inverse",
-      "files": ["design-system/components.css#btn"]
-    },
-    {
-      "nodeId": "1:366",
-      "nodeName": "Image (Protect media)",
-      "component": "Brotherhood Mutual logomark — hand-authored inline SVG shield/cross mark",
-      "files": ["index.html#feature-split__media"]
-    },
-    {
-      "nodeId": "1:986",
-      "nodeName": "Let's chat! (floating chat teaser)",
-      "component": "Shep proactive chat widget — .shep (renamed/redesigned; not a literal implementation — see COMPONENTS.md for why the copy and behavior diverge from a generic chat launcher)",
-      "files": ["js/shep-chat.js", "design-system/chat-widget.css"]
-    },
-    {
-      "nodeId": "1:1003",
-      "nodeName": "Button (Privacy settings)",
-      "component": null,
-      "status": "not implemented",
-      "note": "Out of scope for this change — no cookie/consent management system exists in this repo yet to wire a real privacy-settings control to."
+      "source": {
+        "file": "https://www.figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH/Pitch-Concepts",
+        "fileKey": "hlV7Q6MnEMhJQpdiDSXmUH",
+        "rootNodeId": "16:3",
+        "rootNodeName": "Universal Profile",
+        "note": "A CRM-style account dashboard (an agent's living view of a client/ministry account), distinct from the marketing site and not part of index.html's nav. The Figma frame uses its own dark-slate/teal/amber CRM color scheme and an empty logo placeholder in its top bar; per this project's design language rules, this implementation re-maps every color to the existing token set (teal → --color-success-*, amber → --color-warning-*, dark slate → --color-brand-900/--color-text-*) and fills the logo slot with the real public/B-mutualnav.svg mark instead of inventing a second palette or logomark. Photographic avatars in the source (agent headshot, client contact photo) are replaced with initials/icon avatars, consistent with this repo's placeholder-imagery approach (see the Status note in DESIGN.md) — no photography assets were available to pull in."
+      },
+      "implementedIn": "universal-profile/index.html",
+      "mappings": [
+        {
+          "nodeId": "16:4",
+          "nodeName": "Header - TOP BAR",
+          "component": "App top bar — .app-topbar, .app-nav, .app-search",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:10",
+          "nodeName": "Container (logo)",
+          "component": "Brand logo — public/B-mutualnav.svg (the Figma logo slot was an empty placeholder; the real site mark is used here instead)",
+          "files": ["universal-profile/index.html#app-topbar__brand"]
+        },
+        {
+          "nodeId": "16:15",
+          "nodeName": "Nav",
+          "component": "App nav pills — .app-nav__link, current page via aria-current",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:26",
+          "nodeName": "Container (search + actions)",
+          "component": "Search input (.app-search, ⌘K shortcut) + notification button (.app-icon-btn) + account avatar (.app-avatar)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css", "js/dashboard.js"]
+        },
+        {
+          "nodeId": "16:45",
+          "nodeName": "Aside - LEFT SIDEBAR",
+          "component": "App sidebar — .app-sidebar (Meetings/Tasks stat tiles, workspace nav, Quick Access)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css", "js/dashboard.js"]
+        },
+        {
+          "nodeId": "16:105",
+          "nodeName": "BREADCRUMB / HEADER",
+          "component": ".app-breadcrumb (trail + badge-pill--success \"AI Enriched\" + Export/Edit Policy buttons)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:127",
+          "nodeName": "LEAD REGION",
+          "component": ".lead-grid (2/3 + 1/3 responsive grid)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:128",
+          "nodeName": "2/3 Asset/Metric Card",
+          "component": ".panel-card containing .profile-summary, .quick-stats, .feed (Living Profile Feed)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:216",
+          "nodeName": "1/3 Tall Promo/Portfolio Card",
+          "component": ".panel-card.panel-card--dark containing .promo-list and .promo-owner (Shep icon reused from design-system/icons.js's compass mark)",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:265",
+          "nodeName": "Section - PRODUCT ECOSYSTEM TABLE",
+          "component": ".data-table inside a .panel-card",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:358",
+          "nodeName": "CHART + STAT PAIR",
+          "component": ".bar-chart (illustrative CSS bar chart — the source's vector chart layer was too large to extract pixel-for-pixel; values are representative of the described trend, not literal) + .stat-highlight",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        },
+        {
+          "nodeId": "16:546",
+          "nodeName": "Section - BOTTOM FULL-WIDTH DETAIL PANEL",
+          "component": "Recommendations panel — .rec-columns / .rec-row / .rec-owner / .empty-state / .panel-card__footer",
+          "files": ["universal-profile/index.html", "design-system/dashboard.css"]
+        }
+      ]
     }
   ]
 }
