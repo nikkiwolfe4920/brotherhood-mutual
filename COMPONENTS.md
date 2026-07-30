@@ -116,11 +116,16 @@ sitemap-style footer without a design to implement first.
 The single global assistant entry point (see `DESIGN.md`'s "homepage-specific primitives"). Lives
 in `js/shep-chat.js`, rendered into `#shep-root`, styled by `design-system/chat-widget.css`.
 
-**Why it's built this way (non-intrusive by design):**
-- It never appears instantly — it auto-opens once, ~4.5s after the visitor arrives, and only if
-  they haven't dismissed it in the last 24h (`localStorage["shep-last-dismiss"]`) or already seen
-  it auto-open this session (`sessionStorage["shep-auto-opened"]`). It never nags on every page
-  load.
+**Why it's built this way (proactive, but still respects a dismissal):**
+- The panel opens by default as soon as the widget initializes — no delay — as long as the
+  visitor hasn't dismissed it in the last 24h (`localStorage["shep-last-dismiss"]`) or already
+  had it auto-open this session (`sessionStorage["shep-auto-opened"]`). It still never nags on
+  every page load once dismissed.
+- While open, `.shep__scrim` — a full-viewport `position: fixed` layer appended to `<body>` —
+  sits behind the panel/launcher (`z-index: 999` vs. the widget's `1000`) and applies the same
+  deep-blur glass treatment to the entire page behind it, so the dialog reads as the sole focus.
+  It's created in `openPanel()`/removed in `closePanel()` (and on the outside-click soft dismiss)
+  alongside the panel itself.
 - The opening line doesn't claim to know anything about the specific visitor (no "we noticed
   you're going on a trip") — it asks, framed generically ("Planning a mission trip with your
   ministry?"). Claiming real behavioral knowledge we don't have would read as either creepy or

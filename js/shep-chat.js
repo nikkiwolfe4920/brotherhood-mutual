@@ -1,6 +1,5 @@
 import { ICONS } from "../design-system/icons.js";
 
-const AUTO_OPEN_DELAY_MS = 4500;
 const TYPING_DELAY_MS = 900;
 const DISMISS_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const SESSION_KEY = "shep-auto-opened";
@@ -35,7 +34,21 @@ function initShep(root) {
   launcher.classList.add("is-idle-pulse");
 
   let panel = null;
+  let scrim = null;
   let hasGreeted = false;
+
+  function renderScrim() {
+    scrim = document.createElement("div");
+    scrim.className = "shep__scrim";
+    scrim.setAttribute("aria-hidden", "true");
+    document.body.appendChild(scrim);
+  }
+
+  function removeScrim() {
+    if (!scrim) return;
+    scrim.remove();
+    scrim = null;
+  }
 
   function renderPanel() {
     panel = document.createElement("div");
@@ -99,6 +112,7 @@ function initShep(root) {
 
   function openPanel({ auto = false } = {}) {
     if (panel) return;
+    renderScrim();
     renderPanel();
     launcher.setAttribute("aria-expanded", "true");
     launcher.classList.remove("is-idle-pulse");
@@ -130,6 +144,7 @@ function initShep(root) {
     if (!panel) return;
     panel.remove();
     panel = null;
+    removeScrim();
     launcher.setAttribute("aria-expanded", "false");
     launcher.focus();
     localStorage.setItem(DISMISS_KEY, String(Date.now()));
@@ -246,6 +261,7 @@ function initShep(root) {
       // explicit close, since the visitor didn't say "not now."
       panel.remove();
       panel = null;
+      removeScrim();
       launcher.setAttribute("aria-expanded", "false");
     }
   });
@@ -258,9 +274,7 @@ function initShep(root) {
     const lastDismiss = Number(localStorage.getItem(DISMISS_KEY) || 0);
     if (Date.now() - lastDismiss < DISMISS_COOLDOWN_MS) return;
 
-    window.setTimeout(() => {
-      sessionStorage.setItem(SESSION_KEY, "1");
-      openPanel({ auto: true });
-    }, AUTO_OPEN_DELAY_MS);
+    sessionStorage.setItem(SESSION_KEY, "1");
+    openPanel({ auto: true });
   }
 }
