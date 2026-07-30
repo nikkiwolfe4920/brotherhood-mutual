@@ -198,7 +198,9 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
-  background: var(--color-brand-900);
+  /* Same brand gradient as .profile-summary__icon/.rec-row__icon — see
+     that comment for the contrast rationale. */
+  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
   color: var(--color-text-inverse);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -461,9 +463,28 @@
 }
 
 .panel-card--dark {
+  position: relative;
+  overflow: hidden;
   background: var(--color-brand-900);
   border-color: var(--color-brand-900);
   color: var(--color-text-inverse);
+}
+
+/* Tri-color accent strip echoing the brand palette (blue/orange/teal) —
+   sits in the card's top padding above any text, so it never touches the
+   contrast-checked copy underneath. This card is already documented as one
+   deliberate visual accent, not a pattern to spread to every card. */
+.panel-card--dark::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-500),
+    var(--color-accent-500),
+    var(--color-success-border)
+  );
 }
 
 .panel-card__body {
@@ -501,6 +522,11 @@
 
 /* ---------- Lead region ---------- */
 .lead-grid {
+  /* Contained ambient brand glow (see ::before below) — position: relative +
+     isolation: isolate scope it to this box so it can never underlap the
+     breadcrumb text above, only the opaque cards and the gap between them. */
+  position: relative;
+  isolation: isolate;
   display: grid;
   gap: var(--space-5);
   grid-template-columns: 1fr;
@@ -510,6 +536,27 @@
   .lead-grid {
     grid-template-columns: 2fr 1fr;
   }
+}
+
+/* Same radial-gradient recipe as the homepage's .hero__atmosphere, tuned
+   down for a data-dense CRM view. Bleeds only slightly past the card
+   edges (inset) so it reads as a soft glow around/between the two cards —
+   both are opaque, so there's no risk of the tint sitting under body text. */
+.lead-grid::before {
+  content: "";
+  position: absolute;
+  inset: -16px -12px;
+  z-index: -1;
+  background: radial-gradient(
+      circle at 12% 15%,
+      var(--color-brand-500) 0%,
+      transparent 55%
+    ),
+    radial-gradient(circle at 88% 10%, var(--color-accent-500) 0%, transparent 45%),
+    radial-gradient(circle at 60% 95%, var(--color-success-border) 0%, transparent 50%);
+  opacity: 0.22;
+  filter: blur(var(--blur-deep));
+  pointer-events: none;
 }
 
 .profile-summary {
@@ -531,7 +578,11 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: var(--color-brand-900);
+  /* Same gradient recipe as the homepage's .photo-tile — brand-900 icon
+     badges across this page pick it up for a richer, on-brand fill. Safe
+     at the lighter brand-500 end: icons only need 3:1 contrast (WCAG
+     "meaningful UI graphics"), and this clears >5:1 throughout. */
+  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
   color: var(--color-text-inverse);
   display: inline-flex;
   align-items: center;
@@ -925,6 +976,9 @@
 
 /* ---------- Chart + stat pair ---------- */
 .chart-stat-grid {
+  /* Same contained-glow technique as .lead-grid, see its comment above. */
+  position: relative;
+  isolation: isolate;
   display: grid;
   gap: var(--space-5);
   grid-template-columns: 1fr;
@@ -934,6 +988,22 @@
   .chart-stat-grid {
     grid-template-columns: 2fr 1fr;
   }
+}
+
+.chart-stat-grid::before {
+  content: "";
+  position: absolute;
+  inset: -16px -12px;
+  z-index: -1;
+  background: radial-gradient(
+      circle at 85% 20%,
+      var(--color-brand-500) 0%,
+      transparent 55%
+    ),
+    radial-gradient(circle at 15% 90%, var(--color-success-border) 0%, transparent 50%);
+  opacity: 0.18;
+  filter: blur(var(--blur-deep));
+  pointer-events: none;
 }
 
 .chart-card__legend {
@@ -958,7 +1028,7 @@
 }
 
 .legend-item__dot--premium {
-  background: var(--color-brand-900);
+  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
 }
 
 .legend-item__dot--savings {
@@ -1009,7 +1079,10 @@
 }
 
 .bar-chart__bar--premium {
-  background: var(--color-brand-900);
+  /* Brand gradient — same recipe as .photo-tile / the icon badges above,
+     vertical to match the bar's bottom-up growth. Decorative graphic
+     only, no text sits on top of it. */
+  background: linear-gradient(180deg, var(--color-brand-500), var(--color-brand-900));
 }
 
 .bar-chart__bar--savings {
@@ -1129,7 +1202,9 @@
   align-items: center;
   justify-content: center;
   color: var(--color-text-inverse);
-  background: var(--color-brand-900);
+  /* Same brand gradient as .profile-summary__icon — see that comment for
+     the contrast rationale. */
+  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
 }
 
 .rec-row__icon--accent {
@@ -1170,7 +1245,10 @@
 .progress-bar__fill {
   height: 100%;
   border-radius: var(--radius-full);
-  background: var(--color-success-500);
+  /* Success gradient — same recipe as the homepage's .photo-tile--alt,
+     just horizontal to match the fill direction. Purely decorative (the
+     numeric label sits outside the track), so no text-contrast concern. */
+  background: linear-gradient(90deg, var(--color-success-border), var(--color-success-500));
   width: var(--progress, 0%);
 }
 
