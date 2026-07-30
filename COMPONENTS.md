@@ -122,10 +122,11 @@ in `js/shep-chat.js`, rendered into `#shep-root`, styled by `design-system/chat-
   had it auto-open this session (`sessionStorage["shep-auto-opened"]`). It still never nags on
   every page load once dismissed.
 - While open, `.shep__scrim` — a full-viewport `position: fixed` layer appended to `<body>` —
-  sits behind the panel/launcher (`z-index: 999` vs. the widget's `1000`) and applies the same
-  deep-blur glass treatment to the entire page behind it, so the dialog reads as the sole focus.
-  It's created in `openPanel()`/removed in `closePanel()` (and on the outside-click soft dismiss)
-  alongside the panel itself.
+  sits behind the panel/launcher (`z-index: 999` vs. the widget's `1000`) and applies a lighter
+  glass treatment (`--color-glass-surface-soft` + `--blur-lg`, not the panel's `--blur-deep`) to
+  the entire page behind it, so the dialog reads as the focus while the page stays partly visible
+  underneath rather than disappearing behind an opaque blur. It's created in `openPanel()`/removed
+  in `closePanel()` (and on the outside-click soft dismiss) alongside the panel itself.
 - The opening line doesn't claim to know anything about the specific visitor (no "we noticed
   you're going on a trip") — it asks, framed generically ("Planning a mission trip with your
   ministry?"). Claiming real behavioral knowledge we don't have would read as either creepy or
