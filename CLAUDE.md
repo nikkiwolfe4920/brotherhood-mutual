@@ -14,6 +14,11 @@ collaboration expectations. Follow it in every session, alongside `DESIGN.md`.
   be a dependency without a current need (see "New dependencies require justification" below).
   Fonts are loaded from Google Fonts (Fraunces for display/serif, Manrope for UI/body) as the
   closest open equivalents to the Figma source file's licensed fonts (Tobias, Haffer).
+- **Deployment:** Vercel, deployed straight from the repo root with no build command.
+  `vercel.json` pins `outputDirectory` to `.` — without it, Vercel's zero-config default for an
+  unrecognized framework guesses `public` as the output directory whenever a top-level `public/`
+  folder exists, which would serve that folder's contents (images only, no `index.html`) as the
+  entire site and 404 everything.
 - **Purpose:** Marketing site for Brotherhood Mutual, a ministry-focused insurance provider.
   Communicates the product lines (property/liability/mission coverage, HR & benefits via
   Brotherhood Works) and includes "Shep," a proactive chat assistant that surfaces mission-trip
