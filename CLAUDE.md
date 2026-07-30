@@ -4,15 +4,20 @@ This file is the source of truth for how Claude (and any other AI assistant) sho
 repository. It defines development standards, architecture rules, coding conventions, and
 collaboration expectations. Follow it in every session, alongside `DESIGN.md`.
 
-> **Status:** This project is newly initialized — no code has been committed yet. The sections
-> below establish the standards new code must follow. As the tech stack is chosen, update the
-> "Tech Stack" section and any stack-specific conventions so this file stays accurate.
-
 ## Project Overview
 
 - **Name:** brotherhood-mutual
-- **Tech Stack:** _TBD — update this section once the primary language/framework is chosen._
-- **Purpose:** _TBD — summarize what this project does in 2-3 sentences._
+- **Tech Stack:** Static HTML/CSS/vanilla JS — no build step, no framework. `index.html` at the
+  root is the marketing homepage; shared styles live in `/design-system` (`tokens.css`,
+  `base.css`, `components.css`, `chat-widget.css`); behavior lives in `/js`. Chosen because the
+  site is a small set of marketing pages plus one interactive widget — a framework/bundler would
+  be a dependency without a current need (see "New dependencies require justification" below).
+  Fonts are loaded from Google Fonts (Fraunces for display/serif, Manrope for UI/body) as the
+  closest open equivalents to the Figma source file's licensed fonts (Tobias, Haffer).
+- **Purpose:** Marketing site for Brotherhood Mutual, a ministry-focused insurance provider.
+  Communicates the product lines (property/liability/mission coverage, HR & benefits via
+  Brotherhood Works) and includes "Shep," a proactive chat assistant that surfaces mission-trip
+  insurance to visitors.
 
 ## Development Standards
 

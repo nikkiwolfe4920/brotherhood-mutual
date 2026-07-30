@@ -1,0 +1,360 @@
+/**
+ * Shep — proactive chat widget. See COMPONENTS.md for interaction rules.
+ * Depends on tokens.css + base.css being loaded first.
+ */
+
+.shep {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+/* ---------- Launcher ---------- */
+.shep__launcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+  min-height: 56px;
+  padding: var(--space-3) var(--space-5) var(--space-3) var(--space-3);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--duration-base) var(--easing-standard),
+    background-color var(--duration-base) var(--easing-standard);
+}
+
+.shep__launcher:hover {
+  background: var(--color-brand-600);
+  transform: translateY(-2px);
+}
+
+.shep__launcher-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-0);
+  color: var(--color-brand-500);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.shep__launcher-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.shep__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-500);
+  border: 2px solid var(--color-surface);
+}
+
+/* Gentle attention pulse the first time the launcher appears — subtle, not
+   flashy, and fully removed under reduced-motion. */
+.shep__launcher.is-idle-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  animation: shep-pulse 2.4s var(--easing-standard) infinite;
+  z-index: -1;
+}
+
+@keyframes shep-pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shep__launcher.is-idle-pulse::before {
+    animation: none;
+    display: none;
+  }
+}
+
+/* ---------- Panel ---------- */
+.shep__panel {
+  width: min(360px, calc(100vw - 2 * var(--space-5)));
+  max-height: min(560px, calc(100vh - 120px));
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-glass-surface);
+  /* The "very deep blur" frosted-glass treatment for overlay UI. */
+  backdrop-filter: blur(var(--blur-deep)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-deep)) saturate(180%);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  transform-origin: bottom right;
+  animation: shep-panel-in var(--duration-slow) var(--easing-standard);
+}
+
+@keyframes shep-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shep__panel {
+    animation: none;
+  }
+}
+
+.shep__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.shep__header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.shep__header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.shep__header-name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.shep__header-status {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.shep__header-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-success-500);
+}
+
+.shep__close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shep__close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-primary);
+}
+
+.shep__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.shep__bubble {
+  max-width: 88%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  animation: shep-bubble-in var(--duration-slow) var(--easing-standard);
+}
+
+@keyframes shep-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shep__bubble {
+    animation: none;
+  }
+}
+
+.shep__bubble--shep {
+  align-self: flex-start;
+  background: var(--color-glass-surface-strong);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-text-primary);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.shep__bubble--user {
+  align-self: flex-end;
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.shep__typing {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 4px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-glass-surface-strong);
+  border: 1px solid var(--color-glass-border);
+}
+
+.shep__typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-text-secondary);
+  animation: shep-typing 1.2s ease-in-out infinite;
+}
+
+.shep__typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.shep__typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes shep-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shep__typing span {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+.shep__quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.shep__quick-reply {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-brand-500);
+  background: transparent;
+  color: var(--color-brand-500);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-4);
+  min-height: 36px;
+}
+
+.shep__quick-reply:hover {
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+}
+
+.shep__form {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-glass-border);
+}
+
+.shep__input {
+  flex: 1;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  min-height: 40px;
+  color: var(--color-text-primary);
+}
+
+.shep__input::placeholder {
+  color: var(--color-neutral-400);
+}
+
+.shep__send {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.shep__send:hover {
+  background: var(--color-brand-600);
+}
+
+.shep__send:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
