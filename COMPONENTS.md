@@ -282,7 +282,7 @@ icon treatments (campaign vs. browse-activity) — it's a visual variant, not a 
 ```html
 <div class="promo-banner">
   <p class="promo-banner__text">You advance the Kingdom.<br />Shep helps you protect it.</p>
-  <svg class="promo-banner__illustration" viewBox="0 0 100 100" aria-hidden="true">…</svg>
+  <img class="promo-banner__illustration" src="../public/bm-illustration.png" width="856" height="480" alt="" aria-hidden="true" />
 </div>
 ```
 
@@ -293,15 +293,16 @@ icon treatments (campaign vs. browse-activity) — it's a visual variant, not a 
   card already has an "Assigned Agent" (Shep) for the illustration and tagline to represent; don't
   copy this banner onto other cards without a similar reason, or it reads as decoration for its own
   sake rather than a brand moment.
-- The illustration is a small, hand-authored inline SVG (flat shapes, no gradients) matching the
-  homepage logo's precedent of hardcoding a few illustration-only colors directly in the markup
-  rather than routing them through design tokens — it's a one-off graphic, not a reusable palette.
+- The illustration is `public/bm-illustration.png`, the same asset used elsewhere in the repo —
+  shown at its full 856:480 aspect ratio via `width: 88px; height: auto; aspect-ratio: 856 / 480`,
+  not cropped with `object-fit`. The figure's raised, pointing hand is the point of the graphic; a
+  fixed-square crop cuts it off.
 - `.promo-banner__text` uses `--font-family-display` (Fraunces) at `--font-size-lg` — the one piece
   of dashboard body copy allowed to use the display serif, since it's standing in for marketing-style
   brand voice rather than dashboard data.
 - `flex` with `justify-content: space-between` lets the text wrap to two lines on narrow widths
-  without colliding with the 64×64px illustration, which stays a fixed size (see the mobile check
-  in `DESIGN.md`'s note) rather than shrinking further — below that it would stop reading clearly.
+  without colliding with the illustration, which stays a fixed 88px width (scaling its height to
+  match) rather than shrinking further — below that it would stop reading clearly.
 
 ### Data table — `.data-table`
 
