@@ -10,6 +10,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* Vibrant green: a brighter, more saturated success/positive-signal color
+     for this page, still clearing 4.5:1 text contrast on white (5.7:1).
+     Scoped here rather than in tokens.css — dashboard.css only loads on
+     this page, so the shared --color-success-* tokens elsewhere (badges,
+     checkmarks on other pages) are untouched. */
+  --color-success-500: #067647;
+  --color-success-surface: #ecfdf3;
+  --color-success-border: #abefc6;
 }
 
 /* ---------- Top bar ---------- */
@@ -198,9 +206,7 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
-  /* Same brand gradient as .profile-summary__icon/.rec-row__icon — see
-     that comment for the contrast rationale. */
-  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
+  background: var(--color-brand-500);
   color: var(--color-text-inverse);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -210,7 +216,8 @@
 /* ---------- Body: sidebar + main ---------- */
 .app-body {
   display: flex;
-  align-items: flex-start;
+  /* Stretch (the flex default) so the blue sidebar matches the height of
+     the main column instead of stopping at the viewport edge. */
   flex: 1;
   position: relative;
 }
@@ -224,10 +231,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  position: sticky;
-  top: 65px;
-  max-height: calc(100vh - 65px);
-  overflow-y: auto;
 }
 
 @media (max-width: 1023px) {
@@ -262,10 +265,11 @@
 }
 
 .app-sidebar__card {
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
+  /* Ghost treatment: translucent over the blue sidebar instead of an
+     opaque white card. */
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -277,7 +281,11 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  color: var(--color-neutral-0);
+}
+
+.app-sidebar__date svg {
+  color: var(--color-neutral-0);
 }
 
 .app-stat-tiles {
@@ -288,31 +296,29 @@
 .app-stat-tile {
   flex: 1;
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-alt);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   padding: var(--space-3);
 }
 
 .app-stat-tile--highlight {
-  background: var(--color-success-surface);
-  border-color: var(--color-success-border);
+  /* rgba equivalent of --color-success-500 (#067647) at low opacity — a
+     ghost tint rather than the opaque success-surface fill. */
+  background: linear-gradient(160deg, rgba(6, 118, 71, 0.35), rgba(6, 118, 71, 0.12));
+  border-color: rgba(171, 239, 198, 0.5);
 }
 
 .app-stat-tile__label {
   display: block;
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .app-stat-tile__value {
   display: block;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-}
-
-.app-stat-tile--highlight .app-stat-tile__value {
-  color: var(--color-success-500);
+  color: var(--color-neutral-0);
 }
 
 .app-sidebar__nav {
@@ -325,6 +331,7 @@
 }
 
 .app-sidebar__nav-link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -353,18 +360,35 @@
 }
 
 .app-sidebar__nav-link[aria-current="page"] {
-  background: var(--color-surface-raised);
-  border-color: var(--color-border);
-  box-shadow: var(--shadow-sm);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--color-neutral-0);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Active-state indicator: a slim vertical bar at the leading edge, in
+   place of the old solid-white pill fill. */
+.app-sidebar__nav-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-0);
 }
 
 .app-sidebar__nav-link[aria-current="page"] svg {
-  color: var(--color-success-500);
+  color: var(--color-neutral-0);
 }
 
 .app-sidebar__nav-count {
   margin-left: auto;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: var(--color-neutral-0);
 }
 
 .app-quick-access {
@@ -396,16 +420,16 @@
   gap: var(--space-2);
   padding: var(--space-3);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-raised);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(160deg, var(--color-brand-600), var(--color-brand-700));
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
+  color: var(--color-neutral-0);
   text-align: center;
 }
 
 .app-quick-access__tile:hover {
-  background: var(--color-surface-alt);
+  background: linear-gradient(160deg, var(--color-brand-700), var(--color-brand-900));
 }
 
 .app-main {
@@ -506,7 +530,7 @@
 
 .panel-card__actions {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
@@ -542,11 +566,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  /* Same gradient recipe as the homepage's .photo-tile — brand-900 icon
-     badges across this page pick it up for a richer, on-brand fill. Safe
-     at the lighter brand-500 end: icons only need 3:1 contrast (WCAG
-     "meaningful UI graphics"), and this clears >5:1 throughout. */
-  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
+  background: var(--color-accent-500);
   color: var(--color-text-inverse);
   display: inline-flex;
   align-items: center;
@@ -818,12 +838,12 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
-  background: var(--color-neutral-0);
-  color: var(--color-brand-500);
+  background: var(--color-brand-500);
+  color: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-0);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 2px var(--color-brand-500);
 }
 
 .promo-owner__text {
@@ -849,12 +869,12 @@
   width: 32px;
   height: 32px;
   border-radius: var(--radius-md);
-  background: var(--color-brand-500);
+  background: transparent;
   color: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-0);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 2px var(--color-neutral-0);
 }
 
 /* Brand illustration banner — see COMPONENTS.md's "Promo banner" entry for
@@ -1025,7 +1045,7 @@
 }
 
 .legend-item__dot--premium {
-  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
+  background: var(--color-brand-500);
 }
 
 .legend-item__dot--savings {
@@ -1076,10 +1096,7 @@
 }
 
 .bar-chart__bar--premium {
-  /* Brand gradient — same recipe as .photo-tile / the icon badges above,
-     vertical to match the bar's bottom-up growth. Decorative graphic
-     only, no text sits on top of it. */
-  background: linear-gradient(180deg, var(--color-brand-500), var(--color-brand-900));
+  background: var(--color-brand-500);
 }
 
 .bar-chart__bar--savings {
@@ -1161,17 +1178,17 @@
 }
 
 .rec-list {
-  padding: var(--space-4) var(--space-6) var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .rec-row {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
   grid-template-columns: 1fr;
-  padding: var(--space-4);
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface-alt);
@@ -1199,9 +1216,7 @@
   align-items: center;
   justify-content: center;
   color: var(--color-text-inverse);
-  /* Same brand gradient as .profile-summary__icon — see that comment for
-     the contrast rationale. */
-  background: linear-gradient(160deg, var(--color-brand-500), var(--color-brand-900));
+  background: var(--color-brand-500);
 }
 
 .rec-row__icon--accent {
@@ -1275,11 +1290,11 @@
 .rec-owner {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-raised);
-  padding: var(--space-2);
+  padding: var(--space-3);
 }
 
 .rec-owner__avatar {
