@@ -193,16 +193,13 @@
 .site-logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-lg);
-  line-height: 1.1;
-  color: var(--color-text-primary);
 }
 
 .site-logo__mark {
   flex-shrink: 0;
+  display: block;
+  height: 32px;
+  width: auto;
 }
 
 .main-nav {
