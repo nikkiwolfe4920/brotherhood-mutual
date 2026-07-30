@@ -1,0 +1,175 @@
+{
+  "$schema": "Figma node-id -> implemented-component mapping for this repo",
+  "source": {
+    "file": "https://www.figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH/Untitled",
+    "fileKey": "hlV7Q6MnEMhJQpdiDSXmUH",
+    "rootNodeId": "1:2",
+    "rootNodeName": "Home - Brotherhood Mutual Insurance Company",
+    "note": "This node is a viewport-cropped capture (height 2263) of a taller scrollable page (Main Content is 4585 tall). No footer section exists in the captured file — index.html's footer is hand-authored, not a Figma implementation."
+  },
+  "mappings": [
+    {
+      "nodeId": "1:6",
+      "nodeName": "Header - Main",
+      "component": "Site header",
+      "files": ["index.html", "design-system/components.css#site-header"]
+    },
+    {
+      "nodeId": "1:10",
+      "nodeName": "Top Navigation",
+      "component": "Utility row (Claims / Customer Logins / Request a quote)",
+      "files": ["index.html", "design-system/components.css#site-header__utility"]
+    },
+    {
+      "nodeId": "1:18",
+      "nodeName": "Section (Request a quote)",
+      "component": "Button — .btn.btn--primary.btn--sm",
+      "files": ["design-system/components.css#btn"]
+    },
+    {
+      "nodeId": "1:27",
+      "nodeName": "Link - Main Navigation Logo",
+      "component": "Brand logomark — hand-authored inline SVG (see Status note in DESIGN.md; original asset could not be downloaded, egress to figma.com is blocked in this environment)",
+      "files": ["index.html#site-logo"]
+    },
+    {
+      "nodeId": "1:57",
+      "nodeName": "List (main nav)",
+      "component": "Main nav — .main-nav, dropdown items via [data-dropdown]",
+      "files": ["index.html", "design-system/components.css#main-nav", "js/main.js"]
+    },
+    {
+      "nodeId": "1:96",
+      "nodeName": "Search",
+      "component": "Nav search — .nav-search",
+      "files": ["index.html", "design-system/components.css#nav-search"]
+    },
+    {
+      "nodeId": "1:112",
+      "nodeName": "Banner",
+      "component": "Announcement banner — .announcement-banner",
+      "files": ["index.html", "design-system/components.css#announcement-banner", "js/main.js"]
+    },
+    {
+      "nodeId": "1:127",
+      "nodeName": "Section (hero)",
+      "component": "Hero — .hero",
+      "files": ["index.html", "design-system/components.css#hero"]
+    },
+    {
+      "nodeId": "1:131",
+      "nodeName": "Serving Christian ministries for over 100 years",
+      "component": "Badge pill — .badge-pill",
+      "files": ["design-system/components.css#badge-pill"]
+    },
+    {
+      "nodeId": "1:136",
+      "nodeName": "Ministry insurance and services that are never lukewarm",
+      "component": "Hero heading — h1.hero__heading, .hero__highlight for the orange emphasis",
+      "files": ["index.html", "design-system/components.css#hero"]
+    },
+    {
+      "nodeId": "1:142",
+      "nodeName": "Because bold ministry matters.",
+      "component": "Hero subhead — .hero__subhead",
+      "files": ["design-system/components.css#hero"]
+    },
+    {
+      "nodeId": "1:147",
+      "nodeName": "Section (Request a quote, hero CTA)",
+      "component": "Button — .btn.btn--primary",
+      "files": ["design-system/components.css#btn"]
+    },
+    {
+      "nodeId": "1:157",
+      "nodeName": "Container (photo strip, 26 images)",
+      "component": "Photo marquee — .photo-marquee / .photo-tile (placeholder imagery — see Status note in DESIGN.md)",
+      "files": ["index.html", "design-system/components.css#photo-marquee"]
+    },
+    {
+      "nodeId": "1:224",
+      "nodeName": "Container (Provide)",
+      "component": "Feature split — .feature-split (light variant)",
+      "files": ["index.html", "design-system/components.css#feature-split"]
+    },
+    {
+      "nodeId": "1:235",
+      "nodeName": "Brotherhood Works (tag)",
+      "component": "Badge pill — .badge-pill.badge-pill--success",
+      "files": ["design-system/components.css#badge-pill"]
+    },
+    {
+      "nodeId": "1:239",
+      "nodeName": "Provide",
+      "component": "h2.feature-split__heading",
+      "files": ["index.html"]
+    },
+    {
+      "nodeId": "1:244",
+      "nodeName": "List (coverage bullets)",
+      "component": "Checklist — .checklist",
+      "files": ["index.html", "design-system/components.css#checklist"]
+    },
+    {
+      "nodeId": "1:289",
+      "nodeName": "Section (Care for your people)",
+      "component": "Button — .btn.btn--primary",
+      "files": ["design-system/components.css#btn"]
+    },
+    {
+      "nodeId": "1:297",
+      "nodeName": "Image (Provide media)",
+      "component": "Brotherhood Works logomark — hand-authored inline SVG pinwheel mark",
+      "files": ["index.html#feature-split__media"]
+    },
+    {
+      "nodeId": "1:298",
+      "nodeName": "Container (Protect)",
+      "component": "Feature split — .feature-split (brand variant, .section--brand)",
+      "files": ["index.html", "design-system/components.css#feature-split"]
+    },
+    {
+      "nodeId": "1:304",
+      "nodeName": "Brotherhood Mutual (tag)",
+      "component": "Badge pill — .badge-pill.badge-pill--inverse",
+      "files": ["design-system/components.css#badge-pill"]
+    },
+    {
+      "nodeId": "1:308",
+      "nodeName": "Protect",
+      "component": "h2.feature-split__heading",
+      "files": ["index.html"]
+    },
+    {
+      "nodeId": "1:313",
+      "nodeName": "List (coverage bullets, on-brand)",
+      "component": "Checklist — .checklist.checklist--inverse",
+      "files": ["index.html", "design-system/components.css#checklist"]
+    },
+    {
+      "nodeId": "1:359",
+      "nodeName": "Button (Insure your ministry)",
+      "component": "Button — .btn.btn--inverse",
+      "files": ["design-system/components.css#btn"]
+    },
+    {
+      "nodeId": "1:366",
+      "nodeName": "Image (Protect media)",
+      "component": "Brotherhood Mutual logomark — hand-authored inline SVG shield/cross mark",
+      "files": ["index.html#feature-split__media"]
+    },
+    {
+      "nodeId": "1:986",
+      "nodeName": "Let's chat! (floating chat teaser)",
+      "component": "Shep proactive chat widget — .shep (renamed/redesigned; not a literal implementation — see COMPONENTS.md for why the copy and behavior diverge from a generic chat launcher)",
+      "files": ["js/shep-chat.js", "design-system/chat-widget.css"]
+    },
+    {
+      "nodeId": "1:1003",
+      "nodeName": "Button (Privacy settings)",
+      "component": null,
+      "status": "not implemented",
+      "note": "Out of scope for this change — no cookie/consent management system exists in this repo yet to wire a real privacy-settings control to."
+    }
+  ]
+}

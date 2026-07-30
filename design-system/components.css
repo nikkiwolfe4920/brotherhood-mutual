@@ -1,0 +1,618 @@
+/**
+ * Shared component primitives. See /COMPONENTS.md for usage notes per component.
+ * Depends on tokens.css + base.css being loaded first.
+ */
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background-color var(--duration-base) var(--easing-standard),
+    border-color var(--duration-base) var(--easing-standard),
+    color var(--duration-base) var(--easing-standard);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn--primary {
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-brand-600);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--color-brand-700);
+}
+
+.btn--secondary {
+  background: var(--color-surface-raised);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+}
+
+.btn--secondary:active:not(:disabled) {
+  background: var(--color-neutral-100);
+}
+
+/* Used on brand-colored (blue) sections, e.g. the Protect section CTA. */
+.btn--inverse {
+  background: var(--color-neutral-0);
+  color: var(--color-brand-500);
+}
+
+.btn--inverse:hover:not(:disabled) {
+  background: var(--color-neutral-100);
+}
+
+.btn--destructive {
+  background: var(--color-danger-500);
+  color: var(--color-text-inverse);
+}
+
+.btn--destructive:hover:not(:disabled) {
+  background: #8f1e18;
+}
+
+.btn--sm {
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.btn--icon {
+  min-width: 44px;
+  padding: var(--space-2);
+}
+
+/* ---------- Badge / pill ---------- */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-pill--success {
+  border-color: var(--color-success-border);
+  background: var(--color-success-surface);
+  color: var(--color-success-500);
+}
+
+.badge-pill--inverse {
+  border-color: transparent;
+  background: var(--color-neutral-0);
+  color: var(--color-brand-500);
+}
+
+/* ---------- Skip-nav / banner ---------- */
+.announcement-banner {
+  background: var(--color-brand-900);
+  color: var(--color-text-inverse);
+}
+
+.announcement-banner__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+}
+
+.announcement-banner a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.announcement-banner__close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-sm);
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-banner__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Header / nav ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-surface);
+  transition: background-color var(--duration-slow) var(--easing-standard),
+    box-shadow var(--duration-slow) var(--easing-standard),
+    backdrop-filter var(--duration-slow) var(--easing-standard);
+}
+
+/* Deep frosted-glass treatment once the page scrolls under the header. */
+.site-header.is-scrolled {
+  background: var(--color-glass-surface);
+  backdrop-filter: blur(var(--blur-deep)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur-deep)) saturate(160%);
+  box-shadow: var(--shadow-md);
+}
+
+.site-header__utility {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__utility-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-6);
+  padding-block: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.site-header__utility-row a:hover {
+  color: var(--color-brand-500);
+}
+
+.site-header__main-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-4);
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.site-logo__mark {
+  flex-shrink: 0;
+}
+
+.main-nav {
+  display: none;
+}
+
+.main-nav.is-open {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-4) var(--space-5);
+}
+
+.main-nav.is-open .main-nav__list {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.main-nav.is-open .nav-dropdown {
+  position: static;
+  box-shadow: none;
+  border: none;
+  margin-top: var(--space-1);
+}
+
+.main-nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) 0;
+  font-weight: var(--font-weight-medium);
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: var(--font-size-md);
+}
+
+.main-nav__link:hover {
+  color: var(--color-brand-500);
+}
+
+.main-nav li[data-dropdown] {
+  position: relative;
+  list-style: none;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-dropdown[hidden] {
+  display: none;
+}
+
+.nav-dropdown a {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.nav-dropdown a:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-brand-500);
+}
+
+@media (min-width: 1024px) {
+  .main-nav {
+    display: block;
+  }
+}
+
+.nav-search {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav-search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-text-secondary);
+    min-width: 220px;
+  }
+
+  .nav-search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    width: 100%;
+  }
+
+  .nav-search input::placeholder {
+    color: var(--color-neutral-400);
+  }
+}
+
+.nav-toggle {
+  display: inline-flex;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Deep-blurred atmospheric backdrop behind the hero copy — matches the "very
+   deep blur" treatment requested for this page; purely decorative, so it's
+   aria-hidden and never carries text. */
+.hero__atmosphere {
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background: radial-gradient(
+      circle at 20% 20%,
+      var(--color-brand-500) 0%,
+      transparent 55%
+    ),
+    radial-gradient(circle at 80% 0%, var(--color-accent-500) 0%, transparent 45%),
+    radial-gradient(circle at 60% 80%, var(--color-success-border) 0%, transparent 50%);
+  opacity: 0.35;
+  filter: blur(var(--blur-deep));
+  pointer-events: none;
+}
+
+.hero__eyebrow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+}
+
+.hero__heading {
+  text-align: center;
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+.hero__heading .hero__highlight {
+  color: var(--color-accent-500);
+}
+
+@media (max-width: 767px) {
+  .hero__heading {
+    font-size: var(--font-size-4xl);
+  }
+
+  .feature-split__heading {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.hero__subhead {
+  text-align: center;
+  margin-top: var(--space-4);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}
+
+.hero__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+/* ---------- Photo marquee ---------- */
+.photo-marquee {
+  overflow: hidden;
+  margin-top: var(--space-7);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.photo-marquee__track {
+  display: flex;
+  gap: var(--space-4);
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-marquee__track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
+.photo-tile {
+  flex-shrink: 0;
+  width: 200px;
+  height: 280px;
+  background: linear-gradient(
+    160deg,
+    var(--color-brand-500),
+    var(--color-brand-900)
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 60%);
+}
+
+.photo-tile--rect {
+  border-radius: var(--radius-lg);
+}
+
+.photo-tile--arch {
+  border-radius: 50% 50% var(--radius-lg) var(--radius-lg) / 45% 45% var(--radius-lg)
+    var(--radius-lg);
+}
+
+.photo-tile--alt {
+  background: linear-gradient(
+    160deg,
+    var(--color-success-border),
+    var(--color-success-500)
+  );
+}
+
+.photo-tile--warm {
+  background: linear-gradient(160deg, var(--color-accent-500), var(--color-brand-900));
+}
+
+/* ---------- Feature split section (Provide / Protect) ---------- */
+.feature-split {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .feature-split {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-split--reverse .feature-split__media {
+    order: 2;
+  }
+}
+
+.feature-split__eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.feature-split__heading {
+  margin-bottom: var(--space-5);
+}
+
+.checklist {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3) var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+}
+
+@media (min-width: 480px) {
+  .checklist {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.checklist__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checklist__icon {
+  flex-shrink: 0;
+  color: var(--color-success-500);
+}
+
+.checklist--inverse .checklist__icon {
+  /* On-brand (blue) sections: white, not --color-accent-500 — the Figma
+     source used orange here, but orange-on-brand-blue measures ~1.5:1,
+     well under the WCAG AA 3:1 minimum for meaningful icons. White clears
+     it (~5.2:1) without adding a second semantic-looking color. */
+  color: var(--color-text-inverse);
+}
+
+.feature-split__media {
+  border-radius: var(--radius-lg);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.feature-split__media--light {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+}
+
+.feature-split__media--brand {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.feature-split__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.feature-split__logo-text strong {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.feature-split__logo-text span {
+  display: block;
+  font-size: var(--font-size-xs);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-6);
+}
+
+.site-footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.site-footer__links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer__links a:hover {
+  color: var(--color-brand-500);
+}

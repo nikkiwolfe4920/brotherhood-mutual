@@ -5,10 +5,26 @@ spacing, typography, accessibility rules, and UI implementation guidelines. Read
 `CLAUDE.md` before starting any UI work. If a decision here conflicts with a one-off request,
 raise it rather than silently deviating.
 
-> **Status:** The application tech stack is still TBD (see `CLAUDE.md`). Tokens below are defined
-> as CSS custom properties so they can be consumed from any framework once one is chosen (plain
-> CSS, a CSS-in-JS library, or a component framework). Update the "Implementation" notes in each
-> section once the stack is locked in.
+> **Status:** Tech stack is locked in: static HTML/CSS/vanilla JS (see `CLAUDE.md`). Tokens below
+> are CSS custom properties, implemented at `/design-system/tokens.css` and consumed by
+> `/design-system/base.css` and `/design-system/components.css`. The palette, type scale, and
+> component list in this file were sourced from the Figma homepage design
+> (`figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH`, node `1:2`) — see `/figma/component-map.json` for
+> the node-id → component mapping.
+>
+> **Fonts:** the Figma file specifies Tobias (display serif) and Haffer (UI sans) — both licensed,
+> non-Google fonts. This project uses the closest Google Fonts equivalents instead: **Fraunces**
+> for `--font-family-display` and **Manrope** for `--font-family-base`. If the licensed fonts are
+> ever purchased, swap the `@import`/`<link>` in `index.html` and the two `--font-family-*` values
+> here — component code never references a font name directly.
+>
+> **Asset note:** this environment's egress policy blocks direct downloads from `figma.com`, so
+> the photographic imagery in the Figma file (hero photo strip, feature-section photography)
+> could not be pulled into the repo as real image assets. Those slots are implemented as
+> gradient/pattern placeholders (see `.photo-tile` in `components.css`) sized and shaped to match
+> the design — swap in real photography via the `background-image` / `<img>` slot when available.
+> Icons and the two brand logos (Brotherhood Mutual, Brotherhood Works) are simple enough
+> geometric marks that they were hand-authored as faithful inline SVG instead.
 
 ## Design Principles
 
@@ -29,11 +45,15 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
 
 ### Token Categories
 
-- **Color** — brand, semantic (success/warning/danger/info), neutral scale, surface, text, border
+- **Color** — brand, accent (decorative brand highlight, never semantic), semantic
+  (success/warning/danger/info), neutral scale, surface, text, border
 - **Typography** — font family, size scale, weight, line-height, letter-spacing
 - **Spacing** — a single spacing scale used for margin, padding, and gap
 - **Radius** — border-radius scale
 - **Shadow/Elevation** — a small set of elevation levels
+- **Glass/Blur** — frosted-glass surface tokens for overlay UI (sticky header on scroll, the Shep
+  chat widget, hero atmosphere) — a real, recurring need across 3 surfaces, so it earns its own
+  token category rather than one-off `backdrop-filter` values
 - **Motion** — duration and easing for transitions/animations
 - **Breakpoints** — responsive layout thresholds
 
@@ -43,56 +63,77 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
 :root {
   /* Color — neutral scale */
   --color-neutral-0: #ffffff;
-  --color-neutral-50: #f7f8f9;
-  --color-neutral-100: #eceef1;
-  --color-neutral-200: #d8dce1;
+  --color-neutral-25: #fbfbfc;
+  --color-neutral-50: #f5f6f7;
+  --color-neutral-100: #ebecef;
+  --color-neutral-200: #e0e3e8;
   --color-neutral-300: #b7bec7;
   --color-neutral-400: #8f98a3;
-  --color-neutral-500: #6b7480;
+  --color-neutral-500: #66718a;
   --color-neutral-600: #515964;
   --color-neutral-700: #3a4048;
   --color-neutral-800: #262a30;
   --color-neutral-900: #16181b;
 
-  /* Color — brand */
-  --color-brand-500: #1c4e80;
-  --color-brand-600: #163e66;
-  --color-brand-700: #102e4d;
+  /* Color — brand (navy + blue, from the Figma source) */
+  --color-brand-500: #0062f1;
+  --color-brand-600: #0052c9;
+  --color-brand-700: #003e99;
+  --color-brand-900: #00133c;
+
+  /* Color — accent (decorative brand highlight only — never repurposed as a semantic color) */
+  --color-accent-500: #dc6803;
 
   /* Color — semantic */
-  --color-success-500: #1c7c4d;
+  --color-success-500: #006353;
+  --color-success-surface: #ebfbf8;
+  --color-success-border: #aaece1;
   --color-warning-500: #b4790f;
   --color-danger-500: #b3261e;
-  --color-info-500: #2563a6;
+  --color-info-500: #0071aa;
+  --color-info-surface: #ebf8ff;
+  --color-info-border: #aae3ff;
 
   /* Color — surface & text (light theme defaults) */
-  --color-surface: var(--color-neutral-0);
-  --color-surface-raised: var(--color-neutral-50);
-  --color-text-primary: var(--color-neutral-900);
-  --color-text-secondary: var(--color-neutral-600);
+  --color-surface: var(--color-neutral-25);
+  --color-surface-raised: var(--color-neutral-0);
+  --color-surface-alt: var(--color-neutral-50);
+  --color-text-primary: var(--color-brand-900);
+  --color-text-secondary: var(--color-neutral-500);
   --color-text-inverse: var(--color-neutral-0);
   --color-border: var(--color-neutral-200);
   --color-border-strong: var(--color-neutral-300);
 
+  /* Color — glass/blur overlay surfaces (sticky header, chat widget, hero atmosphere) */
+  --color-glass-surface: rgba(255, 255, 255, 0.72);
+  --color-glass-surface-strong: rgba(255, 255, 255, 0.88);
+  --color-glass-border: rgba(255, 255, 255, 0.5);
+  --blur-md: 12px;
+  --blur-lg: 24px;
+  --blur-deep: 48px;
+
   /* Typography */
-  --font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-base: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-family-display: "Fraunces", Georgia, serif;
   --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --font-size-xs: 0.75rem;   /* 12px */
-  --font-size-sm: 0.875rem;  /* 14px */
-  --font-size-md: 1rem;      /* 16px — base */
-  --font-size-lg: 1.125rem;  /* 18px */
-  --font-size-xl: 1.25rem;   /* 20px */
-  --font-size-2xl: 1.5rem;   /* 24px */
-  --font-size-3xl: 1.875rem; /* 30px */
-  --font-size-4xl: 2.25rem;  /* 36px */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px — base */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3.0625rem; /* 49px — Provide/Protect-style h2 */
+  --font-size-6xl: 3.8125rem; /* 61px — hero h1 */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.25;
+  --line-height-tight: 1.2;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
 
@@ -116,6 +157,7 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
   --shadow-sm: 0 1px 2px rgba(22, 24, 27, 0.06);
   --shadow-md: 0 4px 8px rgba(22, 24, 27, 0.08);
   --shadow-lg: 0 12px 24px rgba(22, 24, 27, 0.12);
+  --shadow-xl: 0 24px 48px rgba(0, 19, 60, 0.16);
 
   /* Motion */
   --duration-fast: 100ms;
@@ -135,10 +177,14 @@ neutral or brand scale:
 [data-theme="dark"] {
   --color-surface: var(--color-neutral-900);
   --color-surface-raised: var(--color-neutral-800);
+  --color-surface-alt: var(--color-neutral-800);
   --color-text-primary: var(--color-neutral-0);
   --color-text-secondary: var(--color-neutral-300);
   --color-border: var(--color-neutral-700);
   --color-border-strong: var(--color-neutral-600);
+  --color-glass-surface: rgba(10, 14, 26, 0.68);
+  --color-glass-surface-strong: rgba(10, 14, 26, 0.85);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
 }
 ```
 
@@ -157,12 +203,16 @@ neutral or brand scale:
 - **Base size:** 16px (`--font-size-md`), scaling via `rem` so it respects user font-size
   preferences. Never use px for font sizes.
 - **Type scale:** use the steps in `--font-size-*` only. Headings map to fixed steps:
-  - `h1` → `--font-size-4xl` / `--font-weight-bold`
-  - `h2` → `--font-size-3xl` / `--font-weight-bold`
-  - `h3` → `--font-size-2xl` / `--font-weight-semibold`
-  - `h4` → `--font-size-xl` / `--font-weight-semibold`
-  - body → `--font-size-md` / `--font-weight-regular`
+  - `h1` → `--font-size-6xl` / `--font-weight-bold` / `--font-family-display` (hero-only; page `h1`s
+    elsewhere use `--font-size-4xl`)
+  - `h2` → `--font-size-5xl` / `--font-weight-semibold` / `--font-family-display`
+  - `h3` → `--font-size-2xl` / `--font-weight-semibold` / `--font-family-base`
+  - `h4` → `--font-size-xl` / `--font-weight-semibold` / `--font-family-base`
+  - body → `--font-size-md` / `--font-weight-regular` / `--font-family-base`
   - caption/helper text → `--font-size-sm` / `--color-text-secondary`
+  - **Display serif (`--font-family-display`) is reserved for `h1`/`h2`** — the moment it appears
+    on body copy, a button, or a caption, that's a signal the hierarchy is wrong, not a reason to
+    reach for the serif elsewhere.
 - **Line length:** target 60–80 characters per line for body copy; constrain text blocks with
   `max-width` rather than letting them span the full viewport.
 - **Line height:** `--line-height-tight` for headings, `--line-height-normal` for body text,
@@ -202,6 +252,9 @@ layering on enhancements.
   - `danger` — errors, destructive actions, failed states
   - `info` — neutral informational callouts
   - Do not repurpose a semantic color for decoration or branding.
+- **`--color-accent-500` (orange) is decoration, not status.** It exists for one job: emphasizing
+  a phrase inside a heading (e.g. "never lukewarm" in the homepage hero). It must never stand in
+  for `warning`, and a warning/error state must never borrow it for "brand feel."
 - **Color is never the only signal.** Pair color with an icon, label, or text (e.g., an error
   state has red border/text *and* an inline error message, not just a red outline).
 
@@ -211,6 +264,17 @@ layering on enhancements.
   modals/dialogs, tables, tabs, tooltips, and toasts are the core primitive set. New UI is composed
   from these; a new primitive requires justification (a real, recurring need across ≥2 screens —
   see `CLAUDE.md`'s "no premature abstraction" rule).
+- **Homepage-specific primitives** (added for the marketing site, documented in full in
+  `COMPONENTS.md`): `.badge-pill` (rounded-full label chip, used for the hero eyebrow and the
+  "Brotherhood Works"/"Brotherhood Mutual" section tags), `.feature-split` (two-column
+  image/copy section, used for the Provide/Protect sections and any future product pairing), and
+  `.checklist` (icon + label list for coverage bullets). `.photo-tile` is a placeholder-imagery
+  primitive (see the Status note above) — replace with a real `<img>`/`background-image` per tile
+  once photography assets are available; don't build new UI on top of the placeholder styling
+  itself.
+- **The Shep chat widget** is a single, global, proactive assistant entry point — see
+  `COMPONENTS.md` for its states and copy rules. Don't create a second chat/assistant surface
+  without folding it into this one.
 - **States are mandatory, not optional,** for every interactive component: `default`, `hover`,
   `focus-visible`, `active`, `disabled`, and (where applicable) `loading` and `error`. A component
   isn't done until all of these are implemented and visually distinct.
@@ -229,8 +293,10 @@ layering on enhancements.
   elevation levels arbitrarily within the same list/grid of items.
 - **Modals/dialogs:** trap focus while open, restore focus to the trigger element on close, and
   are dismissible via `Esc` and an explicit close control.
-- **Icons:** from a single icon set only; icons that convey meaning (not purely decorative) must
-  have an accessible name (see Accessibility).
+- **Icons:** from a single icon set only — this project uses one hand-authored inline-SVG set
+  (`design-system/icons.js` exposes them as template strings), 24×24 grid, 1.5px stroke, rounded
+  caps/joins, no fills except for the two brand logomarks. Icons that convey meaning (not purely
+  decorative) must have an accessible name (see Accessibility).
 
 ## Accessibility Rules
 

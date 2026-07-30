@@ -1,0 +1,127 @@
+/**
+ * Design tokens — the single source of truth for design values.
+ * Mirrors the "Reference Token Set" in /DESIGN.md. Never hardcode a raw hex,
+ * pixel, or font value in component code — add or extend a token here instead.
+ */
+
+:root {
+  /* Color — neutral scale */
+  --color-neutral-0: #ffffff;
+  --color-neutral-25: #fbfbfc;
+  --color-neutral-50: #f5f6f7;
+  --color-neutral-100: #ebecef;
+  --color-neutral-200: #e0e3e8;
+  --color-neutral-300: #b7bec7;
+  --color-neutral-400: #8f98a3;
+  --color-neutral-500: #66718a;
+  --color-neutral-600: #515964;
+  --color-neutral-700: #3a4048;
+  --color-neutral-800: #262a30;
+  --color-neutral-900: #16181b;
+
+  /* Color — brand (navy + blue, from the Figma source) */
+  --color-brand-500: #0062f1;
+  --color-brand-600: #0052c9;
+  --color-brand-700: #003e99;
+  --color-brand-900: #00133c;
+
+  /* Color — accent (decorative brand highlight only — never repurposed as a semantic color) */
+  --color-accent-500: #dc6803;
+
+  /* Color — semantic */
+  --color-success-500: #006353;
+  --color-success-surface: #ebfbf8;
+  --color-success-border: #aaece1;
+  --color-warning-500: #b4790f;
+  --color-danger-500: #b3261e;
+  --color-info-500: #0071aa;
+  --color-info-surface: #ebf8ff;
+  --color-info-border: #aae3ff;
+
+  /* Color — surface & text (light theme defaults) */
+  --color-surface: var(--color-neutral-25);
+  --color-surface-raised: var(--color-neutral-0);
+  --color-surface-alt: var(--color-neutral-50);
+  --color-text-primary: var(--color-brand-900);
+  --color-text-secondary: var(--color-neutral-500);
+  --color-text-inverse: var(--color-neutral-0);
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-300);
+
+  /* Color — glass/blur overlay surfaces (sticky header, chat widget, hero atmosphere) */
+  --color-glass-surface: rgba(255, 255, 255, 0.72);
+  --color-glass-surface-strong: rgba(255, 255, 255, 0.88);
+  --color-glass-border: rgba(255, 255, 255, 0.5);
+  --blur-md: 12px;
+  --blur-lg: 24px;
+  --blur-deep: 48px;
+
+  /* Typography */
+  --font-family-base: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-family-display: "Fraunces", Georgia, serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px — base */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3.0625rem; /* 49px — Provide/Protect-style h2 */
+  --font-size-6xl: 3.8125rem; /* 61px — hero h1 */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Spacing (4px base unit) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-7: 3rem;     /* 48px */
+  --space-8: 4rem;     /* 64px */
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(22, 24, 27, 0.06);
+  --shadow-md: 0 4px 8px rgba(22, 24, 27, 0.08);
+  --shadow-lg: 0 12px 24px rgba(22, 24, 27, 0.12);
+  --shadow-xl: 0 24px 48px rgba(0, 19, 60, 0.16);
+
+  /* Motion */
+  --duration-fast: 100ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="dark"] {
+  --color-surface: var(--color-neutral-900);
+  --color-surface-raised: var(--color-neutral-800);
+  --color-surface-alt: var(--color-neutral-800);
+  --color-text-primary: var(--color-neutral-0);
+  --color-text-secondary: var(--color-neutral-300);
+  --color-border: var(--color-neutral-700);
+  --color-border-strong: var(--color-neutral-600);
+  --color-glass-surface: rgba(10, 14, 26, 0.68);
+  --color-glass-surface-strong: rgba(10, 14, 26, 0.85);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+}
+
+/* Breakpoints (reference only — media queries below use the literal px values)
+   sm: 640px, md: 768px, lg: 1024px, xl: 1280px */
