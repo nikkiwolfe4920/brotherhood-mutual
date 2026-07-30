@@ -64,6 +64,19 @@ raise it rather than silently deviating.
 > advance the Kingdom. Shep helps you protect it." so it reads as this card's own AI agent (Shep,
 > already the card's "Assigned Agent") speaking, not detached marketing copy. See `COMPONENTS.md`'s
 > "Promo banner" entry for the markup and the reason it lives on this card specifically.
+>
+> **Universal Profile — flat brand pass:** a later revision reversed part of the brand pass above
+> in favor of the plain `--color-brand-500` fill `.btn--primary` already uses everywhere else in
+> the product. `.panel-card--dark` ("AI Chat Summary") is now a solid `brand-500` fill with no top
+> accent strip; `.promo-owner__avatar` (the Shep icon) and `.promo-owner__action` (the send/message
+> icon) use `brand-500` instead of the `success` token, with a `--color-neutral-0` ring on the
+> latter so a blue icon button stays visible against the now-blue-not-navy card; `.lead-grid`'s
+> ambient radial glow was removed entirely (that area is plain white/`--color-surface` again); and
+> `.app-sidebar` is a solid `brand-500` fill with its nav links, icons, and the "Quick access"
+> label recolored to `--color-neutral-50`/`--color-neutral-0` so they clear 4.5:1 against it — the
+> active-state pill, badge counts, and quick-access tiles already used white/light local
+> backgrounds and needed no change. `.chart-stat-grid` keeps its ambient glow; it wasn't part of
+> this pass.
 
 ## Design Principles
 
