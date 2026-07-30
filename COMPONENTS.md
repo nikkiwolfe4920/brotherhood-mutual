@@ -208,15 +208,16 @@ To bring this page's visuals in line with the homepage's brand palette (previous
   var(--color-brand-900))` — the exact recipe the homepage's `.photo-tile` already uses. Safe
   because these are icon-only surfaces: WCAG only requires 3:1 for "meaningful UI graphics," and
   even the lighter `brand-500` end of the gradient clears >5:1 against the white icon glyphs.
-- **Contained ambient glow:** `.lead-grid` and `.chart-stat-grid` (the two card-pair rows) each get
-  a `::before` radial-gradient glow — the same three-color (`brand-500`/`accent-500`/
-  `success-border`) recipe as the homepage's `.hero__atmosphere`, at lower opacity. Each is scoped
-  with `position: relative; isolation: isolate` on the grid container itself and a small negative
+- **Contained ambient glow:** `.chart-stat-grid` gets a `::before` radial-gradient glow — the same
+  recipe as the homepage's `.hero__atmosphere`, at lower opacity. It's scoped with
+  `position: relative; isolation: isolate` on the grid container itself and a small negative
   `inset`, so the glow can only ever render behind the two (opaque) cards in that row and the gap
   between them — it structurally cannot underlap any bare page text, which is what keeps this safe
-  under the AA contrast rules in `DESIGN.md`. Don't extend this glow further down the page (e.g.
-  behind the data table or recommendations panel) without the same containment — a glow sitting
-  under bare text needs a fresh contrast check, not a copy-paste.
+  under the AA contrast rules in `DESIGN.md`. `.lead-grid` had the same treatment but had it removed
+  in the flat brand pass (see the Status note in `DESIGN.md`) in favor of a plain white background.
+  Don't extend this glow further down the page (e.g. behind the data table or recommendations
+  panel) without the same containment — a glow sitting under bare text needs a fresh contrast
+  check, not a copy-paste.
 
 ### Panel card — `.panel-card`
 
@@ -232,11 +233,11 @@ To bring this page's visuals in line with the homepage's brand palette (previous
 
 - The one card shell every dashboard section sits in (white surface, `--radius-lg`, `--shadow-sm`,
   `--color-border`) — reuse this instead of writing a one-off bordered `<div>` per section.
-- `.panel-card--dark` (brand-900 background, inverse text) is for the single "AI Chat Summary"
+- `.panel-card--dark` (brand-500 background, inverse text) is for the single "AI Chat Summary"
   promo card — don't use it as a generic "dark mode" card, it's one deliberate visual accent, not a
-  pattern to spread around. It carries a 4px tri-color (`brand-500`/`accent-500`/`success-border`)
-  gradient strip along its top edge (`::before`) — positioned inside the card's top padding, above
-  where any text starts, so it never touches a contrast-checked text pairing.
+  pattern to spread around. Its text/icon colors (`.promo-list__text`, `.promo-owner__role`, the
+  eyebrow label) use `--color-neutral-0`/`--color-neutral-50` rather than the darker neutrals a
+  near-black card could get away with — brand-500 is lighter, so anything under 4.5:1 fails AA.
 - `.panel-card__header` / `.panel-card__footer` are optional top/bottom strips with a
   `--color-border` divider; `.panel-card__body` is plain padding for everything else
   (`.profile-summary`, `.stat-highlight`, etc. lay out their own content inside it).
