@@ -180,9 +180,9 @@
       "source": {
         "file": "https://www.figma.com/design/hlV7Q6MnEMhJQpdiDSXmUH/Pitch-Concepts",
         "fileKey": "hlV7Q6MnEMhJQpdiDSXmUH",
-        "rootNodeId": "16:3",
-        "rootNodeName": "Universal Profile",
-        "note": "A CRM-style account dashboard (an agent's living view of a client/ministry account), distinct from the marketing site and not part of index.html's nav. The Figma frame uses its own dark-slate/teal/amber CRM color scheme and an empty logo placeholder in its top bar; per this project's design language rules, this implementation re-maps every color to the existing token set (teal → --color-success-*, amber → --color-warning-*, dark slate → --color-brand-900/--color-text-*) and fills the logo slot with the real public/B-mutualnav.svg mark instead of inventing a second palette or logomark. Photographic avatars in the source (agent headshot, client contact photo) are replaced with initials/icon avatars, consistent with this repo's placeholder-imagery approach (see the Status note in DESIGN.md) — no photography assets were available to pull in."
+        "rootNodeId": "26:1000",
+        "rootNodeName": "Brotherhood Mutual — Universal Profile",
+        "note": "A CRM-style account dashboard (an agent's living view of a client/ministry account), distinct from the marketing site and not part of index.html's nav. Superseded the earlier 16:3 frame with a revision (26:1000, 'Pitch-Concepts' node-id=26-1000) that switches the CRM color scheme from dark-slate/teal/amber to this project's actual navy/blue/green palette, so most raw hex values in this revision now equal the existing token set exactly (brand-500 #0062f1, accent-500 #dc6803, neutral-200/300/100, warning-500/border) with no re-mapping needed. Two real deltas from the token set: (1) the sidebar's navy (#002260) is a distinct shade from --color-brand-900 (#00133c, still used for text) — added as --color-brand-800; (2) the source's literal success green (#0da70f) fails 4.5:1 text contrast on white/mint (~3.2:1), so small text (badges, feed copy) keeps the already-accessible --color-success-500 (#067647, ~5.7:1) instead of matching the literal value — see dashboard.css's .app-shell comment. The logo slot (empty placeholder in the source) still fills with the real public/B-mutualnav.svg mark, and photographic avatars are still initials/icon avatars per DESIGN.md's placeholder-imagery approach — no photography assets were available to pull in."
       },
       "implementedIn": "universal-profile/index.html",
       "mappings": [

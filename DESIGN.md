@@ -77,6 +77,24 @@ raise it rather than silently deviating.
 > active-state pill, badge counts, and quick-access tiles already used white/light local
 > backgrounds and needed no change. `.chart-stat-grid` keeps its ambient glow; it wasn't part of
 > this pass.
+>
+> **Universal Profile — Figma color reconciliation:** a later Figma revision (Pitch-Concepts,
+> node-id 26-1000) replaced the source frame's placeholder CRM palette with Brotherhood Mutual's
+> actual colors, so this implementation's raw hex values now match that source almost exactly with
+> no re-mapping — `--color-brand-500`, `--color-accent-500`, the neutral scale, and
+> `--color-warning-500`/`--color-warning-border` all equal the source literally. Two exceptions:
+> (1) `.app-sidebar`'s navy (`#002260`) turned out to be a distinct, lighter shade from
+> `--color-brand-900` (`#00133c`, still used for `--color-text-primary` and headings) — added as
+> `--color-brand-800` rather than overloading `brand-900` for two different colors; (2) the
+> source's literal success green (`#0da70f`) is ~3.2:1 against white — under the 4.5:1 floor for
+> normal text — so badge/feed text keeps the already-accessible `--color-success-500` (`#067647`,
+> ~5.7:1) from the earlier brand pass instead of matching the literal value. Also fixed to match
+> the source: `.app-quick-access__tile` is the same translucent glass treatment as
+> `.app-stat-tile` (was a solid `brand-600`/`brand-700` gradient), the Meetings tile no longer gets
+> a one-off green tint (the source treats both stat tiles identically), and `.promo-banner`'s
+> illustration is shown at its full, un-cropped aspect ratio instead of a 64×64 `object-fit: cover`
+> square that was cutting off the figure's raised, pointing hand — see `COMPONENTS.md`'s "Promo
+> banner" entry.
 
 ## Design Principles
 

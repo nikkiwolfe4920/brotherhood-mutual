@@ -225,7 +225,7 @@
 .app-sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: var(--color-brand-900);
+  background: var(--color-brand-800);
   border-right: 1px solid var(--color-brand-600);
   padding: var(--space-5) var(--space-4);
   display: flex;
@@ -299,13 +299,6 @@
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   padding: var(--space-3);
-}
-
-.app-stat-tile--highlight {
-  /* rgba equivalent of --color-success-500 (#067647) at low opacity — a
-     ghost tint rather than the opaque success-surface fill. */
-  background: linear-gradient(160deg, rgba(6, 118, 71, 0.35), rgba(6, 118, 71, 0.12));
-  border-color: rgba(171, 239, 198, 0.5);
 }
 
 .app-stat-tile__label {
@@ -420,8 +413,8 @@
   gap: var(--space-2);
   padding: var(--space-3);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: linear-gradient(160deg, var(--color-brand-600), var(--color-brand-700));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-neutral-0);
@@ -429,7 +422,7 @@
 }
 
 .app-quick-access__tile:hover {
-  background: linear-gradient(160deg, var(--color-brand-700), var(--color-brand-900));
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
 }
 
 .app-main {
@@ -899,12 +892,13 @@
 }
 
 .promo-banner__illustration {
+  /* Shown at the source asset's full aspect ratio (856:480), un-cropped — the
+     figure's raised, pointing hand is the point of the illustration, and a
+     square object-fit: cover crop was cutting it off. */
   flex-shrink: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-  object-position: 70% center;
+  width: 88px;
+  height: auto;
+  aspect-ratio: 856 / 480;
 }
 
 /* ---------- Data table ---------- */
