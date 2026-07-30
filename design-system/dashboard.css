@@ -225,7 +225,7 @@
 .app-sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: var(--color-brand-500);
+  background: var(--color-brand-900);
   border-right: 1px solid var(--color-brand-600);
   padding: var(--space-5) var(--space-4);
   display: flex;
@@ -902,6 +902,9 @@
   flex-shrink: 0;
   width: 64px;
   height: 64px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  object-position: 70% center;
 }
 
 /* ---------- Data table ---------- */
@@ -1375,6 +1378,7 @@
 }
 
 .empty-state__heading {
+  margin-inline: auto;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.04em;
@@ -1384,6 +1388,7 @@
 
 .empty-state__desc {
   margin-top: var(--space-2);
+  margin-inline: auto;
   font-size: var(--font-size-xs);
 }
 
