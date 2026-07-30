@@ -889,6 +889,33 @@
   justify-content: center;
 }
 
+/* Brand illustration banner — see COMPONENTS.md's "Promo banner" entry for
+   why this reuses the homepage's illustrated-figure treatment here. */
+.promo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.promo-banner__text {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  color: var(--color-neutral-0);
+}
+
+.promo-banner__illustration {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+}
+
 /* ---------- Data table ---------- */
 .data-table-wrap {
   overflow-x: auto;
