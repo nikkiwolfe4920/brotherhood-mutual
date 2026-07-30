@@ -43,6 +43,17 @@ raise it rather than silently deviating.
 > floor this file requires for normal text — so it was darkened to `#8f620b` (5.36:1 on white,
 > 4.87:1 on `--color-warning-surface`) rather than shipping a token nobody could actually use at
 > body-text sizes.
+>
+> **Universal Profile — brand pass:** the CRM re-mapping above left the page's `brand` usage flat
+> (solid `--color-brand-900` fills). A follow-up pass brought in the homepage's actual brand
+> *treatments*, not just its tokens: the `brand-500`→`brand-900` gradient from `.photo-tile` now
+> fills the icon badges (`.profile-summary__icon`, `.rec-row__icon`, `.app-avatar`) and the bar
+> chart's "Proposed Premium" series; the `success-border`→`success-500` gradient from
+> `.photo-tile--alt` fills `.progress-bar__fill`; and the tri-color radial glow from
+> `.hero__atmosphere` now sits behind `.lead-grid` and `.chart-stat-grid` (contained to those grids
+> via `isolation: isolate` so it can only render behind their opaque cards, never under bare text).
+> `.panel-card--dark` also picked up a 4px tri-color accent strip along its top edge. See
+> `COMPONENTS.md`'s "Brand accents" subsection for the contrast rationale on each.
 
 ## Design Principles
 

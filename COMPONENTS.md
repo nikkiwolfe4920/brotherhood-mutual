@@ -193,6 +193,30 @@ source file's teal/amber/dark-slate CRM palette was re-mapped onto this project'
   scrim click, and `Esc` to close — mirrors the marketing site's mobile nav toggle pattern.
 - The sidebar's "Today · …" date (`#sidebar-today`) is computed client-side (like the footer year
   on the homepage), not hardcoded — it's a small nod to the "living profile" concept.
+- `.app-avatar` uses the same `brand-500` → `brand-900` gradient fill as the icon badges described
+  below, rather than the flat `brand-900` the rest of the app-shell chrome (topbar, sidebar,
+  `.app-icon-btn`) uses — restrained on purpose, so the brand color doesn't compete with the
+  functional chrome around it.
+
+### Brand accents — icon badges and ambient glow
+
+To bring this page's visuals in line with the homepage's brand palette (previously it only reused
+`success`/`warning`/`brand` as flat fills), two small, contrast-safe patterns were added:
+
+- **Icon badge gradient:** `.profile-summary__icon`, `.rec-row__icon`, and `.app-avatar` (all
+  originally a flat `--color-brand-900` fill) now use `linear-gradient(160deg, var(--color-brand-500),
+  var(--color-brand-900))` — the exact recipe the homepage's `.photo-tile` already uses. Safe
+  because these are icon-only surfaces: WCAG only requires 3:1 for "meaningful UI graphics," and
+  even the lighter `brand-500` end of the gradient clears >5:1 against the white icon glyphs.
+- **Contained ambient glow:** `.lead-grid` and `.chart-stat-grid` (the two card-pair rows) each get
+  a `::before` radial-gradient glow — the same three-color (`brand-500`/`accent-500`/
+  `success-border`) recipe as the homepage's `.hero__atmosphere`, at lower opacity. Each is scoped
+  with `position: relative; isolation: isolate` on the grid container itself and a small negative
+  `inset`, so the glow can only ever render behind the two (opaque) cards in that row and the gap
+  between them — it structurally cannot underlap any bare page text, which is what keeps this safe
+  under the AA contrast rules in `DESIGN.md`. Don't extend this glow further down the page (e.g.
+  behind the data table or recommendations panel) without the same containment — a glow sitting
+  under bare text needs a fresh contrast check, not a copy-paste.
 
 ### Panel card — `.panel-card`
 
@@ -210,7 +234,9 @@ source file's teal/amber/dark-slate CRM palette was re-mapped onto this project'
   `--color-border`) — reuse this instead of writing a one-off bordered `<div>` per section.
 - `.panel-card--dark` (brand-900 background, inverse text) is for the single "AI Chat Summary"
   promo card — don't use it as a generic "dark mode" card, it's one deliberate visual accent, not a
-  pattern to spread around.
+  pattern to spread around. It carries a 4px tri-color (`brand-500`/`accent-500`/`success-border`)
+  gradient strip along its top edge (`::before`) — positioned inside the card's top padding, above
+  where any text starts, so it never touches a contrast-checked text pairing.
 - `.panel-card__header` / `.panel-card__footer` are optional top/bottom strips with a
   `--color-border` divider; `.panel-card__body` is plain padding for everything else
   (`.profile-summary`, `.stat-highlight`, etc. lay out their own content inside it).
@@ -276,9 +302,11 @@ Added to `components.css` (not `dashboard.css`) since `.badge-pill` is already a
 </div>
 ```
 
-Set `--progress` inline per instance; the fill always uses `--color-success-500` (these are
-"confidence score" bars, framed as a positive metric, not a generic progress indicator with
-variable color).
+Set `--progress` inline per instance; the fill is a `success-border` → `success-500` gradient
+(these are "confidence score" bars, framed as a positive metric, not a generic progress indicator
+with variable color) — same gradient recipe as the homepage's `.photo-tile--alt`. Purely
+decorative; the numeric label lives outside the track, so the gradient carries no text-contrast
+concern.
 
 ### Recommendation row — `.rec-row`
 
@@ -298,6 +326,9 @@ nested vector group that was infeasible to extract exactly, and a hand-rolled ap
 matches its described trend (premium rising, savings low and flat) is more honest than fabricating
 false precision. The whole plot has a single `role="img"` with a descriptive `aria-label`
 summarizing the trend in words, since the bars/gridlines carry no accessible text on their own.
+The "Proposed Premium" bars/legend dot use the same `brand-500` → `brand-900` gradient as the icon
+badges below; "Risk Savings" stays a flat `success-500` fill to keep the two series visually
+distinct at a glance.
 
 ### Empty state — `.empty-state`
 
