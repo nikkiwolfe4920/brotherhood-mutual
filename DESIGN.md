@@ -23,8 +23,12 @@ raise it rather than silently deviating.
 > could not be pulled into the repo as real image assets. Those slots are implemented as
 > gradient/pattern placeholders (see `.photo-tile` in `components.css`) sized and shaped to match
 > the design — swap in real photography via the `background-image` / `<img>` slot when available.
-> Icons and the two brand logos (Brotherhood Mutual, Brotherhood Works) are simple enough
-> geometric marks that they were hand-authored as faithful inline SVG instead.
+> Icons are simple enough geometric marks that they were hand-authored as faithful inline SVG
+> instead. The two brand logos (Brotherhood Mutual, Brotherhood Works) were originally hand-authored
+> the same way, as a stand-in for the real marks; real logo assets (`public/bro-works.png`,
+> `public/B-mutualWhite.png`) were later added to the repo, and the "Provide"/"Protect" feature
+> sections' `.feature-split__image` now render those directly instead of the hand-drawn
+> placeholders — see `COMPONENTS.md`'s "Feature split" entry.
 >
 > **Second page — Universal Profile:** `/universal-profile` (`universal-profile/index.html`) is a
 > CRM-style account dashboard for insurance agents, sourced from the same Figma file's

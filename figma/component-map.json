@@ -122,8 +122,8 @@
         {
           "nodeId": "1:297",
           "nodeName": "Image (Provide media)",
-          "component": "Brotherhood Works logomark — hand-authored inline SVG pinwheel mark",
-          "files": ["index.html#feature-split__media"]
+          "component": "Brotherhood Works logomark — public/bro-works.png via .feature-split__image",
+          "files": ["index.html#feature-split__media", "design-system/components.css#feature-split__image"]
         },
         {
           "nodeId": "1:298",
@@ -158,8 +158,8 @@
         {
           "nodeId": "1:366",
           "nodeName": "Image (Protect media)",
-          "component": "Brotherhood Mutual logomark — hand-authored inline SVG shield/cross mark",
-          "files": ["index.html#feature-split__media"]
+          "component": "Brotherhood Mutual logomark — public/B-mutualWhite.png via .feature-split__image",
+          "files": ["index.html#feature-split__media", "design-system/components.css#feature-split__image"]
         },
         {
           "nodeId": "1:986",

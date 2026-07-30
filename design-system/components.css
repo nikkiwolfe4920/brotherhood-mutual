@@ -369,7 +369,11 @@
 
 /* Deep-blurred atmospheric backdrop behind the hero copy — matches the "very
    deep blur" treatment requested for this page; purely decorative, so it's
-   aria-hidden and never carries text. */
+   aria-hidden and never carries text. Gradient positions/colors and the 48px
+   blur match the Figma source (node 18:700) exactly; the source's overall
+   opacity is a barely-there 3% wash, not a bold tint — at 0.35 this rendered
+   as a solid blue/orange gradient block that drowned out the white hero
+   background instead of a subtle atmosphere. */
 .hero__atmosphere {
   position: absolute;
   inset: -20%;
@@ -381,7 +385,7 @@
     ),
     radial-gradient(circle at 80% 0%, var(--color-accent-500) 0%, transparent 45%),
     radial-gradient(circle at 60% 80%, var(--color-success-border) 0%, transparent 50%);
-  opacity: 0.35;
+  opacity: 0.03;
   filter: blur(var(--blur-deep));
   pointer-events: none;
 }
@@ -586,21 +590,11 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-.feature-split__logo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.feature-split__logo-text strong {
+.feature-split__image {
   display: block;
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-}
-
-.feature-split__logo-text span {
-  display: block;
-  font-size: var(--font-size-xs);
+  width: 100%;
+  max-width: 320px;
+  height: auto;
 }
 
 /* ---------- Footer ---------- */

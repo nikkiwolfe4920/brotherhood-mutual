@@ -35,7 +35,6 @@ function initShep(root) {
 
   let panel = null;
   let scrim = null;
-  let hasGreeted = false;
 
   function renderScrim() {
     scrim = document.createElement("div");
@@ -117,19 +116,20 @@ function initShep(root) {
     launcher.setAttribute("aria-expanded", "true");
     launcher.classList.remove("is-idle-pulse");
 
-    if (!hasGreeted) {
-      hasGreeted = true;
-      showTyping().then(() => {
-        addMessage(
-          "shep",
-          "Hi, I'm Shep \u{1F44B} Planning a mission trip with your ministry? We'd love to help make sure it's protected — want to learn more about mission trip insurance?"
-        );
-        showQuickReplies([
-          { label: "Yes, tell me more", value: "yes" },
-          { label: "Not right now", value: "no" },
-        ]);
-      });
-    }
+    // Each panel is a fresh, empty `.shep__messages` log (the previous one was
+    // torn down in closePanel), so this greeting must run every time a panel
+    // opens — not just once per session — or a reopened panel silently shows
+    // nothing at all.
+    showTyping().then(() => {
+      addMessage(
+        "shep",
+        "Hi, I'm Shep \u{1F44B} Planning a mission trip with your ministry? We'd love to help make sure it's protected — want to learn more about mission trip insurance?"
+      );
+      showQuickReplies([
+        { label: "Yes, tell me more", value: "yes" },
+        { label: "Not right now", value: "no" },
+      ]);
+    });
 
     window.requestAnimationFrame(() => {
       panel.querySelector(".shep__close")?.focus();
