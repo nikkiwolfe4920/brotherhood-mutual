@@ -14,6 +14,34 @@
   gap: var(--space-3);
 }
 
+/* ---------- Scrim ---------- */
+/* Full-page frosted-glass backdrop shown behind the open panel — the rest of
+   the page should read as clearly out-of-focus while the dialog is active. */
+.shep__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--color-glass-surface);
+  backdrop-filter: blur(var(--blur-deep));
+  -webkit-backdrop-filter: blur(var(--blur-deep));
+  animation: shep-scrim-in var(--duration-slow) var(--easing-standard);
+}
+
+@keyframes shep-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shep__scrim {
+    animation: none;
+  }
+}
+
 /* ---------- Launcher ---------- */
 .shep__launcher {
   position: relative;
