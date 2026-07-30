@@ -87,6 +87,11 @@ column below `1024px`.
 
 - `.feature-split__media--light` / `--brand` pick the media panel's background to match the
   section it's in (light section vs. `.section--brand`).
+- `.feature-split__image` renders the real brand logo inside the media panel — `public/bro-works.png`
+  (full-color, on the light "Provide" card) and `public/B-mutualWhite.png` (white-on-transparent, on
+  the brand-blue "Protect" card). `width`/`height` auto with a `max-width` cap keeps it from
+  outgrowing the panel while preserving the source PNG's aspect ratio — never `object-fit: cover`
+  here, since cropping a logomark risks clipping the mark or wordmark.
 - Pair with `.checklist` for the coverage bullet list.
 
 ## Checklist — `.checklist`
