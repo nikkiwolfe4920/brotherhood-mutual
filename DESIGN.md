@@ -54,6 +54,16 @@ raise it rather than silently deviating.
 > via `isolation: isolate` so it can only render behind their opaque cards, never under bare text).
 > `.panel-card--dark` also picked up a 4px tri-color accent strip along its top edge. See
 > `COMPONENTS.md`'s "Brand accents" subsection for the contrast rationale on each.
+>
+> **Universal Profile — illustrated brand banner:** the brand pass above still left the page
+> without the one thing that makes the homepage feel like Brotherhood Mutual rather than a generic
+> CRM: the hand-illustrated figure used in its brand-blue banners. A small version of that
+> illustration (hand-authored inline SVG, same treatment as the two brand logomarks — see the
+> Status note above) was added to the bottom of the "AI Chat Summary" card, paired with a tagline
+> adapted from the homepage's "You advance the Kingdom. We protect the work." — rewritten as "You
+> advance the Kingdom. Shep helps you protect it." so it reads as this card's own AI agent (Shep,
+> already the card's "Assigned Agent") speaking, not detached marketing copy. See `COMPONENTS.md`'s
+> "Promo banner" entry for the markup and the reason it lives on this card specifically.
 
 ## Design Principles
 
@@ -307,7 +317,8 @@ layering on enhancements.
   documented in full in `COMPONENTS.md`): `.panel-card` (the bordered white card shell used for
   every dashboard section), `.stat-card`/`.stat-highlight` (metric tiles), `.data-table`, a CSS
   `.progress-bar`, `.rec-row` (the recommendation-list row), `.feed` (the Living Profile Feed
-  list), and a lightweight illustrative `.bar-chart`. These live in their own
+  list), `.promo-banner` (the illustrated brand tagline on the AI Chat Summary card), and a
+  lightweight illustrative `.bar-chart`. These live in their own
   `design-system/dashboard.css` and read as a distinct "app" surface, not a second marketing page
   style — don't reuse them on marketing pages without checking they still fit.
 - **The Shep chat widget** is a single, global, proactive assistant entry point — see
