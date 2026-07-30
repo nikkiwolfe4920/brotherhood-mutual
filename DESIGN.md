@@ -53,7 +53,9 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
 - **Shadow/Elevation** — a small set of elevation levels
 - **Glass/Blur** — frosted-glass surface tokens for overlay UI (sticky header on scroll, the Shep
   chat widget, hero atmosphere) — a real, recurring need across 3 surfaces, so it earns its own
-  token category rather than one-off `backdrop-filter` values
+  token category rather than one-off `backdrop-filter` values. The Shep panel/header/hero use the
+  opaque `--color-glass-surface` + `--blur-deep` pairing; the full-page Shep scrim uses the lighter
+  `--color-glass-surface-soft` + `--blur-lg` pairing so the page stays partly visible underneath it
 - **Motion** — duration and easing for transitions/animations
 - **Breakpoints** — responsive layout thresholds
 
@@ -107,6 +109,7 @@ everywhere else — never hardcode a raw hex, pixel, or font value in component 
   /* Color — glass/blur overlay surfaces (sticky header, chat widget, hero atmosphere) */
   --color-glass-surface: rgba(255, 255, 255, 0.72);
   --color-glass-surface-strong: rgba(255, 255, 255, 0.88);
+  --color-glass-surface-soft: rgba(255, 255, 255, 0.45);
   --color-glass-border: rgba(255, 255, 255, 0.5);
   --blur-md: 12px;
   --blur-lg: 24px;

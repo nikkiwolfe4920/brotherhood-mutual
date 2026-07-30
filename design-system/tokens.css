@@ -51,6 +51,9 @@
   /* Color — glass/blur overlay surfaces (sticky header, chat widget, hero atmosphere) */
   --color-glass-surface: rgba(255, 255, 255, 0.72);
   --color-glass-surface-strong: rgba(255, 255, 255, 0.88);
+  /* Lighter tint for the full-page Shep scrim — the page underneath should stay
+     partly legible, unlike the opaque panel/header chrome above. */
+  --color-glass-surface-soft: rgba(255, 255, 255, 0.45);
   --color-glass-border: rgba(255, 255, 255, 0.5);
   --blur-md: 12px;
   --blur-lg: 24px;

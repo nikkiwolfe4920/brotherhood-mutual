@@ -16,14 +16,16 @@
 
 /* ---------- Scrim ---------- */
 /* Full-page frosted-glass backdrop shown behind the open panel — the rest of
-   the page should read as clearly out-of-focus while the dialog is active. */
+   the page should read as out-of-focus while the dialog is active, but stay
+   visible enough underneath that it doesn't feel like a blank overlay. Lighter
+   than the panel/header's --blur-deep treatment on purpose. */
 .shep__scrim {
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: var(--color-glass-surface);
-  backdrop-filter: blur(var(--blur-deep));
-  -webkit-backdrop-filter: blur(var(--blur-deep));
+  background: var(--color-glass-surface-soft);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
   animation: shep-scrim-in var(--duration-slow) var(--easing-standard);
 }
 
