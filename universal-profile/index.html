@@ -44,11 +44,7 @@
         <span class="badge-pill badge-pill--success">Live Sync</span>
 
         <nav class="app-nav" aria-label="Universal profile sections">
-          <a class="app-nav__link" href="#" aria-current="page">Overview</a>
-          <a class="app-nav__link" href="#">Active Policies</a>
-          <a class="app-nav__link" href="#">Risk Assessment</a>
-          <a class="app-nav__link" href="#">Underwriting AI</a>
-          <a class="app-nav__link" href="#">System Routing</a>
+          <a class="app-nav__link" href="#" aria-current="page">Unified Customer Record</a>
         </nav>
 
         <div class="app-topbar__actions">
@@ -74,72 +70,16 @@
     <div class="app-body">
       <div class="app-sidebar-scrim" id="sidebar-scrim" hidden></div>
       <aside class="app-sidebar" id="app-sidebar">
-        <div class="app-sidebar__card">
-          <div class="app-sidebar__date">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M8 3v4M16 3v4" /></svg>
-            <span>Today · <span id="sidebar-today"></span></span>
-          </div>
-          <div class="app-stat-tiles">
-            <div class="app-stat-tile">
-              <span class="app-stat-tile__label">Meetings</span>
-              <span class="app-stat-tile__value">3</span>
-            </div>
-            <div class="app-stat-tile">
-              <span class="app-stat-tile__label">Tasks</span>
-              <span class="app-stat-tile__value">7</span>
-            </div>
-          </div>
-        </div>
-
         <nav aria-label="Account workspace">
           <ul class="app-sidebar__nav">
             <li>
               <a class="app-sidebar__nav-link" href="#" aria-current="page">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="3" y="3" width="8" height="8" /><rect x="13" y="3" width="8" height="8" /><rect x="3" y="13" width="8" height="8" /><rect x="13" y="13" width="8" height="8" /></svg>
-                Overview
-              </a>
-            </li>
-            <li>
-              <a class="app-sidebar__nav-link" href="#">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M6 2h9l5 5v15H6z" /><path d="M14 2v6h6" /><path d="M9 13h6M9 17h6" /></svg>
-                Active Policies
-                <span class="badge-pill badge-pill--neutral app-sidebar__nav-count">128</span>
-              </a>
-            </li>
-            <li>
-              <a class="app-sidebar__nav-link" href="#">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
-                Risk Assessment
-              </a>
-            </li>
-            <li>
-              <a class="app-sidebar__nav-link" href="#">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></svg>
-                Underwriting AI
-              </a>
-            </li>
-            <li>
-              <a class="app-sidebar__nav-link" href="#">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M21 4v4h-4" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /><path d="M3 20v-4h4" /></svg>
-                System Routing
+                Unified Customer Record
               </a>
             </li>
           </ul>
         </nav>
-
-        <div class="app-quick-access">
-          <span class="app-quick-access__label">Quick access</span>
-          <div class="app-quick-access__tiles">
-            <a class="app-quick-access__tile" href="#">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><circle cx="9" cy="8" r="4" /><path d="M2 21v-1a7 7 0 0 1 14 0v1" /><path d="M19 8v6M22 11h-6" /></svg>
-              Add Client
-            </a>
-            <a class="app-quick-access__tile" href="#">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="m4 15 5-5 4 4 7-8" /><path d="M14 6h6v6" /></svg>
-              Analytics
-            </a>
-          </div>
-        </div>
       </aside>
 
       <main class="app-main" id="main-content">
@@ -148,10 +88,6 @@
             <a href="#">Active Policies</a>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="12" height="12"><path d="m9 6 6 6-6 6" /></svg>
             <span class="app-breadcrumb__current">Grace Community Church</span>
-            <span class="badge-pill badge-pill--success">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="11" height="11"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z" /></svg>
-              AI Enriched
-            </span>
           </div>
           <div class="app-breadcrumb__actions">
             <button class="btn btn--secondary btn--sm" type="button">
@@ -223,14 +159,26 @@
                   </span>
                   <span class="feed__meta">Updated 4 min ago</span>
                 </div>
-                <ul class="feed__list">
+                <ul class="feed__list" id="feed-list">
                   <li class="feed__item">
                     <span class="feed__icon feed__icon--accent">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M5 3v18" /><path d="M5 4h11l-2 4 2 4H5" /></svg>
                     </span>
                     <div style="flex: 1; min-width: 0;">
                       <div class="feed__row">
-                        <p class="feed__row-title">Campaign source: <strong>Spring Outreach 2024</strong></p>
+                        <p class="feed__row-title">Opened: <strong>Campaign source: Spring Outreach 2026</strong></p>
+                        <span class="feed__timestamp">2d ago</span>
+                      </div>
+                      <p class="feed__desc">Opened email blast on property protection.</p>
+                    </div>
+                  </li>
+                  <li class="feed__item">
+                    <span class="feed__icon feed__icon--accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M5 3v18" /><path d="M5 4h11l-2 4 2 4H5" /></svg>
+                    </span>
+                    <div style="flex: 1; min-width: 0;">
+                      <div class="feed__row">
+                        <p class="feed__row-title">Engaged with: <strong>Campaign source: Spring Outreach 2026</strong></p>
                         <span class="feed__timestamp">2d ago</span>
                       </div>
                       <p class="feed__desc">Engaged via email blast on property protection.</p>
@@ -243,12 +191,24 @@
                     <div style="flex: 1; min-width: 0;">
                       <div class="feed__row">
                         <p class="feed__row-title">Pages browsed: <strong>Roof Program, Event Liability</strong></p>
-                        <span class="feed__timestamp">1w ago</span>
+                        <span class="feed__timestamp">2d ago</span>
                       </div>
                       <span class="feed__tag badge-pill badge-pill--success">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><path d="m4 15 5-5 4 4 7-8" /><path d="M14 6h6v6" /></svg>
                         High interest in safety resources
                       </span>
+                    </div>
+                  </li>
+                  <li class="feed__item">
+                    <span class="feed__icon feed__icon--accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" /></svg>
+                    </span>
+                    <div style="flex: 1; min-width: 0;">
+                      <div class="feed__row">
+                        <p class="feed__row-title">Phone call: <strong>#agentname</strong></p>
+                        <span class="feed__timestamp">1d ago</span>
+                      </div>
+                      <p class="feed__desc">for quarterly checkin.</p>
                     </div>
                   </li>
                 </ul>

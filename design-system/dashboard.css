@@ -264,56 +264,6 @@
   }
 }
 
-.app-sidebar__card {
-  /* Ghost treatment: translucent over the blue sidebar instead of an
-     opaque white card. */
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.app-sidebar__date {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-xs);
-  color: var(--color-neutral-0);
-}
-
-.app-sidebar__date svg {
-  color: var(--color-neutral-0);
-}
-
-.app-stat-tiles {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.app-stat-tile {
-  flex: 1;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
-  padding: var(--space-3);
-}
-
-.app-stat-tile__label {
-  display: block;
-  font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.app-stat-tile__value {
-  display: block;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-neutral-0);
-}
-
 .app-sidebar__nav {
   list-style: none;
   margin: 0;
@@ -375,54 +325,6 @@
 
 .app-sidebar__nav-link[aria-current="page"] svg {
   color: var(--color-neutral-0);
-}
-
-.app-sidebar__nav-count {
-  margin-left: auto;
-  border-color: rgba(255, 255, 255, 0.6);
-  background: transparent;
-  color: var(--color-neutral-0);
-}
-
-.app-quick-access {
-  margin-top: auto;
-}
-
-.app-quick-access__label {
-  display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  /* Light neutral clears 4.5:1 against the solid brand-500 sidebar; the
-     darker text-secondary token this used to use does not. */
-  color: var(--color-neutral-50);
-  margin-bottom: var(--space-3);
-}
-
-.app-quick-access__tiles {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.app-quick-access__tile {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-0);
-  text-align: center;
-}
-
-.app-quick-access__tile:hover {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
 }
 
 .app-main {
@@ -727,6 +629,14 @@
 .feed__icon--accent {
   background: var(--color-success-surface);
   color: var(--color-success-500);
+}
+
+/* Matches .promo-owner__avatar's treatment so a Shep-originated feed entry
+   reads as coming from the same assistant shown on the AI Chat Summary card. */
+.feed__icon--shep {
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  color: var(--color-neutral-0);
 }
 
 .feed__row {

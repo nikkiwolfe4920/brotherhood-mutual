@@ -125,6 +125,29 @@ raise it rather than silently deviating.
 > illustration is shown at its full, un-cropped aspect ratio instead of a 64×64 `object-fit: cover`
 > square that was cutting off the figure's raised, pointing hand — see `COMPONENTS.md`'s "Promo
 > banner" entry.
+>
+> **Universal Profile — Unified Customer Record nav collapse:** a later Figma revision
+> (Pitch-Concepts, node-ids `26-1074` and `26-1004`) replaced both the top nav's 5-link list
+> (Overview, Active Policies, Risk Assessment, Underwriting AI, System Routing) and the left
+> sidebar's matching nav with a single "Unified Customer Record" link, and dropped the sidebar's
+> "Today" date card, Meetings/Tasks stat tiles, and Quick Access section entirely — none of those
+> appear in the source frames. Implemented as a straight content removal rather than a restyle:
+> `.app-nav__link[aria-current="page"]` and `.app-sidebar__nav-link[aria-current="page"]` already
+> matched the source's active-link treatment (white pill / left indicator bar) from the earlier
+> brand passes, so only the HTML changed. The now-unused `.app-sidebar__card`, `.app-sidebar__date`,
+> `.app-stat-tile*`, `.app-sidebar__nav-count`, and `.app-quick-access*` rules were deleted from
+> `dashboard.css` rather than left in place — see "No dead code" in `CLAUDE.md`. The breadcrumb's
+> "AI Enriched" badge next to "Grace Community Church" was also removed per the same Figma pass.
+>
+> **Universal Profile — Living Profile Feed content + Shep tie-in:** the feed's item copy was
+> updated to match Figma node `26-1197` (Opened/Engaged-with campaign entries, a phone-call entry,
+> alongside the existing pages-browsed entry), all sharing the `.feed__row-title strong` green
+> highlight the source uses for key phrases. Separately, submitting the "Ask Shep a question" form
+> now actually prepends a new item to the feed (previously the response text promised this but
+> nothing was added) — see `addShepFeedItem` in `dashboard.js`. Its icon uses a new
+> `.feed__icon--shep` class matching `.promo-owner__avatar`'s `brand-500`-filled-circle treatment
+> exactly, so a Shep-originated entry reads as coming from the same assistant shown on the AI Chat
+> Summary card rather than blending into the feed's other icon backgrounds.
 
 ## Design Principles
 
