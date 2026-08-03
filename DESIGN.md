@@ -82,6 +82,14 @@ raise it rather than silently deviating.
 > backgrounds and needed no change. `.chart-stat-grid` keeps its ambient glow; it wasn't part of
 > this pass.
 >
+> **Third page — Payroll landing page:** `/payroll` (`payroll/index.html`) is a second marketing
+> landing page reusing the homepage's header/hero/footer chrome and its "Provide" `.feature-split`
+> section verbatim, with payroll-specific hero copy. It introduces no new tokens or components; its
+> only functional addition is a `data-flow="payroll"` attribute on `#shep-root` that gives Shep a
+> payroll-specific scripted conversation (intro → inline email capture → a roof-replacement savings
+> nudge) instead of the homepage's mission-trip greeting — see `COMPONENTS.md`'s "Per-page
+> conversation flows" and "Payroll landing page" entries for the full contract.
+>
 > **Universal Profile — Figma color reconciliation:** a later Figma revision (Pitch-Concepts,
 > node-id 26-1000) replaced the source frame's placeholder CRM palette with Brotherhood Mutual's
 > actual colors, so this implementation's raw hex values now match that source almost exactly with
