@@ -4,6 +4,7 @@ const TYPING_DELAY_MS = 900;
 const DISMISS_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const SESSION_KEY = "shep-auto-opened";
 const DISMISS_KEY = "shep-last-dismiss";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const root = document.getElementById("shep-root");
 if (root) {
@@ -11,6 +12,11 @@ if (root) {
 }
 
 function initShep(root) {
+  // `data-flow` on #shep-root lets a page opt into a different scripted
+  // conversation (see the "payroll" branches below) without forking the
+  // whole widget — the panel chrome/a11y contract stays identical either way.
+  const flow = root.dataset.flow === "payroll" ? "payroll" : "default";
+
   root.innerHTML = `
     <div class="shep">
       <div class="shep__panel-slot"></div>
@@ -60,12 +66,13 @@ function initShep(root) {
         <span class="shep__header-avatar">${ICONS.compass}</span>
         <div class="shep__header-text">
           <p class="shep__header-name">Shep</p>
-          <p class="shep__header-status">Ministry trip assistant</p>
+          <p class="shep__header-status">${flow === "payroll" ? "Payroll &amp; HR assistant" : "Ministry trip assistant"}</p>
         </div>
         <button class="shep__close" type="button" aria-label="Close chat">${ICONS.close}</button>
       </div>
       <div class="shep__messages" role="log" aria-live="polite"></div>
       <div class="shep__quick-replies" hidden></div>
+      <div class="shep__email-capture" hidden></div>
       <form class="shep__form">
         <label class="visually-hidden" for="shep-input">Message Shep</label>
         <input
@@ -121,6 +128,21 @@ function initShep(root) {
     // opens — not just once per session — or a reopened panel silently shows
     // nothing at all.
     showTyping().then(() => {
+      if (flow === "payroll") {
+        addMessage(
+          "shep",
+          "Hi! Curious how Payroll would work alongside what you already have with us — or just exploring? Either way, I can help."
+        );
+        showQuickReplies(
+          [
+            { label: "See how it works", value: "how-it-works" },
+            { label: "Get Pricing", value: "pricing" },
+          ],
+          onPayrollIntroReply
+        );
+        return;
+      }
+
       addMessage(
         "shep",
         "Hi, I'm Shep \u{1F44B} Planning a mission trip with your ministry? We'd love to help make sure it's protected — want to learn more about mission trip insurance?"
@@ -177,7 +199,7 @@ function initShep(root) {
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  function showQuickReplies(options) {
+  function showQuickReplies(options, onSelect = onQuickReply) {
     if (!panel) return;
     const container = panel.querySelector(".shep__quick-replies");
     container.hidden = false;
@@ -187,9 +209,120 @@ function initShep(root) {
       btn.type = "button";
       btn.className = "shep__quick-reply";
       btn.textContent = option.label;
-      btn.addEventListener("click", () => onQuickReply(option, container));
+      btn.addEventListener("click", () => onSelect(option, container));
       container.appendChild(btn);
     }
+  }
+
+  // ---------- Payroll page flow ----------
+  async function onPayrollIntroReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    addMessage("user", option.label);
+
+    await showTyping();
+    addMessage(
+      "shep",
+      "By the way — looks like you might already have a Brotherhood account. Mind popping in your email so I can double check?"
+    );
+    showEmailCapture(onPayrollEmailVerified);
+  }
+
+  function showEmailCapture(onVerified) {
+    if (!panel) return;
+    const container = panel.querySelector(".shep__email-capture");
+    container.hidden = false;
+    container.innerHTML = `
+      <form class="shep__email-form" novalidate>
+        <label class="visually-hidden" for="shep-email-input">Email address</label>
+        <input
+          class="shep__input shep__email-input"
+          id="shep-email-input"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          aria-describedby="shep-email-error"
+        />
+        <button class="shep__send" type="submit" aria-label="Send email">${ICONS.send}</button>
+      </form>
+      <p class="shep__field-error" id="shep-email-error" role="alert" hidden></p>
+    `;
+
+    const form = container.querySelector(".shep__email-form");
+    const input = container.querySelector("#shep-email-input");
+    const error = container.querySelector("#shep-email-error");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+
+      if (!EMAIL_PATTERN.test(value)) {
+        error.textContent = "Enter a valid email address, like name@example.com.";
+        error.hidden = false;
+        input.setAttribute("aria-invalid", "true");
+        input.focus();
+        return;
+      }
+
+      error.hidden = true;
+      input.removeAttribute("aria-invalid");
+      input.disabled = true;
+      form.querySelector(".shep__send").disabled = true;
+
+      // A visible confirmation that the address passed validation, distinct
+      // from the "Shep is typing" indicator that follows once the form is
+      // torn down — otherwise a valid submit and an invalid one look the
+      // same for a beat.
+      const success = document.createElement("p");
+      success.className = "shep__field-success";
+      success.innerHTML = `${ICONS.check} Email verified`;
+      container.appendChild(success);
+
+      await new Promise((resolve) => window.setTimeout(resolve, TYPING_DELAY_MS));
+
+      container.hidden = true;
+      container.innerHTML = "";
+      addMessage("user", value);
+
+      await showTyping();
+      onVerified();
+    });
+
+    window.requestAnimationFrame(() => input.focus());
+  }
+
+  function onPayrollEmailVerified() {
+    addMessage(
+      "shep",
+      "Just a heads-up—it looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+    );
+    showQuickReplies(
+      [
+        { label: "Yes, Interested in Learning More", value: "roof-yes" },
+        { label: "Maybe Later", value: "roof-later" },
+      ],
+      onPayrollRoofReply
+    );
+  }
+
+  async function onPayrollRoofReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    addMessage("user", option.label);
+
+    await showTyping();
+    if (option.value === "roof-yes") {
+      addMessage(
+        "shep",
+        "Great — I'll flag this for a specialist so they can follow up with the roof savings details."
+      );
+    } else {
+      addMessage("shep", "No problem — I'll be right here if you change your mind.");
+    }
+
+    // Same reasoning as onQuickReply below: the clicked button was just
+    // removed from the DOM, so focus needs somewhere to land explicitly.
+    panel?.querySelector("#shep-input")?.focus();
   }
 
   async function onQuickReply(option, container) {
@@ -236,6 +369,15 @@ function initShep(root) {
     input.value = "";
 
     await showTyping();
+    if (flow === "payroll") {
+      addMessage(
+        "shep",
+        "Thanks for asking! For specifics like that, our payroll team can give you a real answer — get pricing and a specialist will follow up, or keep chatting with me about the basics."
+      );
+      showQuickReplies([{ label: "Get Pricing", value: "quote" }], onQuickReply);
+      return;
+    }
+
     addMessage(
       "shep",
       "Thanks for asking! For specifics like that, our team can give you a real answer — request a quote and a mission-trip specialist will follow up, or keep chatting with me about the basics."

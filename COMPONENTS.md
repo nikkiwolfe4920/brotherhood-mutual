@@ -162,6 +162,36 @@ in `js/shep-chat.js`, rendered into `#shep-root`, styled by `design-system/chat-
 - Glass panel background uses `--color-glass-surface` + `backdrop-filter: blur(var(--blur-deep))`
   — the same "very deep blur" treatment as the sticky header, not a one-off value.
 
+**Per-page conversation flows (`data-flow`):** `#shep-root` accepts a `data-flow` attribute read
+once in `initShep()`; it only changes which scripted messages/quick-replies play, never the panel
+chrome, a11y contract, or open/close/dismiss behavior above. `data-flow="payroll"` (used by
+`/payroll`) opens with a payroll-specific greeting instead of the homepage's mission-trip one — see
+`js/shep-chat.js`'s `onPayrollIntroReply` / `showEmailCapture` / `onPayrollEmailVerified` /
+`onPayrollRoofReply` chain. No `data-flow` (or any other value) falls back to the original
+mission-trip flow — don't add a third flow without first checking whether the greeting/reply
+branches are still simple `if (flow === …)` checks or whether it's time for a real per-flow config
+object instead.
+
+- **Inline email capture** (`.shep__email-capture`, payroll flow only): a scripted step can call
+  `showEmailCapture(onVerified)` to swap the quick-replies slot for a real `<input type="email">` +
+  send button. Submission is validated client-side against a simple `EMAIL_PATTERN` regex;
+  an invalid address shows an inline `role="alert"` error (`.shep__field-error`) tied to the input
+  via `aria-describedby` and never proceeds. A valid address shows a visible `.shep__field-success`
+  checkmark state before the form is torn down and the conversation continues — this is purely a
+  UX confirmation, not a real account lookup (there's no backend here to actually check).
+
+## Payroll landing page — `/payroll`
+
+`payroll/index.html` is a second marketing landing page, not a new layout: it reuses the homepage's
+`.site-header`/nav/announcement-banner/`.hero`/`.photo-marquee`/`.site-footer` markup verbatim (same
+classes, same blur/atmosphere treatment) with payroll-specific hero copy, and reuses the homepage's
+"Provide" `.feature-split` section (the Brotherhood Works checklist) as-is rather than inventing a
+new content section — the "Protect" (core P&amp;C insurance) section isn't relevant here so it's not
+duplicated. The only functional difference from the homepage is `<div id="shep-root"
+data-flow="payroll">`, which drives Shep's payroll-specific scripted conversation (see the `data-flow`
+note above). The homepage's "Payroll &amp; HR Solutions" dropdown link now points to `/payroll`
+instead of `#`.
+
 ## Icon set — `design-system/icons.js`
 
 Single source for JS-rendered icons (24×24, 1.5px stroke, `currentColor`). Icons embedded directly
