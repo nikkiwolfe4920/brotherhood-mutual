@@ -90,6 +90,24 @@ raise it rather than silently deviating.
 > nudge) instead of the homepage's mission-trip greeting — see `COMPONENTS.md`'s "Per-page
 > conversation flows" and "Payroll landing page" entries for the full contract.
 >
+> **Fourth page — Mission trip landing page:** `/mission-trip` (`mission-trip/index.html`) is a
+> third marketing landing page, reusing the homepage's header/hero/footer chrome verbatim with
+> mission-trip-specific hero copy, and reusing the homepage's "Protect" `.feature-split` section
+> (brand-blue, `checklist--inverse`) with mission-coverage-specific bullets instead of the
+> homepage's general P&amp;C list. Its `#shep-root` carries `data-flow="mission-trip"`, giving Shep a
+> much longer scripted conversation than either existing flow: a topic checklist alongside the
+> greeting, a full multi-field intake form (contact/org details, "I am interested in," Mission
+> Coverage Options, Background Screening Options, and a required privacy-statement consent), the
+> same roof-replacement savings nudge the payroll flow uses, and a final "Submit" confirmation step.
+> This required two small additions to `chat-widget.css` beyond what `payroll` needed: a
+> `.shep__topic-select` checkbox group rendered alongside the greeting (rather than replacing the
+> quick-replies slot, so both are visible together), and a `.shep__form-message` variant of the
+> chat bubble (`max-width: 100%` instead of the default `88%`) so the intake form has room to lay
+> out its fields inside the same 360px panel — see `COMPONENTS.md`'s "Per-page conversation flows"
+> and "Mission trip landing page" entries for the full step-by-step contract. No new design tokens
+> were needed; form inputs/selects reuse the existing glass-surface/border tokens already used by
+> `.shep__input`.
+>
 > **Universal Profile — Figma color reconciliation:** a later Figma revision (Pitch-Concepts,
 > node-id 26-1000) replaced the source frame's placeholder CRM palette with Brotherhood Mutual's
 > actual colors, so this implementation's raw hex values now match that source almost exactly with

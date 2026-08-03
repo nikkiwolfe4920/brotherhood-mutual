@@ -167,10 +167,11 @@ once in `initShep()`; it only changes which scripted messages/quick-replies play
 chrome, a11y contract, or open/close/dismiss behavior above. `data-flow="payroll"` (used by
 `/payroll`) opens with a payroll-specific greeting instead of the homepage's mission-trip one — see
 `js/shep-chat.js`'s `onPayrollIntroReply` / `showEmailCapture` / `onPayrollEmailVerified` /
-`onPayrollRoofReply` chain. No `data-flow` (or any other value) falls back to the original
-mission-trip flow — don't add a third flow without first checking whether the greeting/reply
-branches are still simple `if (flow === …)` checks or whether it's time for a real per-flow config
-object instead.
+`onPayrollRoofReply` chain. `data-flow="mission-trip"` (used by `/mission-trip`) runs a third,
+longer chain — see the dedicated entry below. No `data-flow` (or any other value) falls back to the
+original mission-trip flow. The three flows are still simple `if (flow === …)` checks throughout
+`shep-chat.js`; if a fourth flow is ever added, that's the point to revisit whether a real per-flow
+config object is overdue instead of one more `if` branch at each step.
 
 - **Inline email capture** (`.shep__email-capture`, payroll flow only): a scripted step can call
   `showEmailCapture(onVerified)` to swap the quick-replies slot for a real `<input type="email">` +
@@ -179,6 +180,55 @@ object instead.
   via `aria-describedby` and never proceeds. A valid address shows a visible `.shep__field-success`
   checkmark state before the form is torn down and the conversation continues — this is purely a
   UX confirmation, not a real account lookup (there's no backend here to actually check).
+
+**Mission-trip flow (`data-flow="mission-trip"`) — step-by-step:**
+1. **Greeting + topic select.** The greeting plays alongside `.shep__topic-select`
+   (`showTopicSelect()`), a `<fieldset>` of three checkboxes (Trip protection, Fundraising tools,
+   Background checks) rendered *above* `.shep__quick-replies` in the panel template so the topics
+   are visible while the visitor picks Yes/No — unlike the payroll flow's email capture, this
+   container coexists with quick-replies rather than replacing them. Trip protection starts
+   checked; all three stay independently togglable. The checked set isn't currently read anywhere
+   downstream (the intake form always shows every section) — it exists to set expectations in the
+   greeting, not to gate content. If that ever needs to change, `onMissionTripIntroReply` is where
+   to read the checkbox state before branching.
+2. **Intake form.** Choosing "Yes, tell me more" calls `showIntakeForm()`, which renders a full
+   form as its own chat-message bubble via `addFormMessage()` (a `.shep__form-message` — see the
+   primitive note below) rather than using a fixed-height slot, so it scrolls with the rest of
+   `.shep__messages` instead of needing its own scroll region. Fields: First/Last name (required),
+   Job title, Phone, Email (required), Contact preference (select), Organization name/address/type,
+   an "I am interested in" checkbox group, a "Mission coverage options" checkbox group plus a free-text
+   "Other" field, a "Background screening options" checkbox group, and a required consent checkbox
+   whose label contains the privacy-statement link (`href="#"` — a placeholder anchor, same
+   convention as the footer's `Privacy` link, until a real privacy page exists). Submitting runs
+   `onIntakeFormSubmit`: required-field and email-format checks each show their own inline
+   `role="alert"` error via `showFieldError`/`clearFieldError`/`validateRequired`; once everything
+   passes, a `.shep__field-success` "Email verified" checkmark appears next to the email field
+   (mirroring the payroll flow's inline email capture) before the whole form bubble is removed and
+   the conversation continues.
+3. **Roof savings nudge.** `onMissionTripFormSubmitted()` plays the same roof-replacement-savings
+   message and soft-reply pair (`Yes, Interested in Learning More` / `Maybe Later`) as the payroll
+   flow's `onPayrollRoofReply` — intentionally reused copy, not a coincidence, since both are the
+   same "there's a building-related upsell" beat in two different conversations.
+4. **Final submit.** Either roof reply leads to `showFinalSubmit()`, another `.shep__form-message`
+   bubble with a single `.btn.btn--primary` "Submit" button — deliberately a primary button, not a
+   pill-style quick-reply, since it's the one main action that finalizes the whole request rather
+   than a conversational branch. Clicking it (`onFinalSubmit`) shows the closing confirmation:
+   "Thank you for your request — our Global Missions Team will be reaching out to you shortly."
+
+- **Form-as-message bubble** (`.shep__form-message`, mission-trip flow only): `addFormMessage(html)`
+  appends arbitrary form markup into `.shep__messages` wrapped in the same `.shep__bubble
+  .shep__bubble--shep` classes every other Shep message uses, plus `.shep__form-message` to widen
+  it to the bubble's full available width (`max-width: 100%`) instead of the default `88%` — a form
+  with this many fields needs the room a chat bubble doesn't normally get. Both the intake form and
+  the final-submit prompt use this helper rather than the fixed `.shep__quick-replies` /
+  `.shep__email-capture` slots, since those are sized for a handful of buttons or one input, not a
+  multi-fieldset form.
+- **Checkbox groups** (`.shep__form-fieldset` + `.shep__checkbox-option`): a plain `<fieldset>`/
+  `<legend>` per group (topic select, "I am interested in," Mission coverage options, Background
+  screening options) with native checkboxes styled via `accent-color: var(--color-brand-500)`
+  rather than a custom-drawn checkbox — native controls keep the built-in keyboard/AT semantics
+  `DESIGN.md`'s "semantic HTML first" rule asks for, and `accent-color` is enough to make them read
+  as on-brand without hand-rolling a checked-state icon.
 
 ## Payroll landing page — `/payroll`
 
@@ -191,6 +241,22 @@ duplicated. The only functional difference from the homepage is `<div id="shep-r
 data-flow="payroll">`, which drives Shep's payroll-specific scripted conversation (see the `data-flow`
 note above). The homepage's "Payroll &amp; HR Solutions" dropdown link now points to `/payroll`
 instead of `#`.
+
+## Mission trip landing page — `/mission-trip`
+
+`mission-trip/index.html` is a third marketing landing page: it reuses the homepage's
+`.site-header`/nav/announcement-banner/`.hero`/`.photo-marquee`/`.site-footer` markup verbatim with
+mission-trip-specific hero copy, and reuses the homepage's "Protect" `.feature-split` section
+(`.section--brand`, `checklist--inverse`) as-is except for its bullet list, which swaps the
+homepage's general P&amp;C coverage items for the mission-specific ones (Mission Travel Insurance,
+Mission Liability Coverage, Medical/Evacuation Coverage, Trip Cancellation/Interruption Coverage,
+Kidnap &amp; Ransom Coverage, Foreign Property/Liability Coverage) — the homepage's "Provide"
+section isn't relevant here so it's not duplicated, mirroring how `/payroll` only kept "Provide."
+The only functional difference from the homepage is `<div id="shep-root"
+data-flow="mission-trip">`, which drives Shep's much longer mission-trip-specific scripted
+conversation (see the "Mission-trip flow" entry under the Shep section above for the full
+step-by-step contract). The homepage's and `/payroll`'s "Mission Trip Protection" dropdown links now
+point to `/mission-trip` instead of `#`.
 
 ## Icon set — `design-system/icons.js`
 
