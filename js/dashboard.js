@@ -46,3 +46,19 @@ document.addEventListener("keydown", (event) => {
     searchInput?.focus();
   }
 });
+
+// ---------- Ask Shep a question (AI Chat Summary card) ----------
+const askShepForm = document.getElementById("ask-shep-form");
+const askShepInput = document.getElementById("ask-shep-input");
+const askShepResponse = document.getElementById("ask-shep-response");
+
+askShepForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const question = askShepInput.value.trim();
+  if (!question) return;
+
+  askShepResponse.hidden = false;
+  askShepResponse.textContent = `Got it — Shep is looking into “${question}” and will follow up in the Living Profile Feed.`;
+  askShepForm.reset();
+  askShepInput.focus();
+});
