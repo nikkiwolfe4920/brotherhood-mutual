@@ -269,8 +269,8 @@ A second, self-contained page (`universal-profile/index.html`, styled by
 `design-system/dashboard.css`) implementing the Figma "Universal Profile" concept: an insurance
 agent's living view of one client/ministry account. It's an **app-shell layout**, not a marketing
 page — it doesn't use `.site-header`/`.main-nav`/`.site-footer` because its top bar has an
-entirely different nav (Overview / Active Policies / Risk Assessment / Underwriting AI / System
-Routing) and there's no page footer in the source design. It does reuse the shared tokens, fonts,
+entirely different nav (a single "Unified Customer Record" link) and there's no page footer in the
+source design. It does reuse the shared tokens, fonts,
 `.btn`, and `.badge-pill` from `components.css` — see the Status note in `DESIGN.md` for how the
 source file's teal/amber/dark-slate CRM palette was re-mapped onto this project's existing
 `success`/`warning`/`brand` tokens instead of importing a second color scheme.
@@ -290,8 +290,10 @@ source file's teal/amber/dark-slate CRM palette was re-mapped onto this project'
   (`transform: translateX(-100%)`, shown via `.is-open`) toggled by `#sidebar-toggle` in the top
   bar, with a click-to-close `#sidebar-scrim` overlay. `js/dashboard.js` wires the toggle, the
   scrim click, and `Esc` to close — mirrors the marketing site's mobile nav toggle pattern.
-- The sidebar's "Today · …" date (`#sidebar-today`) is computed client-side (like the footer year
-  on the homepage), not hardcoded — it's a small nod to the "living profile" concept.
+- Both `.app-nav` (top bar) and `.app-sidebar__nav` (sidebar) contain a single "Unified Customer
+  Record" link, matching the Figma "Unified Customer Record" nav concept — see the Status note in
+  `DESIGN.md` for why the sidebar's date card, stat tiles, and Quick Access section were removed
+  rather than restyled.
 - `.app-avatar` uses the same `brand-500` → `brand-900` gradient fill as the icon badges described
   below, rather than the flat `brand-900` the rest of the app-shell chrome (topbar, sidebar,
   `.app-icon-btn`) uses — restrained on purpose, so the brand color doesn't compete with the
@@ -358,12 +360,12 @@ Three related but distinct metric displays, matched to how the source design use
 ```html
 <div class="feed">
   <div class="feed__header">…</div>
-  <ul class="feed__list">
+  <ul class="feed__list" id="feed-list">
     <li class="feed__item">
       <span class="feed__icon feed__icon--accent">…svg…</span>
       <div>
         <div class="feed__row">
-          <p class="feed__row-title">Campaign source: <strong>Spring Outreach 2024</strong></p>
+          <p class="feed__row-title">Opened: <strong>Campaign source: Spring Outreach 2026</strong></p>
           <span class="feed__timestamp">2d ago</span>
         </div>
         <p class="feed__desc">…</p>
@@ -373,8 +375,16 @@ Three related but distinct metric displays, matched to how the source design use
 </div>
 ```
 
-`.feed__icon--accent` (success-tinted) vs. the plain `.feed__icon` distinguishes the two source
-icon treatments (campaign vs. browse-activity) — it's a visual variant, not a status indicator.
+`.feed__icon--accent` (success-tinted) vs. the plain `.feed__icon` distinguishes the source's
+campaign/call icon treatments from its browse-activity one — it's a visual variant, not a status
+indicator.
+
+`#feed-list` is a live list, not just a template: submitting the "Ask Shep a question" form
+(`js/dashboard.js`'s `addShepFeedItem`) prepends a new `.feed__item` here so the promised "will
+follow up in the Living Profile Feed" response actually happens. That entry uses a dedicated
+`.feed__icon--shep` (a `brand-500`-filled circle, matching `.promo-owner__avatar` exactly) so it
+reads as coming from the same Shep shown on the AI Chat Summary card, rather than blending into the
+feed's other icon backgrounds.
 
 ### Promo banner — `.promo-banner`
 
