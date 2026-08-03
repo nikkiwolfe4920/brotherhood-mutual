@@ -453,7 +453,12 @@ collapses to a single stacked column below `1024px`. `.rec-columns` renders the 
 above the list on `≥1024px` only (`aria-hidden="true"` — the row content is already
 self-describing via visible labels, so the column headers are a layout aid, not the only source of
 that meaning). `.rec-owner__avatar` uses initials or `?` text rather than a photo, consistent with
-this repo's no-photography-placeholder approach.
+this repo's no-photography-placeholder approach. The pending-owner state's `rec-owner__status--pending`
+line ends with a `.rec-owner__reminder-link` — an inline text link ("Send a reminder") to `/email`,
+the transactional lead-notification template (see "Email — `/email`" below). It's a plain underlined
+`brand-500` link rather than a `.btn`, since it's one clause inside a sentence, not a standalone
+action — WCAG 2.5.5's 44px hit-target rule has a standing exception for inline links in text for
+exactly this reason.
 
 ### Bar chart — `.bar-chart`
 
@@ -472,3 +477,46 @@ distinct at a glance.
 Dashed-border placeholder ("Future Ecosystem Partners") for a list section with no current data —
 reuse this instead of just omitting the section, so it's clear the empty state is intentional
 rather than a bug.
+
+## Email — `/email`
+
+`email/index.html` is the transactional "new lead" notification email sent from Shep to the
+routed agent (currently hardcoded to a "Peter" recipient and the Grace Community Church lead used
+throughout `/universal-profile`, matching this repo's other pages' use of one representative
+example account rather than dynamic data). It's a summary/nudge that recaps two blocks straight
+from the Universal Profile — a condensed Living Profile Feed (3 of its items) and the full
+Recommended Next Steps list — with a single primary CTA ("View Profile") deep-linking to
+`/universal-profile`.
+
+**This page does not load `tokens.css`/`components.css`/`dashboard.css`.** That's a deliberate,
+necessary exception to "tokens are the only source of design values": it's authored as a real HTML
+email template (table layout, inline styles throughout, one small `<style>` block only for the
+`@media` mobile-stacking rule and link/button `:hover`), because the inboxes this is meant to
+render in — Outlook desktop above all — strip `<link>` stylesheets and don't support CSS custom
+properties. Every inline hex value is still a direct copy of a `tokens.css` value (not a new
+color), so the page stays visually identical to `/universal-profile`; if the token palette ever
+changes, this file's hex values need a manual, matching update since they can't `var()` off the
+token file the way every other page does.
+
+Content mapping back to `/universal-profile`, so the two stay in sync if either changes:
+- The lead identity card (org name + `.badge-pill--success`, policy/location line, three stats)
+  mirrors `.profile-summary` + `.quick-stats`.
+- "Living Profile Feed" mirrors `.feed`, trimmed to 3 of its 4 items (an email nudge that reproduces
+  the entire feed stops reading as a snapshot) — the Opened/Engaged pair collapses to just the
+  Engaged entry since they describe the same campaign touch.
+- The blue "Recommended Next Steps" block mirrors `.promo-recommendations` verbatim (same two
+  bullets, same copy).
+- The sign-off strip mirrors `.promo-banner` (same illustration + tagline), and is hidden on the
+  `@media (max-width: 620px)` breakpoint rather than shrunk further, since a wallet-sized version of
+  `bm-illustration.png` stopped being legible in testing.
+
+Icons are the same inline SVGs used by `/universal-profile` (Shep's compass mark, the feed-item
+icons, the recommendation bullet's circle-chevron) — kept as SVG for this in-browser preview so it
+stays pixel-identical to the source page, but flagged here since a production send through an ESP
+would need to export them as PNGs first: Outlook desktop's Word rendering engine has no SVG
+support at all, unlike this repo's brand mark, which already ships both an SVG (`B-mutualnav.svg`,
+used in the email's header, on-brand for this page's white-background chrome) and a PNG fallback
+(`B-mutualWhite.png`) for exactly this kind of client gap.
+
+Reachable from `/universal-profile` via the `.rec-owner__reminder-link` documented above ("Send a
+reminder" on the Mission Travel row's pending-owner status — the same lead this email is about).
