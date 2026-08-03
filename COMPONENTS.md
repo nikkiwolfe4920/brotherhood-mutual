@@ -195,8 +195,9 @@ config object is overdue instead of one more `if` branch at each step.
    form as its own chat-message bubble via `addFormMessage()` (a `.shep__form-message` — see the
    primitive note below) rather than using a fixed-height slot, so it scrolls with the rest of
    `.shep__messages` instead of needing its own scroll region. Fields: First/Last name (required),
-   Job title, Phone, Email (required), Contact preference (select), Organization name/address/type,
-   an "I am interested in" checkbox group, a "Mission coverage options" checkbox group plus a free-text
+   Job title (required), Phone (required), Email (required), Contact preference (select),
+   Organization name (required), Organization address (required), Organization type, an "I am
+   interested in" checkbox group, a "Mission coverage options" checkbox group plus a free-text
    "Other" field, a "Background screening options" checkbox group, and a required consent checkbox
    whose label contains the privacy-statement link (`href="#"` — a placeholder anchor, same
    convention as the footer's `Privacy` link, until a real privacy page exists). Submitting runs
@@ -205,24 +206,21 @@ config object is overdue instead of one more `if` branch at each step.
    passes, a `.shep__field-success` "Email verified" checkmark appears next to the email field
    (mirroring the payroll flow's inline email capture) before the whole form bubble is removed and
    the conversation continues.
-3. **Roof savings nudge.** `onMissionTripFormSubmitted()` plays the same roof-replacement-savings
-   message and soft-reply pair (`Yes, Interested in Learning More` / `Maybe Later`) as the payroll
-   flow's `onPayrollRoofReply` — intentionally reused copy, not a coincidence, since both are the
-   same "there's a building-related upsell" beat in two different conversations.
-4. **Final submit.** Either roof reply leads to `showFinalSubmit()`, another `.shep__form-message`
-   bubble with a single `.btn.btn--primary` "Submit" button — deliberately a primary button, not a
-   pill-style quick-reply, since it's the one main action that finalizes the whole request rather
-   than a conversational branch. Clicking it (`onFinalSubmit`) shows the closing confirmation:
-   "Thank you for your request — our Global Missions Team will be reaching out to you shortly."
+3. **Closing confirmation.** `onMissionTripFormSubmitted()` closes the flow directly with "Thank
+   you for making your request. Our Global Mission's Team will be reaching out to you soon." —
+   unlike the payroll flow, there's no roof-savings upsell or second submit step here.
 
 - **Form-as-message bubble** (`.shep__form-message`, mission-trip flow only): `addFormMessage(html)`
   appends arbitrary form markup into `.shep__messages` wrapped in the same `.shep__bubble
   .shep__bubble--shep` classes every other Shep message uses, plus `.shep__form-message` to widen
   it to the bubble's full available width (`max-width: 100%`) instead of the default `88%` — a form
-  with this many fields needs the room a chat bubble doesn't normally get. Both the intake form and
-  the final-submit prompt use this helper rather than the fixed `.shep__quick-replies` /
-  `.shep__email-capture` slots, since those are sized for a handful of buttons or one input, not a
-  multi-fieldset form.
+  with this many fields needs the room a chat bubble doesn't normally get. The intake form uses this
+  helper rather than the fixed `.shep__quick-replies` / `.shep__email-capture` slots, since those are
+  sized for a handful of buttons or one input, not a multi-fieldset form. Because a form bubble can be
+  much taller than the log's other messages, `addFormMessage` scrolls to bring the new bubble's top
+  into view (via `getBoundingClientRect`, not `offsetTop` — the latter is relative to the nearest
+  positioned ancestor, not necessarily `.shep__messages`) instead of jumping to `scrollHeight`, so the
+  reply that introduced the form stays in view rather than being scrolled past.
 - **Checkbox groups** (`.shep__form-fieldset` + `.shep__checkbox-option`): a plain `<fieldset>`/
   `<legend>` per group (topic select, "I am interested in," Mission coverage options, Background
   screening options) with native checkboxes styled via `accent-color: var(--color-brand-500)`

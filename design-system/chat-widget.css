@@ -410,7 +410,7 @@
 
 .shep__input {
   flex: 1;
-  border: 1px solid var(--color-glass-border);
+  border: 1px solid var(--color-border);
   background: var(--color-surface-raised);
   border-radius: var(--radius-full);
   padding: var(--space-2) var(--space-4);
@@ -516,7 +516,7 @@
 }
 
 .shep__form-input {
-  border: 1px solid var(--color-glass-border);
+  border: 1px solid var(--color-border);
   background: var(--color-surface-raised);
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
@@ -543,10 +543,4 @@
 .shep__form-actions {
   display: flex;
   justify-content: flex-end;
-}
-
-.shep__submit-prompt {
-  margin: 0 0 var(--space-3);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
 }

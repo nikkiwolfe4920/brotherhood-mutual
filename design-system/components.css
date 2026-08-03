@@ -419,6 +419,7 @@
 .hero__subhead {
   text-align: center;
   margin-top: var(--space-4);
+  margin-inline: auto;
   font-size: var(--font-size-lg);
   color: var(--color-text-secondary);
 }

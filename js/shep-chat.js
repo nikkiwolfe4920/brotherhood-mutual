@@ -412,7 +412,16 @@ function initShep(root) {
     wrapper.className = "shep__bubble shep__bubble--shep shep__form-message";
     wrapper.innerHTML = html;
     messagesEl.appendChild(wrapper);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    // Forms are much taller than the log's other bubbles — scrolling to
+    // scrollHeight (the form's own bottom) buries the reply that introduced
+    // it. Scroll just far enough to bring the form's top into view instead,
+    // so it opens up right under the message before it. Measured via
+    // getBoundingClientRect rather than offsetTop, since offsetTop is
+    // relative to the nearest positioned ancestor (not necessarily
+    // messagesEl) and can be off by the panel chrome above the log.
+    const messagesRect = messagesEl.getBoundingClientRect();
+    const wrapperRect = wrapper.getBoundingClientRect();
+    messagesEl.scrollTop += wrapperRect.top - messagesRect.top;
     return wrapper;
   }
 
@@ -452,12 +461,14 @@ function initShep(root) {
           <p class="shep__field-error" id="mt-last-name-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
-          <label for="mt-job-title">Job title</label>
-          <input class="shep__form-input" id="mt-job-title" type="text" autocomplete="organization-title" />
+          <label for="mt-job-title">Job title (required)</label>
+          <input class="shep__form-input" id="mt-job-title" type="text" required autocomplete="organization-title" aria-describedby="mt-job-title-error" />
+          <p class="shep__field-error" id="mt-job-title-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
-          <label for="mt-phone">Phone number</label>
-          <input class="shep__form-input" id="mt-phone" type="tel" autocomplete="tel" />
+          <label for="mt-phone">Phone number (required)</label>
+          <input class="shep__form-input" id="mt-phone" type="tel" required autocomplete="tel" aria-describedby="mt-phone-error" />
+          <p class="shep__field-error" id="mt-phone-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
           <label for="mt-email">Email address (required)</label>
@@ -473,12 +484,14 @@ function initShep(root) {
           </select>
         </div>
         <div class="shep__form-field">
-          <label for="mt-org-name">Organization name</label>
-          <input class="shep__form-input" id="mt-org-name" type="text" autocomplete="organization" />
+          <label for="mt-org-name">Organization name (required)</label>
+          <input class="shep__form-input" id="mt-org-name" type="text" required autocomplete="organization" aria-describedby="mt-org-name-error" />
+          <p class="shep__field-error" id="mt-org-name-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
-          <label for="mt-org-address">Organization street address</label>
-          <input class="shep__form-input" id="mt-org-address" type="text" autocomplete="street-address" />
+          <label for="mt-org-address">Organization street address (required)</label>
+          <input class="shep__form-input" id="mt-org-address" type="text" required autocomplete="street-address" aria-describedby="mt-org-address-error" />
+          <p class="shep__field-error" id="mt-org-address-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
           <label for="mt-org-type">Organization type</label>
@@ -541,7 +554,11 @@ function initShep(root) {
     const form = event.target;
     const firstNameInput = form.querySelector("#mt-first-name");
     const lastNameInput = form.querySelector("#mt-last-name");
+    const jobTitleInput = form.querySelector("#mt-job-title");
+    const phoneInput = form.querySelector("#mt-phone");
     const emailInput = form.querySelector("#mt-email");
+    const orgNameInput = form.querySelector("#mt-org-name");
+    const orgAddressInput = form.querySelector("#mt-org-address");
     const consentInput = form.querySelector("#mt-consent");
 
     let isValid = true;
@@ -550,6 +567,19 @@ function initShep(root) {
       isValid;
     isValid =
       validateRequired(lastNameInput, form.querySelector("#mt-last-name-error"), "Enter your last name.") && isValid;
+    isValid =
+      validateRequired(jobTitleInput, form.querySelector("#mt-job-title-error"), "Enter your job title.") && isValid;
+    isValid =
+      validateRequired(phoneInput, form.querySelector("#mt-phone-error"), "Enter your phone number.") && isValid;
+    isValid =
+      validateRequired(orgNameInput, form.querySelector("#mt-org-name-error"), "Enter your organization name.") &&
+      isValid;
+    isValid =
+      validateRequired(
+        orgAddressInput,
+        form.querySelector("#mt-org-address-error"),
+        "Enter your organization's street address."
+      ) && isValid;
 
     const emailError = form.querySelector("#mt-email-error");
     if (!EMAIL_PATTERN.test(emailInput.value.trim())) {
@@ -591,49 +621,8 @@ function initShep(root) {
   function onMissionTripFormSubmitted() {
     addMessage(
       "shep",
-      "Just a heads-up—it looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+      "Thank you for making your request. Our Global Mission's Team will be reaching out to you soon."
     );
-    showQuickReplies(
-      [
-        { label: "Yes, Interested in Learning More", value: "roof-yes" },
-        { label: "Maybe Later", value: "roof-later" },
-      ],
-      onMissionTripRoofReply
-    );
-  }
-
-  async function onMissionTripRoofReply(option, container) {
-    container.hidden = true;
-    container.innerHTML = "";
-    addMessage("user", option.label);
-
-    await showTyping();
-    if (option.value === "roof-yes") {
-      addMessage(
-        "shep",
-        "Great — I'll flag this for a specialist so they can follow up with the roof savings details."
-      );
-    } else {
-      addMessage("shep", "No problem — I'll be right here if you change your mind.");
-    }
-
-    showFinalSubmit();
-  }
-
-  function showFinalSubmit() {
-    const wrapper = addFormMessage(`
-      <p class="shep__submit-prompt">Ready to send this to our Global Missions Team?</p>
-      <button class="btn btn--primary shep__final-submit" type="button">Submit</button>
-    `);
-    wrapper?.querySelector(".shep__final-submit")?.addEventListener("click", () => onFinalSubmit(wrapper));
-  }
-
-  async function onFinalSubmit(wrapper) {
-    wrapper.remove();
-    addMessage("user", "Submit");
-
-    await showTyping();
-    addMessage("shep", "Thank you for your request — our Global Missions Team will be reaching out to you shortly.");
     panel?.querySelector("#shep-input")?.focus();
   }
 
