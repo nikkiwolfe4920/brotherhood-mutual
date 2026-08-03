@@ -449,3 +449,104 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+/* ---------- Checkbox groups (topic select + mission-trip intake form) ---------- */
+.shep__form-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.shep__form-fieldset legend {
+  padding: 0;
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.shep__checkbox-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  padding: var(--space-1) 0;
+}
+
+.shep__checkbox-option input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--color-brand-500);
+}
+
+.shep__topic-select {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+/* ---------- Mission-trip intake form (rendered as a wide message bubble) ---------- */
+.shep__form-message {
+  max-width: 100%;
+  width: 100%;
+}
+
+.shep__intake-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.shep__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.shep__form-field label,
+.shep__form-field span:first-child {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.shep__form-input {
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  min-height: 40px;
+}
+
+.shep__form-input[aria-invalid="true"],
+.shep__consent input[aria-invalid="true"] {
+  border-color: var(--color-danger-500);
+}
+
+.shep__consent {
+  align-items: flex-start;
+}
+
+.shep__consent a {
+  text-decoration: underline;
+  color: var(--color-brand-500);
+}
+
+.shep__form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shep__submit-prompt {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}

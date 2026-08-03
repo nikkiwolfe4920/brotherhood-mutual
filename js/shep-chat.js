@@ -13,9 +13,15 @@ if (root) {
 
 function initShep(root) {
   // `data-flow` on #shep-root lets a page opt into a different scripted
-  // conversation (see the "payroll" branches below) without forking the
-  // whole widget — the panel chrome/a11y contract stays identical either way.
-  const flow = root.dataset.flow === "payroll" ? "payroll" : "default";
+  // conversation (see the "payroll" and "mission-trip" branches below)
+  // without forking the whole widget — the panel chrome/a11y contract stays
+  // identical either way.
+  const flow =
+    root.dataset.flow === "payroll"
+      ? "payroll"
+      : root.dataset.flow === "mission-trip"
+        ? "mission-trip"
+        : "default";
 
   root.innerHTML = `
     <div class="shep">
@@ -66,11 +72,18 @@ function initShep(root) {
         <span class="shep__header-avatar">${ICONS.compass}</span>
         <div class="shep__header-text">
           <p class="shep__header-name">Shep</p>
-          <p class="shep__header-status">${flow === "payroll" ? "Payroll &amp; HR assistant" : "Ministry trip assistant"}</p>
+          <p class="shep__header-status">${
+            flow === "payroll"
+              ? "Payroll &amp; HR assistant"
+              : flow === "mission-trip"
+                ? "Global Missions assistant"
+                : "Ministry trip assistant"
+          }</p>
         </div>
         <button class="shep__close" type="button" aria-label="Close chat">${ICONS.close}</button>
       </div>
       <div class="shep__messages" role="log" aria-live="polite"></div>
+      <div class="shep__topic-select" hidden></div>
       <div class="shep__quick-replies" hidden></div>
       <div class="shep__email-capture" hidden></div>
       <form class="shep__form">
@@ -139,6 +152,22 @@ function initShep(root) {
             { label: "Get Pricing", value: "pricing" },
           ],
           onPayrollIntroReply
+        );
+        return;
+      }
+
+      if (flow === "mission-trip") {
+        addMessage(
+          "shep",
+          "Hi, I'm Shep \u{1F44B} Planning a mission trip with your ministry? We'd love to help make sure it's protected — want to learn more about trip protection, fundraising tools, or background checks?"
+        );
+        showTopicSelect();
+        showQuickReplies(
+          [
+            { label: "Yes, tell me more", value: "yes" },
+            { label: "Not right now", value: "no" },
+          ],
+          onMissionTripIntroReply
         );
         return;
       }
@@ -325,6 +354,289 @@ function initShep(root) {
     panel?.querySelector("#shep-input")?.focus();
   }
 
+  // ---------- Mission-trip page flow ----------
+  function showTopicSelect() {
+    if (!panel) return;
+    const container = panel.querySelector(".shep__topic-select");
+    container.hidden = false;
+    container.innerHTML = `
+      <fieldset class="shep__form-fieldset shep__topic-fieldset">
+        <legend>What would you like to learn more about?</legend>
+        <label class="shep__checkbox-option">
+          <input type="checkbox" name="shep-topic" value="trip-protection" checked />
+          Trip protection
+        </label>
+        <label class="shep__checkbox-option">
+          <input type="checkbox" name="shep-topic" value="fundraising-tools" />
+          Fundraising tools
+        </label>
+        <label class="shep__checkbox-option">
+          <input type="checkbox" name="shep-topic" value="background-checks" />
+          Background checks
+        </label>
+      </fieldset>
+    `;
+  }
+
+  function hideTopicSelect() {
+    const container = panel?.querySelector(".shep__topic-select");
+    if (!container) return;
+    container.hidden = true;
+    container.innerHTML = "";
+  }
+
+  async function onMissionTripIntroReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    hideTopicSelect();
+    addMessage("user", option.label);
+
+    await showTyping();
+    if (option.value === "yes") {
+      addMessage("shep", "Help us get to know you — a few quick details for our Global Missions Team.");
+      showIntakeForm();
+      return;
+    }
+
+    addMessage("shep", "No problem — I'll be right here if you change your mind.");
+    panel?.querySelector("#shep-input")?.focus();
+  }
+
+  // A form is rendered as its own message bubble (rather than the fixed
+  // quick-replies/email-capture slots) so it scrolls naturally with the rest
+  // of the conversation log instead of fighting the panel's fixed height.
+  function addFormMessage(html) {
+    if (!panel) return null;
+    const messagesEl = panel.querySelector(".shep__messages");
+    const wrapper = document.createElement("div");
+    wrapper.className = "shep__bubble shep__bubble--shep shep__form-message";
+    wrapper.innerHTML = html;
+    messagesEl.appendChild(wrapper);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return wrapper;
+  }
+
+  function showFieldError(input, errorEl, message) {
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+    }
+    input.setAttribute("aria-invalid", "true");
+  }
+
+  function clearFieldError(input, errorEl) {
+    if (errorEl) errorEl.hidden = true;
+    input.removeAttribute("aria-invalid");
+  }
+
+  function validateRequired(input, errorEl, message) {
+    if (!input.value.trim()) {
+      showFieldError(input, errorEl, message);
+      return false;
+    }
+    clearFieldError(input, errorEl);
+    return true;
+  }
+
+  function showIntakeForm() {
+    const wrapper = addFormMessage(`
+      <form class="shep__intake-form" novalidate>
+        <div class="shep__form-field">
+          <label for="mt-first-name">First name (required)</label>
+          <input class="shep__form-input" id="mt-first-name" type="text" required autocomplete="given-name" aria-describedby="mt-first-name-error" />
+          <p class="shep__field-error" id="mt-first-name-error" role="alert" hidden></p>
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-last-name">Last name (required)</label>
+          <input class="shep__form-input" id="mt-last-name" type="text" required autocomplete="family-name" aria-describedby="mt-last-name-error" />
+          <p class="shep__field-error" id="mt-last-name-error" role="alert" hidden></p>
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-job-title">Job title</label>
+          <input class="shep__form-input" id="mt-job-title" type="text" autocomplete="organization-title" />
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-phone">Phone number</label>
+          <input class="shep__form-input" id="mt-phone" type="tel" autocomplete="tel" />
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-email">Email address (required)</label>
+          <input class="shep__form-input" id="mt-email" type="email" required autocomplete="email" aria-describedby="mt-email-error" />
+          <p class="shep__field-error" id="mt-email-error" role="alert" hidden></p>
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-contact-pref">Contact preference</label>
+          <select class="shep__form-input" id="mt-contact-pref">
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="text">Text</option>
+          </select>
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-org-name">Organization name</label>
+          <input class="shep__form-input" id="mt-org-name" type="text" autocomplete="organization" />
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-org-address">Organization street address</label>
+          <input class="shep__form-input" id="mt-org-address" type="text" autocomplete="street-address" />
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-org-type">Organization type</label>
+          <select class="shep__form-input" id="mt-org-type">
+            <option value="church">Church</option>
+            <option value="missions-org">Missions organization</option>
+            <option value="nonprofit">Nonprofit ministry</option>
+            <option value="school">Christian school</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <fieldset class="shep__form-fieldset">
+          <legend>I am interested in</legend>
+          <label class="shep__checkbox-option"><input type="checkbox" name="interest" value="insurance" /> Insurance for My Ministry</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="interest" value="payroll" /> Payroll</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="interest" value="hr-solutions" /> HR Solutions</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="interest" value="employee-benefits" /> Employee Benefits</label>
+        </fieldset>
+
+        <fieldset class="shep__form-fieldset">
+          <legend>Mission coverage options</legend>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="travel-insurance" /> Mission Travel Insurance</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="liability-coverage" /> Mission Liability Coverage</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="medical-evacuation" /> Medical/Evacuation Coverage</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="trip-cancellation" /> Trip Cancellation/Interruption Coverage</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="kidnap-ransom" /> Kidnap &amp; Ransom Coverage</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="coverage" value="foreign-property-liability" /> Foreign Property/Liability Coverage</label>
+          <label class="shep__form-field">
+            <span>Other</span>
+            <input class="shep__form-input" id="mt-coverage-other" type="text" placeholder="Tell us what else you need" />
+          </label>
+        </fieldset>
+
+        <fieldset class="shep__form-fieldset">
+          <legend>Background screening options</legend>
+          <label class="shep__checkbox-option"><input type="checkbox" name="screening" value="background-checks" /> Background Checks</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="screening" value="arrest-alerts" /> Arrest Alerts</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="screening" value="reference-checks" /> Reference Checks</label>
+          <label class="shep__checkbox-option"><input type="checkbox" name="screening" value="abuse-prevention-training" /> Online Sexual Abuse Prevention Training</label>
+        </fieldset>
+
+        <label class="shep__checkbox-option shep__consent">
+          <input type="checkbox" id="mt-consent" required aria-describedby="mt-consent-error" />
+          <span>By submitting your request to our Global Missions Team, I agree that I have read and agree to the <a href="#" target="_blank" rel="noopener">privacy statement</a>.</span>
+        </label>
+        <p class="shep__field-error" id="mt-consent-error" role="alert" hidden></p>
+
+        <div class="shep__form-actions">
+          <button class="btn btn--primary shep__intake-submit" type="submit">Continue</button>
+        </div>
+      </form>
+    `);
+
+    wrapper?.querySelector(".shep__intake-form")?.addEventListener("submit", onIntakeFormSubmit);
+  }
+
+  async function onIntakeFormSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const firstNameInput = form.querySelector("#mt-first-name");
+    const lastNameInput = form.querySelector("#mt-last-name");
+    const emailInput = form.querySelector("#mt-email");
+    const consentInput = form.querySelector("#mt-consent");
+
+    let isValid = true;
+    isValid =
+      validateRequired(firstNameInput, form.querySelector("#mt-first-name-error"), "Enter your first name.") &&
+      isValid;
+    isValid =
+      validateRequired(lastNameInput, form.querySelector("#mt-last-name-error"), "Enter your last name.") && isValid;
+
+    const emailError = form.querySelector("#mt-email-error");
+    if (!EMAIL_PATTERN.test(emailInput.value.trim())) {
+      showFieldError(emailInput, emailError, "Enter a valid email address, like name@example.com.");
+      isValid = false;
+    } else {
+      clearFieldError(emailInput, emailError);
+    }
+
+    const consentError = form.querySelector("#mt-consent-error");
+    if (!consentInput.checked) {
+      showFieldError(consentInput, consentError, "You must agree to the privacy statement to continue.");
+      isValid = false;
+    } else {
+      clearFieldError(consentInput, consentError);
+    }
+
+    if (!isValid) return;
+
+    form.querySelector(".shep__intake-submit").disabled = true;
+
+    // A visible confirmation that the email cleared validation, distinct from
+    // the "Shep is typing" indicator that follows once the form is torn down
+    // — same pattern as the payroll flow's inline email capture.
+    const success = document.createElement("p");
+    success.className = "shep__field-success";
+    success.innerHTML = `${ICONS.check} Email verified`;
+    emailInput.closest(".shep__form-field")?.appendChild(success);
+
+    await new Promise((resolve) => window.setTimeout(resolve, TYPING_DELAY_MS));
+
+    form.closest(".shep__form-message")?.remove();
+    addMessage("user", "Submitted my mission trip request details.");
+
+    await showTyping();
+    onMissionTripFormSubmitted();
+  }
+
+  function onMissionTripFormSubmitted() {
+    addMessage(
+      "shep",
+      "Just a heads-up—it looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+    );
+    showQuickReplies(
+      [
+        { label: "Yes, Interested in Learning More", value: "roof-yes" },
+        { label: "Maybe Later", value: "roof-later" },
+      ],
+      onMissionTripRoofReply
+    );
+  }
+
+  async function onMissionTripRoofReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    addMessage("user", option.label);
+
+    await showTyping();
+    if (option.value === "roof-yes") {
+      addMessage(
+        "shep",
+        "Great — I'll flag this for a specialist so they can follow up with the roof savings details."
+      );
+    } else {
+      addMessage("shep", "No problem — I'll be right here if you change your mind.");
+    }
+
+    showFinalSubmit();
+  }
+
+  function showFinalSubmit() {
+    const wrapper = addFormMessage(`
+      <p class="shep__submit-prompt">Ready to send this to our Global Missions Team?</p>
+      <button class="btn btn--primary shep__final-submit" type="button">Submit</button>
+    `);
+    wrapper?.querySelector(".shep__final-submit")?.addEventListener("click", () => onFinalSubmit(wrapper));
+  }
+
+  async function onFinalSubmit(wrapper) {
+    wrapper.remove();
+    addMessage("user", "Submit");
+
+    await showTyping();
+    addMessage("shep", "Thank you for your request — our Global Missions Team will be reaching out to you shortly.");
+    panel?.querySelector("#shep-input")?.focus();
+  }
+
   async function onQuickReply(option, container) {
     container.hidden = true;
     container.innerHTML = "";
@@ -375,6 +687,15 @@ function initShep(root) {
         "Thanks for asking! For specifics like that, our payroll team can give you a real answer — get pricing and a specialist will follow up, or keep chatting with me about the basics."
       );
       showQuickReplies([{ label: "Get Pricing", value: "quote" }], onQuickReply);
+      return;
+    }
+
+    if (flow === "mission-trip") {
+      addMessage(
+        "shep",
+        "Thanks for asking! For specifics like that, our Global Missions Team can give you a real answer — let's get your details started so a specialist can follow up."
+      );
+      showQuickReplies([{ label: "Get started", value: "yes" }], onMissionTripIntroReply);
       return;
     }
 
