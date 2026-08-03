@@ -901,6 +901,132 @@
   aspect-ratio: 856 / 480;
 }
 
+/* AI-generated next steps, called out from the plain summary bullets above
+   with a tinted panel rather than another border-top rule (avoids stacking
+   two divider lines right above the Shep owner row). */
+.promo-recommendations {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.promo-recommendations__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-neutral-0);
+  margin-bottom: var(--space-3);
+}
+
+.promo-recommendations__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.promo-recommendations__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.promo-recommendations__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-recommendations__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-50);
+  line-height: var(--line-height-normal);
+}
+
+.promo-recommendations__text strong {
+  color: var(--color-neutral-0);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Ask Shep (inline question box, AI Chat Summary card) ---------- */
+.ask-shep {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ask-shep__label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-0);
+  margin-bottom: var(--space-2);
+}
+
+.ask-shep__row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.ask-shep__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-neutral-0);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.ask-shep__input::placeholder {
+  color: var(--color-neutral-50);
+}
+
+.ask-shep__submit {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--color-neutral-0);
+  color: var(--color-brand-500);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ask-shep__submit:hover {
+  background: var(--color-neutral-50);
+}
+
+.ask-shep__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ask-shep__response {
+  margin: var(--space-3) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-50);
+}
+
 /* ---------- Data table ---------- */
 .data-table-wrap {
   overflow-x: auto;
@@ -1354,6 +1480,41 @@
   /* --color-neutral-400 only clears ~2.9:1 on this white card — under the
      4.5:1 AA floor for normal text at this size. */
   color: var(--color-text-secondary);
+}
+
+.rec-owner-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rec-owner__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0 var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.rec-owner__status svg {
+  flex-shrink: 0;
+  color: var(--color-success-500);
+}
+
+.rec-owner__status strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.rec-owner__status--pending,
+.rec-owner__status--pending strong {
+  color: var(--color-warning-500);
+}
+
+.rec-owner__status--pending svg {
+  color: var(--color-warning-500);
 }
 
 /* Empty state */
