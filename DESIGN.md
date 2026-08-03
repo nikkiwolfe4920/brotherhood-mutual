@@ -148,6 +148,15 @@ raise it rather than silently deviating.
 > `.feed__icon--shep` class matching `.promo-owner__avatar`'s `brand-500`-filled-circle treatment
 > exactly, so a Shep-originated entry reads as coming from the same assistant shown on the AI Chat
 > Summary card rather than blending into the feed's other icon backgrounds.
+>
+> **Fifth page — transactional email:** `/email` (`email/index.html`) is the "new lead" notification
+> email Shep sends to the routed agent, reusing the Living Profile Feed and Recommended Next Steps
+> content from `/universal-profile` as its body (see `COMPONENTS.md`'s "Email — `/email`" entry for
+> the full content mapping and why this page intentionally does not load `tokens.css`/`components.css`
+> — real HTML email requires table layout and inline styles, not linked stylesheets or CSS custom
+> properties, so every color is a hardcoded copy of its token's hex value instead of a `var()`
+> reference). Reachable from `/universal-profile` via a new `.rec-owner__reminder-link` ("Send a
+> reminder") appended to the Mission Travel row's "Not yet contacted" pending-owner status.
 
 ## Design Principles
 
