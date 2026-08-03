@@ -767,19 +767,6 @@
   color: var(--color-neutral-50);
 }
 
-.promo-owner__action {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--color-neutral-0);
-  border: 1px solid var(--color-neutral-0);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Brand illustration banner — see COMPONENTS.md's "Promo banner" entry for
    why this reuses the homepage's illustrated-figure treatment here. */
 .promo-banner {
