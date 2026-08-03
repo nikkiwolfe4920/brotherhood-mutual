@@ -76,6 +76,15 @@
   flex-shrink: 0;
 }
 
+/* icons.js icons carry a viewBox but no width/height attributes, so without an
+   explicit size here they fall back to each browser's own (inconsistent)
+   intrinsic-sizing rules for a viewBox-only <svg> — pin them so Shep's icons
+   render reliably everywhere instead of only where that fallback behaves. */
+.shep__launcher-avatar svg {
+  width: 32px;
+  height: 32px;
+}
+
 .shep__launcher-label {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
@@ -178,6 +187,11 @@
   flex-shrink: 0;
 }
 
+.shep__header-avatar svg {
+  width: 40px;
+  height: 40px;
+}
+
 .shep__header-text {
   flex: 1;
   min-width: 0;
@@ -217,6 +231,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.shep__close svg {
+  width: 28px;
+  height: 28px;
 }
 
 .shep__close:hover {
@@ -376,6 +395,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.shep__send svg {
+  width: 28px;
+  height: 28px;
 }
 
 .shep__send:hover {
