@@ -85,7 +85,6 @@ function initShep(root) {
       <div class="shep__messages" role="log" aria-live="polite"></div>
       <div class="shep__topic-select" hidden></div>
       <div class="shep__quick-replies" hidden></div>
-      <div class="shep__email-capture" hidden></div>
       <form class="shep__form">
         <label class="visually-hidden" for="shep-input">Message Shep</label>
         <input
@@ -250,36 +249,46 @@ function initShep(root) {
     addMessage("user", option.label);
 
     await showTyping();
-    addMessage(
-      "shep",
-      "By the way — looks like you might already have a Brotherhood account. Mind popping in your email so I can double check?"
+    showEmailCapture(
+      "By the way — looks like you might already have a Brotherhood account. Mind popping in your email so I can double check?",
+      onPayrollEmailVerified
     );
-    showEmailCapture(onPayrollEmailVerified);
   }
 
-  function showEmailCapture(onVerified) {
+  // Rendered as its own message-log card (rather than the fixed
+  // quick-replies slot) so the prompt and its input read as one connected
+  // unit instead of a message bubble followed by a separate, look-alike
+  // input bar.
+  function showEmailCapture(promptText, onVerified) {
     if (!panel) return;
-    const container = panel.querySelector(".shep__email-capture");
-    container.hidden = false;
-    container.innerHTML = `
-      <form class="shep__email-form" novalidate>
+    const messagesEl = panel.querySelector(".shep__messages");
+    const card = document.createElement("div");
+    card.className = "shep__email-card";
+    card.innerHTML = `
+      <p class="shep__email-card-message">${promptText}</p>
+      <form class="shep__email-card-form" novalidate>
         <label class="visually-hidden" for="shep-email-input">Email address</label>
         <input
-          class="shep__input shep__email-input"
+          class="shep__email-card-input"
           id="shep-email-input"
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
           aria-describedby="shep-email-error"
         />
-        <button class="shep__send" type="submit" aria-label="Send email">${ICONS.send}</button>
+        <button class="shep__email-card-send" type="submit">Send</button>
       </form>
-      <p class="shep__field-error" id="shep-email-error" role="alert" hidden></p>
+      <p class="shep__field-error shep__email-card-error" id="shep-email-error" role="alert" hidden></p>
     `;
+    messagesEl.appendChild(card);
 
-    const form = container.querySelector(".shep__email-form");
-    const input = container.querySelector("#shep-email-input");
-    const error = container.querySelector("#shep-email-error");
+    const messagesRect = messagesEl.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    messagesEl.scrollTop += cardRect.top - messagesRect.top;
+
+    const form = card.querySelector(".shep__email-card-form");
+    const input = card.querySelector("#shep-email-input");
+    const error = card.querySelector("#shep-email-error");
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -296,21 +305,20 @@ function initShep(root) {
       error.hidden = true;
       input.removeAttribute("aria-invalid");
       input.disabled = true;
-      form.querySelector(".shep__send").disabled = true;
+      form.querySelector(".shep__email-card-send").disabled = true;
 
       // A visible confirmation that the address passed validation, distinct
-      // from the "Shep is typing" indicator that follows once the form is
+      // from the "Shep is typing" indicator that follows once the card is
       // torn down — otherwise a valid submit and an invalid one look the
       // same for a beat.
       const success = document.createElement("p");
-      success.className = "shep__field-success";
+      success.className = "shep__email-card-success";
       success.innerHTML = `${ICONS.check} Email verified`;
-      container.appendChild(success);
+      card.appendChild(success);
 
       await new Promise((resolve) => window.setTimeout(resolve, TYPING_DELAY_MS));
 
-      container.hidden = true;
-      container.innerHTML = "";
+      card.remove();
       addMessage("user", value);
 
       await showTyping();

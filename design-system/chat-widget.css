@@ -362,22 +362,107 @@
   color: var(--color-text-inverse);
 }
 
-/* ---------- Inline email capture (payroll flow) ---------- */
-.shep__email-capture {
-  padding: 0 var(--space-4) var(--space-4);
+/* ---------- Inline email capture card (payroll flow) ----------
+   Rendered as a single connected unit — navy surface, reversed text, and an
+   input/button treatment distinct from the main "Ask Shep a question" bar —
+   so the prompt and its input read as one ask instead of two look-alike
+   bars stacked on top of each other. */
+.shep__email-card {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sm);
+  background: var(--color-brand-800);
+  color: var(--color-text-inverse);
+  animation: shep-bubble-in var(--duration-slow) var(--easing-standard);
 }
 
-.shep__email-form {
+@media (prefers-reduced-motion: reduce) {
+  .shep__email-card {
+    animation: none;
+  }
+}
+
+.shep__email-card-message {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.shep__email-card-form {
   display: flex;
   gap: var(--space-2);
 }
 
-.shep__email-input {
+.shep__email-card-input {
   flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-inverse);
 }
 
-.shep__email-input[aria-invalid="true"] {
-  border-color: var(--color-danger-500);
+.shep__email-card-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.shep__email-card-input:focus-visible {
+  outline: 2px solid var(--color-text-inverse);
+  outline-offset: 1px;
+}
+
+.shep__email-card-input[aria-invalid="true"] {
+  border-color: #ffb4ab;
+}
+
+.shep__email-card-send {
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-text-inverse);
+  color: var(--color-brand-800);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shep__email-card-send:hover {
+  background: var(--color-neutral-100);
+}
+
+.shep__email-card-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shep__email-card-error {
+  margin: calc(-1 * var(--space-1)) 0 0;
+  color: #ffb4ab;
+}
+
+.shep__email-card-success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.shep__email-card-success svg {
+  width: 16px;
+  height: 16px;
 }
 
 .shep__field-error {
