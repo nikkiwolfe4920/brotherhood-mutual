@@ -331,13 +331,7 @@ function initShep(root) {
   async function onPayrollEmailVerified() {
     addMessage(
       "shep",
-      "Awesome. We are working on that behind the scenes and routing that to your agent for follow up."
-    );
-
-    await showTyping();
-    addMessage(
-      "shep",
-      "It looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+      "Awesome. I've routed that to your agent for follow up. It looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
     );
     showQuickReplies(
       [
@@ -355,7 +349,10 @@ function initShep(root) {
 
     await showTyping();
     if (option.value === "roof-yes") {
-      addMessage("shep", "Great! we have routed this to a specialist who will be following up with you soon.");
+      addMessage(
+        "shep",
+        "Great - I'm sending this to Alan, your Brotherhood agent. He already works with your ministry and knows your info, so he'll follow up within the next day or two with details."
+      );
       return;
     }
 
