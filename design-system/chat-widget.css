@@ -258,6 +258,7 @@
   border-radius: var(--radius-lg);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
+  white-space: pre-line;
   animation: shep-bubble-in var(--duration-slow) var(--easing-standard);
 }
 
