@@ -328,10 +328,16 @@ function initShep(root) {
     window.requestAnimationFrame(() => input.focus());
   }
 
-  function onPayrollEmailVerified() {
+  async function onPayrollEmailVerified() {
     addMessage(
       "shep",
-      "That's helpful, thank you! It looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+      "Awesome. We are working on that behind the scenes and routing that to your agent for follow up."
+    );
+
+    await showTyping();
+    addMessage(
+      "shep",
+      "It looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
     );
     showQuickReplies(
       [
@@ -349,21 +355,7 @@ function initShep(root) {
 
     await showTyping();
     if (option.value === "roof-yes") {
-      addMessage(
-        "shep",
-        "Great — our Global Missions Team will follow up directly with the roof savings details."
-      );
-
-      await showTyping();
-      addMessage("shep", "While I'm here — how many employees are you currently running payroll for?");
-      showQuickReplies(
-        [
-          { label: "Under 10", value: "size-small" },
-          { label: "10–50", value: "size-medium" },
-          { label: "50+", value: "size-large" },
-        ],
-        onPayrollSizeReply
-      );
+      addMessage("shep", "Great! we have routed this to a specialist who will be following up with you soon.");
       return;
     }
 
@@ -372,35 +364,6 @@ function initShep(root) {
     // Same reasoning as onQuickReply below: the clicked button was just
     // removed from the DOM, so focus needs somewhere to land explicitly.
     panel?.querySelector("#shep-input")?.focus();
-  }
-
-  async function onPayrollSizeReply(option, container) {
-    container.hidden = true;
-    container.innerHTML = "";
-    addMessage("user", option.label);
-
-    await showTyping();
-    addMessage("shep", "Thanks! And are you currently using a payroll provider, or handling it in-house?");
-    showQuickReplies(
-      [
-        { label: "Using a provider", value: "has-provider" },
-        { label: "Handling it in-house", value: "in-house" },
-      ],
-      onPayrollSetupReply
-    );
-  }
-
-  async function onPayrollSetupReply(option, container) {
-    container.hidden = true;
-    container.innerHTML = "";
-    addMessage("user", option.label);
-
-    await showTyping();
-    addMessage(
-      "shep",
-      "Perfect — I'll pass that along so a payroll specialist can put together pricing that fits your ministry."
-    );
-    showQuickReplies([{ label: "Get Pricing", value: "quote" }], onQuickReply);
   }
 
   // ---------- Mission-trip page flow ----------
