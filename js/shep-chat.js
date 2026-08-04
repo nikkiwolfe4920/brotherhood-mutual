@@ -331,7 +331,7 @@ function initShep(root) {
   async function onPayrollEmailVerified() {
     addMessage(
       "shep",
-      "Awesome. I've routed that to your agent for follow up. It looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
+      "Awesome. I've routed that to your agent for follow up.\nIt looks like your building may need a new roof in the near future. If you're able to replace it before your insurance policy renews in about three months, you may be eligible for some savings on your premium. It could be worth looking into!"
     );
     showQuickReplies(
       [
