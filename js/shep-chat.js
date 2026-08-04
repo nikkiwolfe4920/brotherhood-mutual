@@ -526,19 +526,14 @@ function initShep(root) {
           <p class="shep__field-error" id="mt-last-name-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
-          <label for="mt-job-title">Job title (required)</label>
-          <input class="shep__form-input" id="mt-job-title" type="text" required autocomplete="organization-title" aria-describedby="mt-job-title-error" />
-          <p class="shep__field-error" id="mt-job-title-error" role="alert" hidden></p>
-        </div>
-        <div class="shep__form-field">
-          <label for="mt-phone">Phone number (required)</label>
-          <input class="shep__form-input" id="mt-phone" type="tel" required autocomplete="tel" aria-describedby="mt-phone-error" />
-          <p class="shep__field-error" id="mt-phone-error" role="alert" hidden></p>
-        </div>
-        <div class="shep__form-field">
           <label for="mt-email">Email address (required)</label>
           <input class="shep__form-input" id="mt-email" type="email" required autocomplete="email" aria-describedby="mt-email-error" />
           <p class="shep__field-error" id="mt-email-error" role="alert" hidden></p>
+        </div>
+        <div class="shep__form-field">
+          <label for="mt-phone">Phone number (optional)</label>
+          <input class="shep__form-input" id="mt-phone" type="tel" autocomplete="tel" aria-describedby="mt-phone-error" />
+          <p class="shep__field-error" id="mt-phone-error" role="alert" hidden></p>
         </div>
         <div class="shep__form-field">
           <label for="mt-contact-pref">Contact preference</label>
@@ -619,8 +614,6 @@ function initShep(root) {
     const form = event.target;
     const firstNameInput = form.querySelector("#mt-first-name");
     const lastNameInput = form.querySelector("#mt-last-name");
-    const jobTitleInput = form.querySelector("#mt-job-title");
-    const phoneInput = form.querySelector("#mt-phone");
     const emailInput = form.querySelector("#mt-email");
     const orgNameInput = form.querySelector("#mt-org-name");
     const orgAddressInput = form.querySelector("#mt-org-address");
@@ -632,10 +625,6 @@ function initShep(root) {
       isValid;
     isValid =
       validateRequired(lastNameInput, form.querySelector("#mt-last-name-error"), "Enter your last name.") && isValid;
-    isValid =
-      validateRequired(jobTitleInput, form.querySelector("#mt-job-title-error"), "Enter your job title.") && isValid;
-    isValid =
-      validateRequired(phoneInput, form.querySelector("#mt-phone-error"), "Enter your phone number.") && isValid;
     isValid =
       validateRequired(orgNameInput, form.querySelector("#mt-org-name-error"), "Enter your organization name.") &&
       isValid;
