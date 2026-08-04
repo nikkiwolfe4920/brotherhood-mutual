@@ -20,6 +20,22 @@
   --color-success-border: #abefc6;
 }
 
+/* ---------- Internal banner ---------- */
+/* Same brand-900/inverse-text treatment as the marketing site's
+   `.announcement-banner`, so an internal tool reads as "still Brotherhood
+   Mutual" rather than a different product — kept static (not sticky, not
+   dismissible) since it's a persistent environment marker, not a promo. */
+.app-internal-banner {
+  background: var(--color-brand-900);
+  color: var(--color-text-inverse);
+  text-align: center;
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /* ---------- Top bar ---------- */
 .app-topbar {
   position: sticky;

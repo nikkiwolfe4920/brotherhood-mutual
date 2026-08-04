@@ -285,6 +285,14 @@ source design. It does reuse the shared tokens, fonts,
 source file's teal/amber/dark-slate CRM palette was re-mapped onto this project's existing
 `success`/`warning`/`brand` tokens instead of importing a second color scheme.
 
+### Internal banner — `.app-internal-banner`
+
+A short, full-width "Brotherhood Mutual Internal" strip inside `.app-shell`, above `.app-topbar`.
+Reuses the marketing site's `.announcement-banner` color treatment (`brand-900` fill,
+`--color-text-inverse` text) so this internal tool still reads as Brotherhood Mutual, but it's a
+separate primitive: static rather than sticky, and not dismissible — it's a persistent "you're in
+an internal tool" marker, not a promo a visitor closes once.
+
 ### App shell — `.app-shell`, `.app-topbar`, `.app-sidebar`, `.app-main`
 
 - `.app-topbar` is `position: sticky`; contains the real site logo (`public/B-mutualnav.svg`), a
