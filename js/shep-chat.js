@@ -401,13 +401,66 @@ function initShep(root) {
 
     await showTyping();
     if (option.value === "yes") {
-      addMessage("shep", "Help us get to know you — a few quick details for our Global Missions Team.");
-      showIntakeForm();
+      addMessage(
+        "shep",
+        "Happy to help make sure your team's mission is protected. Quick one first — about how many people are traveling with your group?"
+      );
+      showQuickReplies(
+        [
+          { label: "Just me", value: "solo" },
+          { label: "A small team (2–5)", value: "small-team" },
+          { label: "A large group (6+)", value: "large-group" },
+        ],
+        onMissionTripGroupSizeReply
+      );
       return;
     }
 
     addMessage("shep", "No problem — I'll be right here if you change your mind.");
     panel?.querySelector("#shep-input")?.focus();
+  }
+
+  // The two follow-ups below exist to work background checks and trip-delay/
+  // cancellation coverage into the conversation as things Shep mentions along
+  // the way — never as their own menu option — while every reply still comes
+  // back around to mission protection as the reason he's asking at all.
+  async function onMissionTripGroupSizeReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    addMessage("user", option.label);
+
+    await showTyping();
+    addMessage(
+      "shep",
+      option.value === "solo"
+        ? "Got it — solo or with a group, the goal's the same: making sure your mission itself is protected the whole time you're serving. One more thing — is your travel timing locked in, or still flexible?"
+        : "Good to know — groups traveling together often like to get background checks done on everyone ahead of time, just one more layer of protection before the trip even starts. But the main thing I'm here for is making sure your team's mission is protected while you're serving. One more thing — is your travel timing locked in, or still flexible?"
+    );
+    showQuickReplies(
+      [
+        { label: "Dates are set", value: "dates-set" },
+        { label: "Still working it out", value: "dates-flexible" },
+      ],
+      onMissionTripTimingReply
+    );
+  }
+
+  async function onMissionTripTimingReply(option, container) {
+    container.hidden = true;
+    container.innerHTML = "";
+    addMessage("user", option.label);
+
+    await showTyping();
+    addMessage(
+      "shep",
+      option.value === "dates-flexible"
+        ? "That's exactly where trip protection helps most — it can cover costs if travel plans shift or the trip gets delayed or cancelled before you even leave. Still, what I care most about is making sure your mission itself is protected once you're there."
+        : "Good to have that locked in. Worth knowing either way — trip protection can cover costs if a delay or cancellation comes up along the way. But what I'm really here for is making sure your team's mission is protected the whole time you're serving."
+    );
+
+    await showTyping();
+    addMessage("shep", "Help us get to know you — a few quick details for our Global Missions Team.");
+    showIntakeForm();
   }
 
   // A form is rendered as its own message bubble (rather than the fixed
