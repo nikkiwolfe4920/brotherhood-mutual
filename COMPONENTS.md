@@ -530,3 +530,20 @@ used in the email's header, on-brand for this page's white-background chrome) an
 
 Reachable from `/universal-profile` via the `.rec-owner__reminder-link` documented above ("Send a
 reminder" on the Mission Travel row's pending-owner status — the same lead this email is about).
+
+## Email — `/email-carly-follow`
+
+`email-carly-follow/index.html` is Shep's check-in note to Carly herself, sent after Alan's
+callback covered her renewal plus the three threads it surfaced (payroll, roof, missions travel).
+It's structurally closest to `/email-peter` — no identity card, Living Profile Feed, or
+Recommended Next Steps block, since there's no account data to summarize for the recipient who
+*is* the account — but adds one thing `/email-peter` doesn't need: a "What Happens Next" recap
+block (reusing the blue box and circle-chevron bullet from `/email`'s Recommended Next Steps)
+listing who owns each of the three threads and what Carly should expect from them next. Unlike
+`/email-peter`'s plain inline reply link, the CTA here is a full button (`.reminder-btn`, matching
+`/email`'s and `/email-carly`'s primary CTA) pointed at a `mailto:` link — this page's ask is a
+reply, so the reply is the primary action, not a secondary link under a button that goes somewhere
+else.
+
+Same inline-styles/table-layout rationale as `/email` applies (see that entry) — this is not a new
+pattern, just a third content variant of the same transactional template.
