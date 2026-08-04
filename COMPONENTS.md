@@ -191,7 +191,17 @@ config object is overdue instead of one more `if` branch at each step.
    downstream (the intake form always shows every section) — it exists to set expectations in the
    greeting, not to gate content. If that ever needs to change, `onMissionTripIntroReply` is where
    to read the checkbox state before branching.
-2. **Intake form.** Choosing "Yes, tell me more" calls `showIntakeForm()`, which renders a full
+2. **Secondary-interest follow-ups.** Choosing "Yes, tell me more" doesn't jump straight to the
+   intake form — `onMissionTripGroupSizeReply` and `onMissionTripTimingReply` ask two quick
+   questions first (group size, then travel-date flexibility) via the same fixed
+   `.shep__quick-replies` slot the intro uses. Each reply is where background checks and trip
+   protection get worked into the conversation ("groups traveling together often like to get
+   background checks done ahead of time" for a small/large group; "trip protection can cover costs
+   if travel gets delayed or cancelled" for flexible dates) — but neither is ever offered as its own
+   menu option, and every branch's copy still closes on mission protection as the reason Shep is
+   asking at all. That throughline, not the two secondary topics, is what carries into
+   `showIntakeForm()`.
+3. **Intake form.** After the follow-ups, `showIntakeForm()` renders a full
    form as its own chat-message bubble via `addFormMessage()` (a `.shep__form-message` — see the
    primitive note below) rather than using a fixed-height slot, so it scrolls with the rest of
    `.shep__messages` instead of needing its own scroll region. Fields: First/Last name (required),
@@ -206,7 +216,7 @@ config object is overdue instead of one more `if` branch at each step.
    passes, a `.shep__field-success` "Email verified" checkmark appears next to the email field
    (mirroring the payroll flow's inline email capture) before the whole form bubble is removed and
    the conversation continues.
-3. **Closing confirmation.** `onMissionTripFormSubmitted()` closes the flow directly with "Thank
+4. **Closing confirmation.** `onMissionTripFormSubmitted()` closes the flow directly with "Thank
    you for making your request. Our Global Mission's Team will be reaching out to you soon." —
    unlike the payroll flow, there's no roof-savings upsell or second submit step here.
 
