@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brotherhood Works Payroll &amp; HR — Brotherhood Mutual</title>
+  <meta
+    name="description"
+    content="Payroll, benefits, and HR support built for ministries — through Brotherhood Works, a Brotherhood Mutual brand."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/components.css" />
+  <link rel="stylesheet" href="../design-system/chat-widget.css" />
+  <style>
+    /* /payroll-2 opts out of Shep's frosted-glass scrim — the rest of the
+       page should stay in full focus when the chat panel is open. */
+    .shep__scrim {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="announcement-banner" id="announcement-banner">
+    <div class="container announcement-banner__row">
+      <button
+        class="announcement-banner__close"
+        type="button"
+        id="banner-close"
+        aria-label="Dismiss announcement"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18">
+          <path d="M18 6 6 18" /><path d="M6 6l12 12" />
+        </svg>
+      </button>
+      <p style="flex: 1; text-align: center; font-size: var(--font-size-sm); margin: 0;">
+        <a href="#">Brotherhood Works: New ways to care for your people →</a>
+      </p>
+      <span style="width: 40px;" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__utility">
+      <div class="container site-header__utility-row">
+        <a href="#">Claims</a>
+        <a href="#">Customer Logins</a>
+        <a class="btn btn--primary btn--sm" href="#quote">Request a quote</a>
+      </div>
+    </div>
+
+    <div class="container site-header__main-row">
+      <a class="site-logo" href="/" aria-label="Brotherhood Mutual home">
+        <img class="site-logo__mark" src="../public/B-mutualnav.svg" width="188" height="47" alt="Brotherhood Mutual" />
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="main-nav__list">
+          <li data-dropdown>
+            <button class="main-nav__link" type="button" aria-expanded="false" data-dropdown-trigger>
+              Insure Your Ministry
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <div class="nav-dropdown" data-dropdown-panel hidden>
+              <a href="#">Property Insurance</a>
+              <a href="#">Liability Insurance</a>
+              <a href="#">Workers&#39; Comp</a>
+              <a href="/mission-trip">Mission Trip Protection</a>
+              <a href="#">Auto &amp; Accident Insurance</a>
+            </div>
+          </li>
+          <li data-dropdown>
+            <button class="main-nav__link" type="button" aria-expanded="false" data-dropdown-trigger>
+              Care for your People
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <div class="nav-dropdown" data-dropdown-panel hidden>
+              <a href="/payroll" aria-current="page">Payroll &amp; HR Solutions</a>
+              <a href="#">Health, Vision &amp; Dental</a>
+              <a href="#">Life Insurance</a>
+              <a href="#">Mission Worker Care</a>
+            </div>
+          </li>
+          <li data-dropdown>
+            <button class="main-nav__link" type="button" aria-expanded="false" data-dropdown-trigger>
+              Resources
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <div class="nav-dropdown" data-dropdown-panel hidden>
+              <a href="#">Ministry Safety Guides</a>
+              <a href="#">Claims Center</a>
+              <a href="#">Blog</a>
+            </div>
+          </li>
+          <li><a class="main-nav__link" href="#">Legal Assist</a></li>
+        </ul>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap: var(--space-3);">
+        <form class="nav-search" role="search" action="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          <label class="visually-hidden" for="site-search">Search</label>
+          <input id="site-search" type="search" placeholder="Search" />
+        </form>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="mobile-nav-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero section">
+      <div class="hero__atmosphere" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero__eyebrow">
+          <span class="badge-pill badge-pill--success">Brotherhood Works</span>
+        </div>
+        <h1 class="hero__heading">
+          Payroll &amp; HR support that's<br />
+          <span class="hero__highlight">actually built for ministry</span>
+        </h1>
+        <p class="hero__subhead">Brotherhood Works handles payroll, benefits, and HR — so your team can focus on the mission.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#quote">Get Payroll pricing</a>
+        </div>
+      </div>
+
+      <div class="photo-marquee" aria-hidden="true">
+        <div class="photo-marquee__track">
+          <div class="photo-tile photo-tile--rect"></div>
+          <div class="photo-tile photo-tile--arch photo-tile--alt"></div>
+          <div class="photo-tile photo-tile--rect photo-tile--warm"></div>
+          <div class="photo-tile photo-tile--arch"></div>
+          <div class="photo-tile photo-tile--rect photo-tile--alt"></div>
+          <div class="photo-tile photo-tile--arch photo-tile--warm"></div>
+          <div class="photo-tile photo-tile--rect"></div>
+          <!-- duplicated for a seamless CSS-only marquee loop -->
+          <div class="photo-tile photo-tile--rect"></div>
+          <div class="photo-tile photo-tile--arch photo-tile--alt"></div>
+          <div class="photo-tile photo-tile--rect photo-tile--warm"></div>
+          <div class="photo-tile photo-tile--arch"></div>
+          <div class="photo-tile photo-tile--rect photo-tile--alt"></div>
+          <div class="photo-tile photo-tile--arch photo-tile--warm"></div>
+          <div class="photo-tile photo-tile--rect"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="feature-split">
+          <div>
+            <div class="feature-split__eyebrow">
+              <span class="badge-pill badge-pill--success">Brotherhood Works</span>
+            </div>
+            <h2 class="feature-split__heading">Provide</h2>
+            <ul class="checklist">
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Payroll &amp; HR Solutions
+              </li>
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Vision Insurance
+              </li>
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Health Insurance
+              </li>
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Dental Insurance
+              </li>
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Life Insurance
+              </li>
+              <li class="checklist__item">
+                <span class="checklist__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="20" height="20"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                Mission Worker Care
+              </li>
+            </ul>
+            <a class="btn btn--primary" href="#quote">Get Payroll pricing</a>
+          </div>
+          <div class="feature-split__media feature-split__media--light">
+            <img
+              class="feature-split__image"
+              src="../public/bro-works.png"
+              width="1137"
+              height="1034"
+              alt="Brotherhood Works — A Brotherhood Mutual brand"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__row">
+      <span>&copy; <span id="footer-year"></span> Brotherhood Mutual Insurance Company</span>
+      <ul class="site-footer__links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <div id="shep-root" data-flow="payroll"></div>
+
+  <script src="../js/main.js" type="module"></script>
+  <script src="../js/shep-chat.js" type="module"></script>
+</body>
+</html>
