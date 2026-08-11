@@ -1480,6 +1480,548 @@
   font-size: var(--font-size-xs);
 }
 
+/* =====================================================================
+   Partner Console — page-specific additions for /dashboard-partner.
+   Everything above this line is shared with /universal-profile; everything
+   below is only loaded on the partner console. See COMPONENTS.md's
+   "Partner Console" entry for usage notes on each of these.
+   ===================================================================== */
+
+/* ---------- Quick stats, 5-up ---------- */
+/* .quick-stats already defines the 2-up/4-up responsive grid; this variant
+   only overrides the widest breakpoint so the Partnership Performance
+   snapshot's optional fifth metric (Conversion Rate) gets its own column
+   instead of wrapping alone onto a second row. */
+@media (min-width: 1024px) {
+  .quick-stats--five {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.stat-card__trend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-success-500);
+}
+
+/* ---------- Governance note ---------- */
+/* Calm, transparent framing for "you only see what's permitted" messaging —
+   deliberately not styled as a warning/alert (no warning-surface tint):
+   this is a standing fact about the product, not something to flag. */
+.governance-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.governance-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-neutral-400);
+}
+
+.governance-note strong {
+  color: var(--color-text-primary);
+}
+
+/* ---------- Opportunity funnel ---------- */
+.funnel {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+
+@media (max-width: 639px) {
+  .funnel {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+}
+
+.funnel__stage {
+  flex: 1;
+  min-width: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+  text-align: left;
+}
+
+.funnel__stage:hover {
+  border-color: var(--color-border-strong);
+}
+
+.funnel__stage.is-active {
+  border-color: var(--color-brand-500);
+  background: var(--color-surface-raised);
+  box-shadow: 0 0 0 1px var(--color-brand-500);
+}
+
+.funnel__stage-count {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.funnel__stage-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.funnel__stage-bar {
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  width: var(--funnel-fill, 0%);
+}
+
+.funnel__arrow {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--color-neutral-300);
+}
+
+@media (max-width: 639px) {
+  .funnel__arrow {
+    transform: rotate(90deg);
+  }
+}
+
+.funnel__stalled {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.funnel__stalled svg {
+  flex-shrink: 0;
+  color: var(--color-warning-500);
+}
+
+.funnel__stalled.is-active {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.funnel-filter-status {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-info-surface);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.funnel-filter-status.is-visible {
+  display: flex;
+}
+
+.funnel-filter-status__clear {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Record rows (matched organizations / inbound leads) ---------- */
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.record-row {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  align-items: center;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+@media (min-width: 1024px) {
+  .record-row {
+    grid-template-columns: 3fr 2fr 2fr 2fr auto;
+  }
+
+  /* Inbound leads only carry identity + consent + resolution — no agent or
+     match-quality columns yet, so this variant uses a 3-column track
+     instead of leaving the org-row grid's extra tracks empty. */
+  .record-row--lead {
+    grid-template-columns: 3fr 2fr 2fr;
+  }
+}
+
+.record-row__identity {
+  min-width: 0;
+}
+
+.record-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.record-row__meta {
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.record-row__stalled-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-warning-500);
+}
+
+.record-row__agent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.record-row__agent-name {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.record-row__action {
+  flex-shrink: 0;
+  justify-self: end;
+}
+
+/* ---------- Reciprocal flow schematic (Inbound from Forte) ---------- */
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.flow-diagram__step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.flow-diagram__step svg {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.flow-diagram__arrow {
+  flex-shrink: 0;
+  color: var(--color-neutral-300);
+}
+
+/* ---------- Digest summary list ---------- */
+.digest-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.digest-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.digest-list__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Partner resources ---------- */
+.resource-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.resource-list__item:last-child {
+  border-bottom: none;
+}
+
+.resource-list__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.resource-list__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.resource-list__meta {
+  margin-top: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Shep contextual note ---------- */
+/* Small, inline — Shep surfacing one observation, never a takeover. Reuses
+   .feed__icon--shep's exact avatar treatment so it reads as the same
+   assistant shown elsewhere in the product. */
+.shep-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.shep-note__avatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-500);
+  color: var(--color-neutral-0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shep-note__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.shep-note__text strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Partner opportunity detail (native <dialog>) ---------- */
+/* A single reusable dialog, populated per-organization by
+   dashboard-partner.js, rather than one static detail block per row — see
+   COMPONENTS.md. Browsers give a native <dialog> focus-trap, Esc-to-close,
+   and a ::backdrop for free; only the visual reset below is page-specific. */
+.org-detail {
+  width: min(560px, calc(100vw - var(--space-6)));
+  max-height: min(640px, calc(100vh - var(--space-6)));
+  overflow-y: auto;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+}
+
+.org-detail::backdrop {
+  background: rgba(22, 24, 27, 0.4);
+}
+
+.org-detail__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.org-detail__name {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.org-detail__meta {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.org-detail__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+}
+
+.org-detail__close:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+}
+
+.org-detail__body {
+  padding: var(--space-6);
+}
+
+.org-detail__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.org-detail__fact-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.org-detail__fact-value {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.org-detail__why {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.org-detail__why-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.org-detail__why-label svg {
+  color: var(--color-accent-500);
+}
+
+.org-detail__why-text {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-style: italic;
+}
+
+.org-detail__timeline-heading {
+  margin-top: var(--space-6);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.org-detail__timeline {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.org-detail__timeline li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-400);
+}
+
+.org-detail__timeline li.is-done {
+  color: var(--color-text-primary);
+}
+
+.org-detail__timeline li svg {
+  flex-shrink: 0;
+}
+
+.org-detail__timeline li.is-done svg {
+  color: var(--color-success-500);
+}
+
+.org-detail__stalled-note {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-surface);
+  color: var(--color-warning-500);
+  font-size: var(--font-size-sm);
+}
+
 /* Panel footer */
 .panel-card__footer {
   display: flex;

@@ -127,6 +127,17 @@
   color: var(--color-neutral-600);
 }
 
+/* In-progress/active states that aren't a completed success yet (e.g. a
+   partner opportunity that's been introduced or booked a session, but hasn't
+   converted) — added for /dashboard-partner. --color-info-500 on
+   --color-info-surface clears ~4.9:1, just over the 4.5:1 AA floor at this
+   pill's small text size. */
+.badge-pill--info {
+  border-color: var(--color-info-border);
+  background: var(--color-info-surface);
+  color: var(--color-info-500);
+}
+
 /* ---------- Skip-nav / banner ---------- */
 .announcement-banner {
   background: var(--color-brand-900);

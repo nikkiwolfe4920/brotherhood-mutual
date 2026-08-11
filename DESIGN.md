@@ -158,12 +158,27 @@ raise it rather than silently deviating.
 > reference). Reachable from `/universal-profile` via a new `.rec-owner__reminder-link` ("Send a
 > reminder") appended to the Mission Travel row's "Not yet contacted" pending-owner status.
 >
-> **Sixth page — Partner Dashboard:** `/dashboard-partner` (`dashboard-partner/index.html`) is a
-> direct copy of `/universal-profile` — same markup, same `design-system/dashboard.css` styling,
-> same `js/dashboard.js` behavior, no content changes — living at its own route as the starting
-> point for a partner-facing variant of the CRM dashboard. It sits at the same depth below the repo
-> root as `/universal-profile`, so its `../design-system/`, `../js/`, and `../public/` references
-> resolve unchanged.
+> **Sixth page — Partner Console:** `/dashboard-partner` (`dashboard-partner/index.html`) is Forte's
+> (an affiliate partner's) external-facing view into its Brotherhood Mutual partnership — a governed
+> projection of `/universal-profile`, not a second copy of it. It reuses `/universal-profile`'s
+> app-shell, tokens, typography, cards, badges, and Shep voice wholesale (same
+> `design-system/dashboard.css`, plus `js/dashboard.js` for the shared sidebar/search behavior), but
+> its information architecture is deliberately different: an internal 360° account view answers "what
+> does Brotherhood know, and what should Brotherhood do next?", while the partner console answers
+> "what has Brotherhood matched to me, and is it working?" See `COMPONENTS.md`'s "Partner Console —
+> `/dashboard-partner`" entry for the full component/content breakdown, the governance rules on what a
+> partner may never see, and the new primitives (`.funnel`, `.record-row`, `.flow-diagram`, the
+> `.org-detail` dialog, etc.) this page adds to `dashboard.css`.
+>
+> **Entitlement layering (not built, documented for the architecture):** the partner console and
+> Brotherhood's internal affiliate-performance view (used by an internal Affiliate Program Lead role)
+> are meant to originate from the same underlying ecosystem events, filtered through different
+> entitlement levels — `/universal-profile` → internal intelligence → a permissions/entitlement layer
+> → the matching engine → a partner-specific projection → `/dashboard-partner`. Only the partner-facing
+> projection is implemented here; the internal affiliate view is out of scope for this page, and
+> nothing on `/dashboard-partner` renders data (other partners' activity, unmatched organizations,
+> policy/premium/claims detail, or individual-level information) that belongs only to that broader
+> internal layer.
 
 ## Design Principles
 
