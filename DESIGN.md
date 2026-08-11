@@ -198,6 +198,37 @@ raise it rather than silently deviating.
 > nothing on `/dashboard-partner` renders data (other partners' activity, unmatched organizations,
 > policy/premium/claims detail, or individual-level information) that belongs only to that broader
 > internal layer.
+>
+> **Partner Console — second partner (Highpoint Roofing & Restoration) + Financial Trends:** the
+> partner console was re-pointed from Forte (mental-fitness coaching) to Highpoint Roofing &
+> Restoration, a roofing/restoration affiliate — every "Forte" reference became "Highpoint" (full
+> name in headings/titles, shorthand in inline copy), and every "why this organization was matched"
+> reasoning string was rewritten from coaching-fit signals (leadership transitions, staff growth) to
+> roofing-fit signals (building/roof age, storm exposure, facilities investment) so the copy stays
+> internally coherent rather than a name-only find-replace over stale coaching language — still
+> organizational-context only, per the governance rule in the "Partner Opportunity Detail" entry
+> below. The header dropped its niche-specific tag and tagline (no longer applicable to a second,
+> differently-niched partner) in favor of `.profile-summary__stats` (reused from
+> `/universal-profile`) showing **Partner Since** / **Renewal Date**. The "3 opportunities stalled"
+> funnel note and each matched organization's "Stalled N days" flag were removed outright, along
+> with their now-dead CSS/JS (`.funnel__stalled`, `.record-row__stalled-flag`,
+> `.org-detail__stalled-note`, and the "stalled" filter stage) — the design brief never called for a
+> stalled state anywhere else, so leaving a single lonely "N opportunities stalled" digest bullet
+> after removing the rest of the concept read as an inconsistency, not a feature.
+>
+> A new **Financial Trends** panel (`.chart-stat-grid`, reusing `/universal-profile`'s
+> chart+stat-highlight layout) sits above Partnership Performance: a dual-series bar chart
+> (Referral Revenue / Referral Bonus) driven by a new `.segmented-control` period filter
+> (Daily/Weekly/Monthly/Quarterly-default/Yearly), each swapping in a different bucketed mock
+> dataset in `js/dashboard-partner.js` rather than one fixed window. Quarterly's 3 monthly figures
+> intentionally reconcile with Yearly's most recent quarter total, so switching between the two
+> doesn't quietly disagree with itself. See `COMPONENTS.md`'s "Financial Trends" and "Segmented
+> control" entries.
+>
+> The "Partner Resources" card was removed (with its now-unused `.resource-list*` CSS and the top
+> nav's "Resources" link) in favor of a **seventh page**, `/partner-integration/` — a standalone
+> utility page (no app-shell chrome) reached from a new sidebar link, with a copy-to-clipboard API
+> request/response snippet. See `COMPONENTS.md`'s "Partner Integration page" entry.
 
 ## Design Principles
 

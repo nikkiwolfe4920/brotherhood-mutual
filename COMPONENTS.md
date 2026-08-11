@@ -498,15 +498,23 @@ rather than a bug.
 
 ## Partner Console — `/dashboard-partner`
 
-A second, self-contained page (`dashboard-partner/index.html`, same `dashboard.css`) — Forte's
-external-facing view into its Brotherhood Mutual partnership. It's built on the same app-shell as
-`/universal-profile` (topbar, off-canvas sidebar, `.panel-card`, `.badge-pill`, `.btn`, the Shep
-voice) but is a **governed projection**, not a second internal record: see the "Sixth page" note in
-`DESIGN.md` for the architecture. Every section below only ever renders data Forte's partner
-agreement permits — no policy/premium/claims detail, no other partner's activity, no unmatched
-organizations, no individual-level information.
+A second, self-contained page (`dashboard-partner/index.html`, same `dashboard.css`) — Highpoint
+Roofing & Restoration's external-facing view into its Brotherhood Mutual partnership. (An earlier
+revision built this for a different partner, Forte, a mental-fitness coaching company — see the
+"second partner" note in `DESIGN.md` for what changed and why "Highpoint" appears as shorthand for
+the full name in body copy.) It's built on the same app-shell as `/universal-profile` (topbar,
+off-canvas sidebar, `.panel-card`, `.badge-pill`, `.btn`, the Shep voice) but is a **governed
+projection**, not a second internal record: see the "Sixth page" note in `DESIGN.md` for the
+architecture. Every section below only ever renders data Highpoint's partner agreement permits — no
+policy/premium/claims detail, no other partner's activity, no unmatched organizations, no
+individual-level information.
 
 ### In-page section navigation
+
+The top nav links to Overview, Matched Organizations, Inbound Leads, Financial Trends, and
+Performance; the sidebar links to Dashboard (`#main-content`) and — in a new tab — Partner
+Integration (see below). "Resources" was removed from the top nav along with the Partner Resources
+card it pointed to.
 
 Clicking a top-nav or sidebar link scrolls (smoothly, via `html { scroll-behavior: smooth; }` in
 `dashboard.css`, and `prefers-reduced-motion` respected automatically through base.css's existing
@@ -522,13 +530,15 @@ secondary fix, not the primary click interaction — an unusually late layout sh
 
 ### Reused as-is
 
-`.profile-summary` (partner identity header — "Forte" stands in for the org name `/universal-profile`
-uses it for), `.quick-stats`/`.stat-card` (Partnership Performance, Match Quality, Inbound stat
-rows — the Inbound row uses the `.quick-stats--relaxed` gap modifier documented with `.funnel`
-below, since "Matched to Existing Organizations" is long enough to wrap and needs more breathing
-room than the shorter labels elsewhere), `.feed` (Recent Activity), `.rec-owner__avatar` (agent
-initials in `.record-row__agent`), and `.empty-state`'s dashed-border pattern are all otherwise
-unmodified — reused directly rather than re-styled, per "build on primitives, not one-offs."
+`.profile-summary` (partner identity header — the partner's name stands in for the org name
+`/universal-profile` uses it for; `.profile-summary__stats` now also carries Partner Since/Renewal
+Date, the same `.stat-block`s `/universal-profile` uses for Net Worth/Premium), `.quick-stats`/
+`.stat-card` (Partnership Performance, Match Quality, Inbound stat rows — the Inbound row uses the
+`.quick-stats--relaxed` gap modifier documented with `.funnel` below, since "Matched to Existing
+Organizations" is long enough to wrap and needs more breathing room than the shorter labels
+elsewhere), `.feed` (Recent Activity), `.rec-owner__avatar` (agent initials in
+`.record-row__agent`), and `.empty-state`'s dashed-border pattern are all otherwise unmodified —
+reused directly rather than re-styled, per "build on primitives, not one-offs."
 
 ### Governance note — `.governance-note`
 
@@ -542,8 +552,10 @@ unmodified — reused directly rather than re-styled, per "build on primitives, 
 
 Calm, factual framing of the access boundary required by the product's governance rules — no
 warning-surface tint, no legal-notice styling. This is a standing fact about the product, not
-something to flag as a problem. Used under "Matched Organizations" and again (in a slightly
-different sentence) under "Inbound from Forte."
+something to flag as a problem. Used under "Matched Organizations" (immediately followed by a
+`.shep-note` — see below — surfacing *why* the matching system is prioritizing what it's showing,
+so the governance boundary and the reasoning behind what's inside it sit next to each other) and
+again (in a slightly different sentence) under "Inbound from Highpoint."
 
 ### Opportunity funnel — `.funnel`
 
@@ -576,11 +588,10 @@ action, and toggles `aria-pressed`/`.is-active` on the buttons. Clicking the act
 ### Record rows — `.record-list`, `.record-row`, `.record-row--lead`
 
 ```html
-<div class="record-row" data-org="grace-fellowship" data-stage="recommended" data-stalled="true">
+<div class="record-row" data-org="grace-fellowship" data-stage="recommended">
   <div class="record-row__identity">
     <p class="record-row__name">Grace Fellowship</p>
     <p class="record-row__meta">Large ministry · Midwest</p>
-    <p class="record-row__stalled-flag"><svg>…</svg> Stalled 12 days</p>
   </div>
   <span class="badge-pill badge-pill--neutral">Recommended</span>
   <div class="record-row__agent"><span class="rec-owner__avatar">AL</span> <span class="record-row__agent-name">Alan</span></div>
@@ -590,18 +601,27 @@ action, and toggles `aria-pressed`/`.is-active` on the buttons. Clicking the act
 ```
 
 One shared row shape for both "Matched Organizations" (5 columns: identity, funnel-stage badge,
-agent, match-quality badge, a "View" action) and "Inbound from Forte" (`.record-row--lead`, a
-3-column variant — identity, consent badge, resolution badge — since inbound leads don't have an
-agent or match score yet). Badge color mapping is deliberate, not arbitrary: `--neutral` for
-Matched/Recommended (early, no signal yet), `--info` (new — see below) for Introduced/Session
-booked/Engaged (in progress, not yet a confirmed outcome), `--success` reserved for Converted only,
-matching `DESIGN.md`'s "success = confirmations/completed states" rule rather than using it for
-every positive-sounding stage. Match quality reuses the same success/neutral pairing (High/Medium).
-An org's incompleteness — no premium, no risk detail, sometimes no agent yet
+agent, match-quality badge, a "View" action) and "Inbound from Highpoint" (`.record-row--lead`, a
+4-column variant — identity, consent badge, resolution badge, a relationship tag — since inbound
+leads don't have an agent or match score yet). Badge color mapping is deliberate, not arbitrary:
+`--neutral` for Matched/Recommended (early, no signal yet), `--info` (new — see below) for
+Introduced/Session booked/Engaged (in progress, not yet a confirmed outcome), `--success` reserved
+for Converted only, matching `DESIGN.md`'s "success = confirmations/completed states" rule rather
+than using it for every positive-sounding stage. Match quality reuses the same success/neutral
+pairing (High/Medium). An org's incompleteness — no premium, no risk detail, sometimes no agent yet
 ("Pending assignment", `.rec-owner__avatar` showing "?") — is intentional per the design brief, not
 a missing-data bug.
 
+The `.record-row--lead` relationship tag (`.badge-pill--neutral`: "Highpoint owned" / "Organic
+overlap" / "Referral from Brotherhood", one per inbound lead) is deliberately neutral-colored rather
+than success/warning — it's a descriptive attribute of how the lead relates to the ecosystem, not a
+status, so it follows the same "don't borrow a semantic color for a plain tag" rule
+`badge-pill--neutral` already exists for.
+
 Collapses to a single stacked column below `1024px`, same responsive strategy as `.rec-row`.
+`.record-row` no longer carries a `data-stalled` attribute or `.record-row__stalled-flag` child — an
+earlier revision removed the "stalled" concept from this page entirely (see the "second partner"
+note in `DESIGN.md`), so don't reintroduce either without checking that note first.
 
 ### `.badge-pill--info` (added to `components.css`)
 
@@ -622,20 +642,25 @@ button opened it (`js/dashboard-partner.js` tracks `lastTrigger`), satisfying `D
 focus-restoration rule.
 
 Content is data-driven from an `ORG_DETAILS` map keyed by the same slug used in `data-org-detail`:
-facts (Forte opportunity / match quality / agent), a "Why this organization was matched" callout
+facts (Highpoint opportunity / match quality / agent), a "Why this organization was matched" callout
 (`.org-detail__why`), and a 6-step `.org-detail__timeline` (Matched → Recommended to agent → Agent
 engaged → Introduction made → Session booked → Conversion) with the first `doneSteps` marked
 `.is-done`. **The "why matched" copy is a hard product-governance rule, not just tone**: every
-reason is organizational context Brotherhood is permitted to use (leadership transitions, ministry
-size, staff growth, region) — never an inference about a named individual's health, mental health,
-or private circumstances. Don't add a "why" string to `ORG_DETAILS` that violates this.
+reason is organizational context Brotherhood is permitted to use (building/roof age, storm exposure,
+facilities investment, region) — never an inference about a named individual's health, mental
+health, or private circumstances. Don't add a "why" string to `ORG_DETAILS` that violates this. (An
+earlier revision, when this partner was a coaching company rather than a roofer, used
+leadership-transition/staff-growth signals instead — the governance rule is what's load-bearing
+here, not those particular signals; rewrite the reasoning to fit whatever the partner actually does,
+same as this page already did once.) There is no more `stalledDays` field or stalled-note
+paragraph — removed along with the rest of the "stalled" concept.
 
 ### Reciprocal flow schematic — `.flow-diagram`
 
 ```html
 <div class="flow-diagram" role="img" aria-label="…">
   <span class="flow-diagram__unit">
-    <span class="flow-diagram__step"><svg>…</svg> Forte site</span>
+    <span class="flow-diagram__step"><svg>…</svg> Highpoint site</span>
     <svg class="flow-diagram__arrow">…</svg>
   </span>
   <!-- …Consent → Brotherhood match → Existing / net-new (each its own __unit)… -->
@@ -643,11 +668,12 @@ or private circumstances. Don't add a "why" string to `ORG_DETAILS` that violate
 </div>
 ```
 
-Under "Inbound from Forte" — a static chain of pill-shaped steps, visually distinct from the
+Under "Inbound from Highpoint" — a static chain of pill-shaped steps, visually distinct from the
 interactive, count-driven `.funnel` above it (no numbers, not clickable) so the outbound
-(Brotherhood → Forte) and inbound (Forte → Brotherhood) halves of the loop read as two different
-mechanisms, per the design brief. `role="img"` + a descriptive `aria-label` on the container, same
-pattern as `.bar-chart__plot`, since the steps carry no other accessible grouping text.
+(Brotherhood → Highpoint) and inbound (Highpoint → Brotherhood) halves of the loop read as two
+different mechanisms, per the design brief. `role="img"` + a descriptive `aria-label` on the
+container, same pattern as `.bar-chart__plot`, since the steps carry no other accessible grouping
+text.
 
 Each step (except the last, which has no trailing arrow) is wrapped with its arrow in a
 `.flow-diagram__unit` — a `flex-wrap` container without this would let a step end one wrapped line
@@ -663,22 +689,65 @@ brief frames the email digest as the primary interface and this dashboard as the
 drill-down, so this section should read as a summary, not compete with the funnel/matched-orgs
 sections above it for attention.
 
-### Resource list — `.resource-list`
+### Financial Trends — `.chart-stat-grid` + segmented period filter
+
+Reuses `/universal-profile`'s chart+stat-highlight layout verbatim (`.chart-stat-grid`, `.bar-chart`,
+`.stat-highlight`) rather than a new chart component — same "deliberately simple, illustrative CSS
+bar chart, not a BI library" rationale applies here. Two new bar/legend color modifiers,
+`--revenue`/`--bonus`, are aliases for the exact same `brand-500`/`success-500` recipe as
+`--premium`/`--savings` (kept as separate classes so the markup reads correctly for this chart's
+actual series, rather than reusing premium/savings out of context).
+
+The chart is data-driven, not static markup: `js/dashboard-partner.js`'s `renderFinancialTrends()`
+rebuilds `#financial-chart-plot`/`#financial-chart-axis`/the two stat-highlight totals from a
+`FINANCIAL_PERIODS` map keyed by period (`daily`/`weekly`/`monthly`/`quarterly`/`yearly`), each with
+its own label/revenue/bonus arrays at a bucket count sized for readability (7 days, 6 weeks, 6
+months, 3 months, 4 quarters) rather than one fixed window stretched thin or compressed. Quarterly
+is the default per the design brief ("current quarter, 3 months"); its monthly figures intentionally
+sum to match Yearly's most recent quarter, so the two views don't silently disagree.
+
+### Segmented control — `.segmented-control`
 
 ```html
-<div class="resource-list__item">
-  <span class="data-table__icon data-table__icon--accent">…</span>
-  <div class="resource-list__text">
-    <p class="resource-list__title">90-Second Forte Overview</p>
-    <p class="resource-list__meta">Video · 1:30</p>
-  </div>
-  <button class="btn btn--secondary btn--sm">Watch</button>
+<div class="segmented-control" role="group" aria-label="Financial trend period">
+  <button class="segmented-control__option is-active" type="button" data-period="quarterly" aria-pressed="true">Quarterly</button>
+  <!-- …Daily/Weekly/Monthly/Yearly siblings… -->
 </div>
 ```
 
-Under "Partner Resources" — reuses `.data-table__icon`'s existing icon-bubble treatment rather than
-a new one. A flat divided list (`border-bottom` between items) instead of cards, since these are
-simple link-style actions, not data records.
+A new primitive — a real, recurring need (a period filter) rather than a one-off. `min-width: 0` on
+both `.segmented-control` and its `.panel-card__actions` parent, plus `overflow-x: auto` on the
+control itself, matter more than they look: without them, 5 non-wrapping button labels forced the
+whole `.panel-card__header` wider than the viewport on narrow screens instead of scrolling
+internally within the control (the same contained-overflow pattern `.app-nav` and `.bar-chart`
+already use elsewhere on this page). `min-height: 36px` per option matches the `.btn--sm` precedent
+already used throughout this page for compact secondary actions.
+
+### Digest list — `.digest-list`
+
+A plain icon+text bullet list for "Latest Partner Digest" — deliberately not an activity feed
+(reuses `.feed` for that, in "Recent Activity" instead). Kept intentionally small/quiet: the design
+brief frames the email digest as the primary interface and this dashboard as the secondary
+drill-down, so this section should read as a summary, not compete with the funnel/matched-orgs
+sections above it for attention.
+
+### Partner Integration page — `/partner-integration/`
+
+A seventh page, reached from a new sidebar link (`target="_blank"`, with a small external-link icon
+and visually-hidden "(opens in a new tab)" text so the new-tab behavior is announced before the
+click, not just after). Deliberately **not** another `.app-shell` dashboard view — no
+topbar/sidebar — since its one job is a focused, copy-and-go reference, not a workspace: just a
+`.integration-page` container (max-width 720px, centered) with two `.panel-card`s.
+
+`.code-block` (dark `--color-neutral-900` body, `--color-neutral-800` toolbar, `--font-family-mono`)
+holds an API request snippet and a sample JSON response, each with a `.code-block__copy` button.
+`js/partner-integration.js` copies the `<code>` element's text via the Clipboard API, swaps the
+button's label to "Copied" plus a `.is-copied` border/color change (text label changes too, not just
+color, per the accessibility rule that color is never the only signal) for 2 seconds, and falls back
+to a "Press Ctrl+C to copy" label if `navigator.clipboard` throws (denied permission, insecure
+context, unsupported browser) rather than failing silently. The snippet's line length exceeds its
+container at most widths on purpose — `.code-block__pre`'s `overflow-x: auto` scrolls it internally
+rather than wrapping code mid-token, the same contained-overflow approach as `.bar-chart`.
 
 ### Shep contextual note — `.shep-note`
 
@@ -689,9 +758,9 @@ simple link-style actions, not data records.
 </div>
 ```
 
-One-line, non-modal Shep callouts (under the partner header and again under Match Quality) — reuses
-`.feed__icon--shep`'s exact avatar treatment. Two on the whole page, by design: the brief is explicit
-that Shep should stay a small, contextual presence here, not the center of the dashboard the way the
+One-line, non-modal Shep callouts (under the partner header, again under the Matched Organizations
+governance note, and again under Match Quality). Three on the whole page, by design: the brief is
+explicit that Shep should stay a small, contextual presence here, not the center of the dashboard the way the
 "Ask Shep" input and AI Chat Summary card are on `/universal-profile`. This page doesn't reuse
 `.panel-card--dark`/`.promo-*`/`.ask-shep` for that reason — those are `/universal-profile`'s
 internal-agent AI surface, not part of what a partner needs.
