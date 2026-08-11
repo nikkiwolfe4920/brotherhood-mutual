@@ -441,6 +441,10 @@
 
 .panel-card__actions {
   display: flex;
+  /* min-width: 0 lets a wide, non-wrapping child (e.g. .segmented-control)
+     shrink/scroll within this box instead of forcing .panel-card__header
+     wider than the viewport — see the Financial Trends period filter. */
+  min-width: 0;
   gap: var(--space-3);
   flex-wrap: wrap;
 }
@@ -1088,6 +1092,17 @@
   background: var(--color-success-500);
 }
 
+/* Same two recipes, under names that make sense for the Financial Trends
+   chart's series (Referral Revenue / Referral Bonus) rather than reusing
+   --premium/--savings out of context. */
+.legend-item__dot--revenue {
+  background: var(--color-brand-500);
+}
+
+.legend-item__dot--bonus {
+  background: var(--color-success-500);
+}
+
 .bar-chart {
   padding: var(--space-6);
   padding-top: var(--space-5);
@@ -1136,6 +1151,14 @@
 }
 
 .bar-chart__bar--savings {
+  background: var(--color-success-500);
+}
+
+.bar-chart__bar--revenue {
+  background: var(--color-brand-500);
+}
+
+.bar-chart__bar--bonus {
   background: var(--color-success-500);
 }
 
@@ -1500,6 +1523,56 @@ html {
   scroll-behavior: smooth;
 }
 
+/* A second sidebar link (Partner Integration) opens in a new tab — this
+   small icon plus the visually-hidden "(opens in a new tab)" text next to
+   it in the markup are the accessible way to flag that before the click,
+   rather than surprising the user with an unannounced new tab. Pinned to
+   the right edge of the row so it doesn't get lost inline with the icon +
+   label that lead every other nav link. */
+.app-sidebar__nav-link-external {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ---------- Segmented control (Financial Trends period filter) ---------- */
+.segmented-control {
+  display: inline-flex;
+  /* min-width: 0 lets this shrink below its 5-option intrinsic width as a
+     flex item of .panel-card__actions; overflow-x scrolls internally
+     instead of forcing the whole panel-card__header wider than the
+     viewport on narrow screens. */
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 2px;
+  gap: 2px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+}
+
+.segmented-control__option {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.segmented-control__option:hover {
+  color: var(--color-text-primary);
+}
+
+.segmented-control__option.is-active {
+  background: var(--color-brand-500);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-semibold);
+}
+
 /* ---------- Quick stats, 5-up ---------- */
 /* .quick-stats already defines the 2-up/4-up responsive grid; this variant
    only overrides the widest breakpoint so the Partnership Performance
@@ -1619,30 +1692,6 @@ html {
   }
 }
 
-.funnel__stalled {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-  padding: 0;
-  background: none;
-  border: none;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.funnel__stalled svg {
-  flex-shrink: 0;
-  color: var(--color-warning-500);
-}
-
-.funnel__stalled.is-active {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-}
-
 .funnel-filter-status {
   display: none;
   align-items: center;
@@ -1695,11 +1744,12 @@ html {
     grid-template-columns: 3fr 2fr 2fr 2fr auto;
   }
 
-  /* Inbound leads only carry identity + consent + resolution — no agent or
-     match-quality columns yet, so this variant uses a 3-column track
-     instead of leaving the org-row grid's extra tracks empty. */
+  /* Inbound leads carry identity + consent + resolution + a relationship
+     tag (Highpoint owned / Organic overlap / Referral from Brotherhood) —
+     no agent or match-quality columns yet, so this variant uses a 4-column
+     track instead of leaving the org-row grid's 5th track empty. */
   .record-row--lead {
-    grid-template-columns: 3fr 2fr 2fr;
+    grid-template-columns: 3fr 2fr 2fr 2fr;
   }
 }
 
@@ -1717,16 +1767,6 @@ html {
   margin-top: 2px;
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-}
-
-.record-row__stalled-flag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: var(--space-1);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-warning-500);
 }
 
 .record-row__agent {
@@ -1827,41 +1867,6 @@ html {
   align-items: center;
   justify-content: center;
   background: var(--color-surface-raised);
-  color: var(--color-text-secondary);
-}
-
-/* ---------- Partner resources ---------- */
-.resource-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.resource-list__item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.resource-list__item:last-child {
-  border-bottom: none;
-}
-
-.resource-list__text {
-  flex: 1;
-  min-width: 0;
-}
-
-.resource-list__title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-}
-
-.resource-list__meta {
-  margin-top: 2px;
-  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
 }
 
@@ -2051,15 +2056,6 @@ html {
   color: var(--color-success-500);
 }
 
-.org-detail__stalled-note {
-  margin-top: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-warning-surface);
-  color: var(--color-warning-500);
-  font-size: var(--font-size-sm);
-}
-
 /* Panel footer */
 .panel-card__footer {
   display: flex;
@@ -2081,4 +2077,121 @@ html {
 
 .panel-card__footer-note strong {
   color: var(--color-text-primary);
+}
+
+/* =====================================================================
+   Partner Integration page — /partner-integration/. Opened from the
+   dashboard-partner sidebar in a new tab, so it's a lightweight standalone
+   utility page (no app-shell/topbar/sidebar) rather than another dashboard
+   view. Still loads this file for .panel-card/.badge-pill/.governance-note.
+   ===================================================================== */
+.integration-page__header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.integration-page {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.integration-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.integration-page__title {
+  /* Overrides base.css's default h1 (--font-size-6xl, hero-only) — this is
+     a regular page heading, which DESIGN.md's type scale maps to 4xl. */
+  font-size: var(--font-size-4xl);
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.integration-page__lead {
+  max-width: 60ch;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+.integration-page__note {
+  margin-top: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.integration-page__note code {
+  padding: 2px var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+}
+
+/* ---------- Code block with copy button ---------- */
+.code-block {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-neutral-700);
+}
+
+.code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-neutral-800);
+}
+
+.code-block__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-neutral-300);
+}
+
+.code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-neutral-600);
+  background: transparent;
+  color: var(--color-neutral-50);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.code-block__copy:hover {
+  background: var(--color-neutral-700);
+}
+
+/* Success feedback after a copy — text label swaps to "Copied" in JS at
+   the same time this class is added, so color isn't the only signal. */
+.code-block__copy.is-copied {
+  border-color: var(--color-success-border);
+  color: var(--color-success-border);
+}
+
+.code-block__pre {
+  margin: 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  background: var(--color-neutral-900);
+  color: var(--color-neutral-50);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
 }

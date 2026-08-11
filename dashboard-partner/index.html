@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forte Partner Console | Brotherhood Mutual</title>
+  <title>Highpoint Roofing &amp; Restoration Partner Console | Brotherhood Mutual</title>
   <meta
     name="description"
-    content="Forte's view into its Brotherhood Mutual partnership — matched organizations, opportunity funnel, and reciprocal inbound leads."
+    content="Highpoint Roofing &amp; Restoration's view into its Brotherhood Mutual partnership — matched organizations, opportunity funnel, and reciprocal inbound leads."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,8 +45,8 @@
           <a class="app-nav__link" href="#main-content" aria-current="page">Overview</a>
           <a class="app-nav__link" href="#matched-organizations">Matched Organizations</a>
           <a class="app-nav__link" href="#inbound-leads">Inbound Leads</a>
+          <a class="app-nav__link" href="#financial-trends">Financial Trends</a>
           <a class="app-nav__link" href="#partnership-performance">Performance</a>
-          <a class="app-nav__link" href="#partner-resources">Resources</a>
         </nav>
 
         <div class="app-topbar__actions">
@@ -62,7 +62,7 @@
             <span class="app-icon-btn__dot" aria-hidden="true"></span>
           </button>
 
-          <button class="app-avatar" type="button" aria-label="Your account — Jordan, Forte">J</button>
+          <button class="app-avatar" type="button" aria-label="Your account — Jordan, Highpoint Roofing &amp; Restoration">J</button>
         </div>
       </div>
     </header>
@@ -76,6 +76,14 @@
               <a class="app-sidebar__nav-link" href="#main-content" aria-current="page">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><rect x="3" y="3" width="8" height="8" /><rect x="13" y="3" width="8" height="8" /><rect x="3" y="13" width="8" height="8" /><rect x="13" y="13" width="8" height="8" /></svg>
                 Dashboard
+              </a>
+            </li>
+            <li>
+              <a class="app-sidebar__nav-link" href="/partner-integration/" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="m8 9-3 3 3 3" /><path d="m16 9 3 3-3 3" /><path d="m13 6-2 12" /></svg>
+                Partner Integration
+                <svg class="app-sidebar__nav-link-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="12" height="12"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+                <span class="visually-hidden">(opens in a new tab)</span>
               </a>
             </li>
           </ul>
@@ -92,11 +100,19 @@
             <div>
               <p class="stat-block__label">Your Brotherhood partnership</p>
               <div class="profile-summary__name-row">
-                <h1 class="profile-summary__name">Forte</h1>
+                <h1 class="profile-summary__name">Highpoint Roofing &amp; Restoration</h1>
                 <span class="badge-pill badge-pill--success">Active Partner</span>
-                <span class="badge-pill badge-pill--neutral">Ministry Leader Coaching Partner</span>
               </div>
-              <p class="profile-summary__subhead">Mental fitness for ministry leaders · Matched opportunities, partner activity, and performance.</p>
+            </div>
+          </div>
+          <div class="profile-summary__stats">
+            <div class="stat-block">
+              <span class="stat-block__label">Partner Since</span>
+              <span class="stat-block__value">Jan 12, 2026</span>
+            </div>
+            <div class="stat-block">
+              <span class="stat-block__label">Renewal Date</span>
+              <span class="stat-block__value">Jan 12, 2027</span>
             </div>
           </div>
         </div>
@@ -108,12 +124,64 @@
           <p class="shep-note__text"><strong>Shep:</strong> 3 organizations changed stage since your last digest.</p>
         </div>
 
+        <!-- Financial trends -->
+        <div class="chart-stat-grid" id="financial-trends">
+          <div class="panel-card">
+            <div class="panel-card__header">
+              <div>
+                <h2 class="panel-card__heading">Financial Trends</h2>
+                <p class="panel-card__subheading">Revenue and referral bonus from your Brotherhood partnership.</p>
+              </div>
+              <div class="panel-card__actions">
+                <div class="segmented-control" id="financial-period-filter" role="group" aria-label="Financial trend period">
+                  <button class="segmented-control__option" type="button" data-period="daily">Daily</button>
+                  <button class="segmented-control__option" type="button" data-period="weekly">Weekly</button>
+                  <button class="segmented-control__option" type="button" data-period="monthly">Monthly</button>
+                  <button class="segmented-control__option is-active" type="button" data-period="quarterly" aria-pressed="true">Quarterly</button>
+                  <button class="segmented-control__option" type="button" data-period="yearly">Yearly</button>
+                </div>
+              </div>
+            </div>
+            <div class="panel-card__header" style="border-bottom: none;">
+              <p class="panel-card__subheading" id="financial-chart-caption" style="margin-top: 0;">Current quarter (Jun–Aug 2026)</p>
+              <div class="chart-card__legend">
+                <span class="legend-item"><span class="legend-item__dot legend-item__dot--revenue" aria-hidden="true"></span>Referral Revenue</span>
+                <span class="legend-item"><span class="legend-item__dot legend-item__dot--bonus" aria-hidden="true"></span>Referral Bonus</span>
+              </div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar-chart__inner">
+                <div class="bar-chart__plot" id="financial-chart-plot" role="img" aria-label="Referral revenue and referral bonus trend"></div>
+                <div class="bar-chart__axis" id="financial-chart-axis" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="stat-highlight">
+              <div class="stat-highlight__section">
+                <p class="stat-highlight__label">Total Referral Revenue</p>
+                <p class="stat-highlight__value" id="financial-total-revenue">$16,100</p>
+                <p class="stat-highlight__caption stat-highlight__caption--positive">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><path d="m6 15 6-6 6 6" /></svg>
+                  <span id="financial-revenue-trend">62% vs. prior period</span>
+                </p>
+              </div>
+              <div class="stat-highlight__section">
+                <p class="stat-highlight__label">Total Referral Bonus</p>
+                <p class="stat-highlight__value stat-highlight__value--accent" id="financial-total-bonus">$3,220</p>
+                <p class="stat-highlight__caption">Paid to Highpoint from Brotherhood's ecosystem</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Partnership performance snapshot -->
         <div class="panel-card" id="partnership-performance">
           <div class="panel-card__header">
             <div>
               <h2 class="panel-card__heading">Partnership Performance</h2>
-              <p class="panel-card__subheading">How Forte's matched pipeline is performing this period.</p>
+              <p class="panel-card__subheading">How Highpoint's matched pipeline is performing this period.</p>
             </div>
           </div>
           <div class="panel-card__body">
@@ -150,7 +218,7 @@
         <div class="panel-card" id="opportunity-funnel">
           <div class="panel-card__header">
             <div>
-              <h2 class="panel-card__heading">Forte Opportunity Funnel</h2>
+              <h2 class="panel-card__heading">Highpoint Opportunity Funnel</h2>
               <p class="panel-card__subheading">See how matched organizations are moving through the partner experience.</p>
             </div>
           </div>
@@ -192,11 +260,6 @@
                 <span class="funnel__stage-bar" style="--funnel-fill: 14%"></span>
               </button>
             </div>
-
-            <button class="funnel__stalled" type="button" data-stage="stalled" aria-pressed="false">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
-              3 opportunities stalled after recommendation
-            </button>
           </div>
         </div>
 
@@ -204,11 +267,17 @@
         <div class="panel-card" id="matched-organizations">
           <div class="panel-card__header">
             <div>
-              <h2 class="panel-card__heading">Matched Organizations</h2>
-              <p class="panel-card__subheading">You're seeing organizations that Brotherhood's matching system has identified as relevant to Forte.</p>
+              <h2 class="panel-card__heading">Matched Organizations within Brotherhood Organization</h2>
+              <p class="panel-card__subheading">You're seeing organizations that Brotherhood's matching system has identified as relevant to Highpoint.</p>
               <div class="governance-note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="5" y="11" width="14" height="9" rx="1" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
                 <span><strong>Matched organizations only</strong> — your access is limited to organizations and fields permitted by your partner agreement.</span>
+              </div>
+              <div class="shep-note">
+                <span class="shep-note__avatar" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+                </span>
+                <p class="shep-note__text"><strong>Shep:</strong> I'm prioritizing organizations with recent roof-related claims activity, aging roofs (15+ years), and storm-affected regions — those signals have historically been Highpoint's best-converting fit.</p>
               </div>
             </div>
           </div>
@@ -247,14 +316,10 @@
                 <button class="btn btn--secondary btn--sm record-row__action" type="button" data-org-detail="willow-creek-ministries">View</button>
               </div>
 
-              <div class="record-row" data-org="grace-fellowship" data-stage="recommended" data-stalled="true">
+              <div class="record-row" data-org="grace-fellowship" data-stage="recommended">
                 <div class="record-row__identity">
                   <p class="record-row__name">Grace Fellowship</p>
                   <p class="record-row__meta">Large ministry · Midwest</p>
-                  <p class="record-row__stalled-flag">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
-                    Stalled 12 days
-                  </p>
                 </div>
                 <span class="badge-pill badge-pill--neutral">Recommended</span>
                 <div class="record-row__agent">
@@ -265,14 +330,10 @@
                 <button class="btn btn--secondary btn--sm record-row__action" type="button" data-org-detail="grace-fellowship">View</button>
               </div>
 
-              <div class="record-row" data-org="riverside-community-church" data-stage="recommended" data-stalled="true">
+              <div class="record-row" data-org="riverside-community-church" data-stage="recommended">
                 <div class="record-row__identity">
                   <p class="record-row__name">Riverside Community Church</p>
                   <p class="record-row__meta">Mid-size ministry · Midwest</p>
-                  <p class="record-row__stalled-flag">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
-                    Stalled 9 days
-                  </p>
                 </div>
                 <span class="badge-pill badge-pill--neutral">Recommended</span>
                 <div class="record-row__agent">
@@ -283,14 +344,10 @@
                 <button class="btn btn--secondary btn--sm record-row__action" type="button" data-org-detail="riverside-community-church">View</button>
               </div>
 
-              <div class="record-row" data-org="trinity-baptist-fellowship" data-stage="recommended" data-stalled="true">
+              <div class="record-row" data-org="trinity-baptist-fellowship" data-stage="recommended">
                 <div class="record-row__identity">
                   <p class="record-row__name">Trinity Baptist Fellowship</p>
                   <p class="record-row__meta">Mid-size ministry · West</p>
-                  <p class="record-row__stalled-flag">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="10" height="10"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
-                    Stalled 15 days
-                  </p>
                 </div>
                 <span class="badge-pill badge-pill--neutral">Recommended</span>
                 <div class="record-row__agent">
@@ -365,7 +422,7 @@
           <div class="panel-card__header">
             <div>
               <h2 class="panel-card__heading">Match Quality</h2>
-              <p class="panel-card__subheading">Understand which types of organizations are responding to Forte.</p>
+              <p class="panel-card__subheading">Understand which types of organizations are responding to Highpoint.</p>
             </div>
           </div>
           <div class="panel-card__body">
@@ -397,12 +454,12 @@
           </div>
         </div>
 
-        <!-- Inbound from Forte -->
+        <!-- Inbound from Highpoint -->
         <div class="panel-card" id="inbound-leads">
           <div class="panel-card__header">
             <div>
-              <h2 class="panel-card__heading">Inbound from Forte</h2>
-              <p class="panel-card__subheading">Leads generated through Forte's own website and AI experience.</p>
+              <h2 class="panel-card__heading">Inbound from Highpoint Roofing &amp; Restoration</h2>
+              <p class="panel-card__subheading">Leads generated through Highpoint's own website and AI experience.</p>
             </div>
           </div>
           <div class="panel-card__body">
@@ -421,11 +478,11 @@
               </div>
             </div>
 
-            <div class="flow-diagram" role="img" aria-label="Flow: Forte site, then Consent, then Brotherhood match, then Existing customer or Net-new prospect, then Agent routing">
+            <div class="flow-diagram" role="img" aria-label="Flow: Highpoint site, then Consent, then Brotherhood match, then Existing customer or Net-new prospect, then Agent routing">
               <span class="flow-diagram__unit">
                 <span class="flow-diagram__step">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18" /></svg>
-                  Forte site
+                  Highpoint site
                 </span>
                 <svg class="flow-diagram__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><path d="m9 6 6 6-6 6" /></svg>
               </span>
@@ -460,32 +517,35 @@
               <div class="record-row record-row--lead">
                 <div class="record-row__identity">
                   <p class="record-row__name">First Community Church</p>
-                  <p class="record-row__meta">Submitted via Forte site · Aug 8</p>
+                  <p class="record-row__meta">Submitted via Highpoint site · Aug 8</p>
                 </div>
                 <span class="badge-pill badge-pill--success">Consent captured</span>
                 <span class="badge-pill badge-pill--neutral">Matched to existing account</span>
+                <span class="badge-pill badge-pill--neutral">Highpoint owned</span>
               </div>
               <div class="record-row record-row--lead">
                 <div class="record-row__identity">
                   <p class="record-row__name">Calvary Ridge Church</p>
-                  <p class="record-row__meta">Submitted via Forte site · Aug 6</p>
+                  <p class="record-row__meta">Submitted via Highpoint site · Aug 6</p>
                 </div>
                 <span class="badge-pill badge-pill--success">Consent captured</span>
                 <span class="badge-pill badge-pill--neutral">Matched to existing account</span>
+                <span class="badge-pill badge-pill--neutral">Organic overlap</span>
               </div>
               <div class="record-row record-row--lead">
                 <div class="record-row__identity">
                   <p class="record-row__name">Unresolved contact — net-new</p>
-                  <p class="record-row__meta">Submitted via Forte site · Aug 5</p>
+                  <p class="record-row__meta">Submitted via Highpoint site · Aug 5</p>
                 </div>
                 <span class="badge-pill badge-pill--success">Consent captured</span>
                 <span class="badge-pill badge-pill--info">Net-new prospect</span>
+                <span class="badge-pill badge-pill--neutral">Referral from Brotherhood</span>
               </div>
             </div>
 
             <div class="governance-note">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="5" y="11" width="14" height="9" rx="1" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
-              <span>Only the fields permitted under Forte's partner agreement are shown here — the rest stays inside Brotherhood's Universal Profile.</span>
+              <span>Only the fields permitted under Highpoint's partner agreement are shown here — the rest stays inside Brotherhood's Universal Profile.</span>
             </div>
           </div>
         </div>
@@ -521,9 +581,9 @@
                 </li>
                 <li class="digest-list__item">
                   <span class="digest-list__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M22 12h-6l-2 3h-4l-2-3H2" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z" /></svg>
                   </span>
-                  2 opportunities stalled
+                  1 new inbound lead from Highpoint
                 </li>
               </ul>
             </div>
@@ -560,7 +620,7 @@
                     </span>
                     <div style="flex: 1; min-width: 0;">
                       <div class="feed__row">
-                        <p class="feed__row-title">New Forte match: <strong>First Community Church</strong>.</p>
+                        <p class="feed__row-title">New Highpoint match: <strong>First Community Church</strong>.</p>
                         <span class="feed__timestamp">Yesterday</span>
                       </div>
                     </div>
@@ -571,7 +631,7 @@
                     </span>
                     <div style="flex: 1; min-width: 0;">
                       <div class="feed__row">
-                        <p class="feed__row-title">New inbound lead from Forte.</p>
+                        <p class="feed__row-title">New inbound lead from Highpoint.</p>
                         <span class="feed__timestamp">Aug 8</span>
                       </div>
                     </div>
@@ -593,59 +653,6 @@
           </div>
         </div>
 
-        <!-- Partner resources -->
-        <div class="panel-card" id="partner-resources">
-          <div class="panel-card__header">
-            <div>
-              <h2 class="panel-card__heading">Partner Resources</h2>
-              <p class="panel-card__subheading">Quick materials to help you and Brotherhood agents talk about Forte.</p>
-            </div>
-          </div>
-          <div class="panel-card__body">
-            <div class="resource-list">
-              <div class="resource-list__item">
-                <span class="data-table__icon data-table__icon--accent" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="9" /><path d="m10 9 5 3-5 3z" /></svg>
-                </span>
-                <div class="resource-list__text">
-                  <p class="resource-list__title">90-Second Forte Overview</p>
-                  <p class="resource-list__meta">Video · 1:30</p>
-                </div>
-                <button class="btn btn--secondary btn--sm" type="button">Watch</button>
-              </div>
-              <div class="resource-list__item">
-                <span class="data-table__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 21s-7-4.35-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 3.5C19 16.65 12 21 12 21Z" /></svg>
-                </span>
-                <div class="resource-list__text">
-                  <p class="resource-list__title">Free Session</p>
-                  <p class="resource-list__meta">One complimentary coaching session for a matched ministry</p>
-                </div>
-                <button class="btn btn--secondary btn--sm" type="button">Claim your session</button>
-              </div>
-              <div class="resource-list__item">
-                <span class="data-table__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="6" y="4" width="12" height="17" rx="1" /><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" /><path d="M9 11h6M9 15h6" /></svg>
-                </span>
-                <div class="resource-list__text">
-                  <p class="resource-list__title">Client Newsletter Blurb</p>
-                  <p class="resource-list__meta">Pre-written copy for Forte's own newsletter</p>
-                </div>
-                <button class="btn btn--secondary btn--sm" type="button">Copy</button>
-              </div>
-              <div class="resource-list__item">
-                <span class="data-table__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="4" y="3" width="16" height="18" rx="1" /><path d="M8 8h8M8 12h8M8 16h5" /></svg>
-                </span>
-                <div class="resource-list__text">
-                  <p class="resource-list__title">Agent Cheat Sheet</p>
-                  <p class="resource-list__meta">How Brotherhood agents introduce Forte to ministries</p>
-                </div>
-                <button class="btn btn--secondary btn--sm" type="button">View</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   </div>
@@ -665,7 +672,7 @@
     <div class="org-detail__body">
       <div class="org-detail__facts">
         <div>
-          <span class="org-detail__fact-label">Forte opportunity</span>
+          <span class="org-detail__fact-label">Highpoint opportunity</span>
           <span class="org-detail__fact-value" id="org-detail-stage"></span>
         </div>
         <div>
@@ -688,8 +695,6 @@
 
       <p class="org-detail__timeline-heading">Partner activity</p>
       <ol class="org-detail__timeline" id="org-detail-timeline"></ol>
-
-      <p class="org-detail__stalled-note" id="org-detail-stalled" hidden></p>
     </div>
   </dialog>
 

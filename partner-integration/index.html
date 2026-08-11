@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner Integration | Brotherhood Mutual</title>
+  <meta
+    name="description"
+    content="Pull your matched-organization and funnel data from the Brotherhood Mutual Partner Console into your own tools with the Partner API."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/components.css" />
+  <link rel="stylesheet" href="../design-system/dashboard.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="integration-page__header">
+    <img src="../public/B-mutualnav.svg" width="150" height="28" alt="Brotherhood Mutual" />
+  </header>
+
+  <main class="integration-page" id="main-content">
+    <div class="integration-page__intro">
+      <span class="badge-pill badge-pill--neutral">Highpoint Roofing &amp; Restoration</span>
+      <h1 class="integration-page__title">Partner Integration</h1>
+      <p class="integration-page__lead">
+        Pull your matched-organization and opportunity-funnel data straight from the Partner
+        Console into your own CRM or reporting tools using the snippet below.
+      </p>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-card__header">
+        <div>
+          <h2 class="panel-card__heading">API request</h2>
+          <p class="panel-card__subheading">Copy this into your terminal, server, or integration tool.</p>
+        </div>
+      </div>
+      <div class="panel-card__body">
+        <div class="code-block">
+          <div class="code-block__toolbar">
+            <span class="code-block__label">cURL</span>
+            <button class="code-block__copy" type="button" id="copy-request-btn" data-copy-target="api-request-snippet">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="9" y="9" width="12" height="12" rx="1.5" /><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" /></svg>
+              <span class="code-block__copy-label">Copy</span>
+            </button>
+          </div>
+          <pre class="code-block__pre"><code id="api-request-snippet">curl -X GET "https://api.brotherhoodmutual.com/partner/v1/highpoint/opportunities" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Accept: application/json"</code></pre>
+        </div>
+        <p class="integration-page__note">
+          Replace <code>YOUR_API_KEY</code> with the API key issued to Highpoint Roofing &amp;
+          Restoration. Need a key or lost yours? Contact your Brotherhood partnership manager.
+        </p>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-card__header">
+        <div>
+          <h2 class="panel-card__heading">Sample response</h2>
+          <p class="panel-card__subheading">What each matched opportunity looks like in the response payload.</p>
+        </div>
+      </div>
+      <div class="panel-card__body">
+        <div class="code-block">
+          <div class="code-block__toolbar">
+            <span class="code-block__label">JSON</span>
+            <button class="code-block__copy" type="button" id="copy-response-btn" data-copy-target="api-response-snippet">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="9" y="9" width="12" height="12" rx="1.5" /><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" /></svg>
+              <span class="code-block__copy-label">Copy</span>
+            </button>
+          </div>
+          <pre class="code-block__pre"><code id="api-response-snippet">{
+  "opportunities": [
+    {
+      "organization": "Grace Fellowship",
+      "size_band": "Large ministry",
+      "region": "Midwest",
+      "stage": "Recommended",
+      "match_quality": "High",
+      "agent": "Alan",
+      "last_updated": "2026-08-11"
+    }
+  ]
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="governance-note integration-page__governance">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="5" y="11" width="14" height="9" rx="1" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+      <span>This API only returns the fields permitted under Highpoint's partner agreement — the
+      same governed subset shown in the Partner Console, never Brotherhood's full customer
+      record.</span>
+    </div>
+  </main>
+
+  <script src="../js/partner-integration.js" type="module"></script>
+</body>
+</html>
