@@ -178,6 +178,17 @@ raise it rather than silently deviating.
 > — this was a request scoped to the sidebar specifically, not a decision that the in-page section
 > links themselves are unneeded.
 >
+> **Partner Console — spacing fixes + offset-aware anchor scrolling:** the "Inbound from Forte"
+> panel's flow schematic and its 3-metric stat row read as cramped (a step's trailing arrow could
+> wrap onto the next line on its own, and the long "Matched to Existing Organizations" label sat too
+> close to its neighbors) — fixed with a `.flow-diagram__unit` wrapper that keeps a step and its
+> arrow together across a wrap, a larger `row-gap` than `column-gap` on `.flow-diagram`, and a new
+> `.quick-stats--relaxed` gap modifier for that one stat row (see `COMPONENTS.md`). Separately, the
+> top-nav/sidebar section links now scroll to place each target `.panel-card__heading` just below the
+> sticky topbar instead of the browser's default jump hiding it behind the topbar — see
+> `COMPONENTS.md`'s "In-page section navigation" entry for how `js/dashboard-partner.js` computes the
+> offset from the topbar's real height rather than a guessed constant.
+>
 > **Entitlement layering (not built, documented for the architecture):** the partner console and
 > Brotherhood's internal affiliate-performance view (used by an internal Affiliate Program Lead role)
 > are meant to originate from the same underlying ecosystem events, filtered through different

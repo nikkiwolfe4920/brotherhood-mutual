@@ -1,3 +1,48 @@
+// ---------- In-page section navigation (top nav + sidebar) ----------
+// Anchors scroll so a section's own heading lands just below the sticky
+// topbar, instead of the browser's default jump — which puts the target
+// element's top edge flush with the viewport top, hiding it behind the
+// topbar entirely. Smoothness/reduced-motion is left to CSS `scroll-behavior`
+// (see dashboard.css) by not passing an explicit `behavior` here.
+const topbar = document.querySelector(".app-topbar");
+const SCROLL_OFFSET_GAP = 16; // breathing room below the topbar, ~--space-4
+
+function scrollToSection(hash, { updateHistory = true } = {}) {
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  const topbarHeight = topbar?.getBoundingClientRect().height ?? 0;
+  const targetTop = target.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top: targetTop - topbarHeight - SCROLL_OFFSET_GAP });
+
+  if (updateHistory) history.pushState(null, "", hash);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  const hash = link.getAttribute("href");
+  if (!hash || hash.length < 2 || !document.querySelector(hash)) return;
+
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    scrollToSection(hash);
+  });
+});
+
+// Landing directly on a section link (e.g. a bookmarked or shared URL) hits
+// the same covered-heading problem the browser's default jump has — offset
+// it the same way once the page has laid out. The browser's own jump-to-
+// fragment isn't tied to DOMContentLoaded — it can land anywhere up through
+// `load` — so correcting only on DOMContentLoaded risks getting silently
+// overwritten by that later native jump. Re-applying on `load` covers the
+// common case; an unusually slow, late layout shift (e.g. a font swap) after
+// that point could still occasionally win the race — an accepted gap for
+// this secondary entry point, not the primary nav-click interaction above.
+if (location.hash) {
+  const landOnHash = () => scrollToSection(location.hash, { updateHistory: false });
+  document.addEventListener("DOMContentLoaded", landOnHash);
+  window.addEventListener("load", landOnHash);
+}
+
 // ---------- Opportunity funnel → matched organization list filter ----------
 const funnel = document.getElementById("funnel");
 const stalledButton = document.querySelector(".funnel__stalled");
