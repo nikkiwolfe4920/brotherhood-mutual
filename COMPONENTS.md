@@ -496,6 +496,14 @@ Dashed-border placeholder ("Future Ecosystem Partners") for a list section with 
 reuse this instead of just omitting the section, so it's clear the empty state is intentional
 rather than a bug.
 
+### `/dashboard-partner` — copy of this page
+
+`dashboard-partner/index.html` is a literal duplicate of `/universal-profile` (same markup, same
+`dashboard.css`/`dashboard.js`), kept as its own route rather than a variant of this one — see the
+"Sixth page" note in `DESIGN.md`. Every primitive documented above (`.panel-card`, `.feed`,
+`.rec-row`, the bar chart, etc.) applies identically there; update both pages together if either
+changes, or they'll silently drift apart.
+
 ## Email — `/email`
 
 `email/index.html` is the transactional "new lead" notification email sent from Shep to the
