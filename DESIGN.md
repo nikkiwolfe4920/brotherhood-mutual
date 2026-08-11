@@ -170,6 +170,14 @@ raise it rather than silently deviating.
 > partner may never see, and the new primitives (`.funnel`, `.record-row`, `.flow-diagram`, the
 > `.org-detail` dialog, etc.) this page adds to `dashboard.css`.
 >
+> **Partner Console — sidebar simplified to a single link:** a follow-up pass reduced
+> `.app-sidebar__nav` to one item — "Dashboard" (was "Overview"), still `href="#main-content"` — and
+> removed the Matched Organizations/Inbound Leads/Performance/Resources sidebar links, mirroring the
+> single-link sidebar `/universal-profile` already settled on (see its "Unified Customer Record nav
+> collapse" note above). The equivalent links in the top `.app-nav` bar were intentionally left as-is
+> — this was a request scoped to the sidebar specifically, not a decision that the in-page section
+> links themselves are unneeded.
+>
 > **Entitlement layering (not built, documented for the architecture):** the partner console and
 > Brotherhood's internal affiliate-performance view (used by an internal Affiliate Program Lead role)
 > are meant to originate from the same underlying ecosystem events, filtered through different
