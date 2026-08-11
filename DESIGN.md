@@ -157,6 +157,13 @@ raise it rather than silently deviating.
 > properties, so every color is a hardcoded copy of its token's hex value instead of a `var()`
 > reference). Reachable from `/universal-profile` via a new `.rec-owner__reminder-link` ("Send a
 > reminder") appended to the Mission Travel row's "Not yet contacted" pending-owner status.
+>
+> **Sixth page — Partner Dashboard:** `/dashboard-partner` (`dashboard-partner/index.html`) is a
+> direct copy of `/universal-profile` — same markup, same `design-system/dashboard.css` styling,
+> same `js/dashboard.js` behavior, no content changes — living at its own route as the starting
+> point for a partner-facing variant of the CRM dashboard. It sits at the same depth below the repo
+> root as `/universal-profile`, so its `../design-system/`, `../js/`, and `../public/` references
+> resolve unchanged.
 
 ## Design Principles
 
