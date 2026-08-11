@@ -1487,6 +1487,19 @@
    "Partner Console" entry for usage notes on each of these.
    ===================================================================== */
 
+/* ---------- In-page section navigation ---------- */
+/* Only opts in on this page — /universal-profile's single nav link is a
+   bare "#" (no real target), so it has nothing to smoothly scroll to.
+   base.css's global `@media (prefers-reduced-motion: reduce)` rule already
+   forces `scroll-behavior: auto !important` on every element, so this is
+   automatically disabled for users who've asked for reduced motion. The
+   pixel offset that keeps a section's heading clear of the sticky topbar
+   is computed at click-time in js/dashboard-partner.js — the topbar's real
+   height, not a guessed constant, since it's the same on every breakpoint. */
+html {
+  scroll-behavior: smooth;
+}
+
 /* ---------- Quick stats, 5-up ---------- */
 /* .quick-stats already defines the 2-up/4-up responsive grid; this variant
    only overrides the widest breakpoint so the Partnership Performance
@@ -1496,6 +1509,13 @@
   .quick-stats--five {
     grid-template-columns: repeat(5, 1fr);
   }
+}
+
+/* A roomier gap for stat rows paired with longer labels (e.g. "Matched to
+   Existing Organizations" on the Inbound from Forte panel) — .quick-stats'
+   default --space-3 gap reads cramped once a label wraps to two lines. */
+.quick-stats--relaxed {
+  gap: var(--space-4);
 }
 
 .stat-card__trend {
@@ -1732,11 +1752,23 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  padding: var(--space-4);
+  /* Column-gap governs spacing within a wrapped line; row-gap is larger so
+     wrapped lines don't read as cramped against the line above/below. */
+  column-gap: var(--space-3);
+  row-gap: var(--space-4);
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface-alt);
+}
+
+/* Groups a step with its trailing arrow so the pair wraps to the next line
+   together — without this, a step could end one line while its arrow
+   starts the next, reading as a stray glyph rather than a connector. */
+.flow-diagram__unit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 .flow-diagram__step {
@@ -1750,6 +1782,7 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
+  white-space: nowrap;
 }
 
 .flow-diagram__step svg {

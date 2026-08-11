@@ -506,13 +506,29 @@ voice) but is a **governed projection**, not a second internal record: see the "
 agreement permits — no policy/premium/claims detail, no other partner's activity, no unmatched
 organizations, no individual-level information.
 
+### In-page section navigation
+
+Clicking a top-nav or sidebar link scrolls (smoothly, via `html { scroll-behavior: smooth; }` in
+`dashboard.css`, and `prefers-reduced-motion` respected automatically through base.css's existing
+global override) to that section with its own `.panel-card__heading` landing just below the sticky
+topbar, instead of the browser's default anchor jump, which puts the target flush with the viewport
+top and hides it entirely behind the topbar. `js/dashboard-partner.js`'s `scrollToSection()`
+intercepts every `a[href^="#"]` click, reads the topbar's *actual* current height (not a guessed
+constant — same function works at every breakpoint without a media query), and scrolls to
+`target top − topbar height − 16px`. It also re-applies on direct/bookmarked hash loads
+(`DOMContentLoaded` and `load`) for the same reason, though that entry point is a best-effort
+secondary fix, not the primary click interaction — an unusually late layout shift after `load`
+(e.g. a slow font swap) could still occasionally let the browser's native jump win that race.
+
 ### Reused as-is
 
 `.profile-summary` (partner identity header — "Forte" stands in for the org name `/universal-profile`
 uses it for), `.quick-stats`/`.stat-card` (Partnership Performance, Match Quality, Inbound stat
-rows), `.feed` (Recent Activity), `.rec-owner__avatar` (agent initials in `.record-row__agent`), and
-`.empty-state`'s dashed-border pattern are all unmodified — reused directly rather than re-styled,
-per "build on primitives, not one-offs."
+rows — the Inbound row uses the `.quick-stats--relaxed` gap modifier documented with `.funnel`
+below, since "Matched to Existing Organizations" is long enough to wrap and needs more breathing
+room than the shorter labels elsewhere), `.feed` (Recent Activity), `.rec-owner__avatar` (agent
+initials in `.record-row__agent`), and `.empty-state`'s dashed-border pattern are all otherwise
+unmodified — reused directly rather than re-styled, per "build on primitives, not one-offs."
 
 ### Governance note — `.governance-note`
 
@@ -618,9 +634,12 @@ or private circumstances. Don't add a "why" string to `ORG_DETAILS` that violate
 
 ```html
 <div class="flow-diagram" role="img" aria-label="…">
-  <span class="flow-diagram__step"><svg>…</svg> Forte site</span>
-  <svg class="flow-diagram__arrow">…</svg>
-  <!-- …Consent → Brotherhood match → Existing / net-new → Agent routing… -->
+  <span class="flow-diagram__unit">
+    <span class="flow-diagram__step"><svg>…</svg> Forte site</span>
+    <svg class="flow-diagram__arrow">…</svg>
+  </span>
+  <!-- …Consent → Brotherhood match → Existing / net-new (each its own __unit)… -->
+  <span class="flow-diagram__step"><svg>…</svg> Agent routing</span>
 </div>
 ```
 
@@ -629,6 +648,12 @@ interactive, count-driven `.funnel` above it (no numbers, not clickable) so the 
 (Brotherhood → Forte) and inbound (Forte → Brotherhood) halves of the loop read as two different
 mechanisms, per the design brief. `role="img"` + a descriptive `aria-label` on the container, same
 pattern as `.bar-chart__plot`, since the steps carry no other accessible grouping text.
+
+Each step (except the last, which has no trailing arrow) is wrapped with its arrow in a
+`.flow-diagram__unit` — a `flex-wrap` container without this would let a step end one wrapped line
+while its arrow started the next, reading as a stray disconnected glyph rather than a connector.
+`row-gap` is larger than `column-gap` for the same reason: a wrapped second line needs more
+separation from the line above it than two chips need from each other on the same line.
 
 ### Digest list — `.digest-list`
 
