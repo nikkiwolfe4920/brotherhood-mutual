@@ -1756,6 +1756,11 @@ html {
      wrapped lines don't read as cramped against the line above/below. */
   column-gap: var(--space-3);
   row-gap: var(--space-4);
+  /* Its own separation from whatever sits above it (the Inbound-from-Forte
+     stat row, on /dashboard-partner) — without this, two adjacent block
+     children of .panel-card__body have nothing setting space between them
+     and sit directly flush against each other. */
+  margin-top: var(--space-5);
   padding: var(--space-5);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
