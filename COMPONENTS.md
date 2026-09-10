@@ -824,3 +824,93 @@ else.
 
 Same inline-styles/table-layout rationale as `/email` applies (see that entry) — this is not a new
 pattern, just a third content variant of the same transactional template.
+
+## ExploreGod CRM Dashboard — `/ExploreGod-CRM-Dashboard`
+
+An eighth page, and the first that isn't Brotherhood Mutual-branded — see DESIGN.md's "Eighth
+page" note for why its palette lives entirely in a new `design-system/explore-god-dashboard.css`
+under a `.egd` root class instead of the shared brand tokens. Layout: a fixed 84px icon rail
+(`.egd-rail`, dark navy) + a scrollable main column (`.egd-topbar` sticky header, then
+`.egd-scroll`), not the `.app-shell`/`.app-sidebar` pattern the Brotherhood Mutual dashboards use —
+deliberately different chrome for a page that isn't part of that product family. All content below
+the KPI row is data-driven, rendered by `js/explore-god-dashboard.js` from small in-file arrays
+(there is no backend) rather than hand-written per-row markup, since every panel needed either
+filtering (the queue) or a count large enough (20 reps) that hardcoding each row would drift from
+its data.
+
+### Stage color system
+
+Four pipeline stages — New Contact, Active Conversation, Christian Formation, Discipleship
+Journey — share one fixed color per stage across every surface that shows them (KPI sparkline,
+funnel bar, roster caseload-mix bar). `js/explore-god-dashboard.js`'s `stageVar()` is the single
+place that maps a stage id to its CSS custom property (`var(--egd-stage-new)`, etc.) so a color is
+never hardcoded as a hex string in JS — components read the color, they don't own it. See
+DESIGN.md for the validated ordering rationale and the separate "-text" variants used wherever a
+stage/status hue sits on real text instead of a fill.
+
+### KPI stat tiles — `.egd-stat`
+
+```html
+<article class="egd-stat">
+  <div class="egd-stat__head">
+    <span class="egd-stat__label">New requests today</span>
+    <span class="egd-stat__delta egd-stat__delta--up">↗ 18%</span>
+  </div>
+  <p class="egd-stat__value">24</p>
+  <svg class="egd-sparkline" data-stage="new" data-points="4,6,5,9,…" viewBox="0 0 220 46"></svg>
+</article>
+```
+
+`renderSparkline()` turns the `data-points` list into a line + a ~28%-opacity area wash (dataviz
+skill's area-fill spec) plus an end-dot, entirely in the stage's own color via `style="stroke: var(--egd-stage-…)"` —
+never a duplicated hex. Each sparkline also gets a hover layer: a single shared tooltip positioned
+at the nearest sample to the pointer, per the skill's "line charts ship a hover layer by default"
+rule.
+
+### Live Intake Queue — `.egd-queue`
+
+Tabs (`.egd-tab[role="tab"]`, All/Unassigned/Waiting &gt;10m/Mine) drive `renderQueue(filter)`,
+which re-renders `#queue-list` from the same `QUEUE_ROWS` array rather than hiding/showing
+pre-rendered rows — simplest correct option at six rows. Each row's wait chip
+(`.egd-wait--good|warning|critical`) is colored by `waitLevel()` (&lt;5m / 5–10m / &gt;=10m), always
+paired with the "waiting Nm" text and a clock icon — color is never the only signal. `.egd-assign`
+is a lightweight popover (not a native `<select>`, since one option needs the "AI pick" tag) built
+and torn down on click; picking a name sets `row.assignedTo` and re-renders, which is also what
+keeps the panel's "N unassigned" eyebrow count live.
+
+### Regional Journey Funnel — `.egd-funnel`
+
+```js
+const FUNNEL_STAGES = [
+  { stageId: "new", label: "New Contact", count: 312 },
+  // …
+];
+```
+
+Bar **width** encodes volume relative to the top stage (`count / max`, the standard funnel taper);
+the **badge inside each bar** shows the conversion rate relative to the *immediately previous*
+stage — two different percentages by design, so don't conflate them when editing the data. Bars
+render at `width: 0` and grow to their target width one animation frame after paint
+(`requestAnimationFrame` x2, staggered per row) — a one-time reveal, not a loading skeleton, so it
+isn't gated behind any loading state.
+
+### AI Opportunities — `.egd-ai-panel`
+
+A dark glass card (`--egd-ai`/`--egd-ai-2` gradient badge) — the one panel allowed to break from
+the page's light surface, since it's meant to read as a distinct "assistant" surface the way
+`.panel-card--dark`/`.promo-banner` do on `/universal-profile`. Each `.egd-ai-card__cta` swaps to a
+checked "is-done" state (`Applied`/`Notified`/`Reassigned`/`Viewed`) on click rather than
+navigating anywhere — this page has no backend to apply a recommendation against, so the click
+gives honest local feedback instead of a fake success toast that implies a server round-trip that
+didn't happen.
+
+### Team Roster — `.egd-roster`
+
+20 reps rendered from `ROSTER` into a fixed-height (`max-height: 480px`) internally-scrolling list
+rather than letting the page grow to fit all of them — keeps every panel in the two-column grid
+roughly the same height. Each row's `.egd-mix` is a 4-segment composition bar (2px gaps, per the
+dataviz skill's "surface gap separates touching marks" spec) showing that rep's caseload split
+across the four stages; the split is decorative sample data, generated deterministically from a
+hash of the rep's name (`caseloadMix()`) so it's stable across reloads instead of reshuffling. The
+stage legend at the bottom of the panel is the one place identity is spelled out in text for the
+whole list, rather than repeating a label on every row.

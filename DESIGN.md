@@ -229,6 +229,33 @@ raise it rather than silently deviating.
 > nav's "Resources" link) in favor of a **seventh page**, `/partner-integration/` — a standalone
 > utility page (no app-shell chrome) reached from a new sidebar link, with a copy-to-clipboard API
 > request/response snippet. See `COMPONENTS.md`'s "Partner Integration page" entry.
+>
+> **Eighth page — ExploreGod CRM Dashboard:** `/ExploreGod-CRM-Dashboard` is a standalone product
+> mockup, not a Brotherhood Mutual-branded page — it tracks "seekers" moving through a
+> faith-formation pipeline for a ministry's outreach team, unrelated to the insurance product the
+> rest of this site markets. Built from a low-fidelity wireframe with two explicit constraints: keep
+> the Fraunces display-serif treatment on the page's header type, and keep the wireframe's overall
+> navy/teal/amber palette — everything else (component design, data-viz treatment, motion,
+> micro-interactions) was a deliberate step up toward a premium, editorial SaaS look rather than a
+> literal rebuild of the wireframe. Because the palette is intentionally not Brotherhood Mutual's
+> brand blue, every color lives as a locally scoped custom property under a `.egd` root class in the
+> new `design-system/explore-god-dashboard.css` (parallel to how `dashboard.css` added its own
+> primitives for Universal Profile) rather than bending the shared `tokens.css` scale to a use it
+> wasn't meant for; the page still loads `tokens.css`/`base.css` for the reset, spacing, radius, and
+> the Fraunces/Manrope font stack, so it reads as built from this system even though its palette
+> doesn't. See `COMPONENTS.md`'s "ExploreGod CRM Dashboard" entry for the component/data breakdown.
+>
+> Its four pipeline stages (New Contact/Active Conversation/Christian Formation/Discipleship
+> Journey) share one fixed color mapping everywhere they appear — the KPI sparklines, the funnel
+> bars, and the team roster's caseload-mix bars — using the dataviz skill's validated default
+> categorical order (blue → orange → aqua → gold) rather than hand-picked hues, so adjacent stages
+> clear the CVD-safe floor without re-ordering (validated with the skill's `validate_palette.js`
+> against this page's cream card surface). Waiting-time urgency (the intake queue's "waiting Nm"
+> chips) and the AI-recommendation accent are separate hue families from stage identity on purpose —
+> a color never carries two meanings on this page. Every hue used as a fill/dot also has a darker
+> "-text" variant (`--egd-good-text`, `--egd-warning-text`, `--egd-accent-text`, `--egd-gold-text`,
+> `--egd-ai-text`) for anywhere that hue is set on actual text rather than a swatch, since several of
+> the fill-tuned steps clear the dataviz skill's 3:1 non-text floor but not the 4.5:1 text floor.
 
 ## Design Principles
 
