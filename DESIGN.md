@@ -230,20 +230,27 @@ raise it rather than silently deviating.
 > utility page (no app-shell chrome) reached from a new sidebar link, with a copy-to-clipboard API
 > request/response snippet. See `COMPONENTS.md`'s "Partner Integration page" entry.
 >
-> **Eighth page — ExploreGod CRM Dashboard:** `/ExploreGod-CRM-Dashboard` is a standalone product
-> mockup, not a Brotherhood Mutual-branded page — it tracks "seekers" moving through a
-> faith-formation pipeline for a ministry's outreach team, unrelated to the insurance product the
-> rest of this site markets. Built from a low-fidelity wireframe with two explicit constraints: keep
-> the Fraunces display-serif treatment on the page's header type, and keep the wireframe's overall
-> navy/teal/amber palette — everything else (component design, data-viz treatment, motion,
-> micro-interactions) was a deliberate step up toward a premium, editorial SaaS look rather than a
-> literal rebuild of the wireframe. Because the palette is intentionally not Brotherhood Mutual's
-> brand blue, every color lives as a locally scoped custom property under a `.egd` root class in the
-> new `design-system/explore-god-dashboard.css` (parallel to how `dashboard.css` added its own
-> primitives for Universal Profile) rather than bending the shared `tokens.css` scale to a use it
-> wasn't meant for; the page still loads `tokens.css`/`base.css` for the reset, spacing, radius, and
-> the Fraunces/Manrope font stack, so it reads as built from this system even though its palette
-> doesn't. See `COMPONENTS.md`'s "ExploreGod CRM Dashboard" entry for the component/data breakdown.
+> **Eighth page — OneHope CRM Dashboard:** `/ExploreGod-CRM-Dashboard` is a standalone product
+> mockup, white-labeled for OneHope — it tracks "seekers" moving through a faith-formation pipeline
+> for a ministry's outreach team, unrelated to the insurance product the rest of this site markets.
+> Originally built from a low-fidelity wireframe against Brotherhood Mutual's Fraunces/navy-teal-amber
+> defaults; a later revision white-labeled it for OneHope and raised its fidelity to match a premium
+> analytics-dashboard reference. The page's header type (the greeting, panel titles) now uses
+> "Instrument Serif" — loaded on this page only, at its natural regular weight rather than a
+> synthetic bold — instead of the shared Fraunces display face, for a more editorial feel; UI type
+> still borrows Manrope. The "AI" accent (badge icon, rail active-state, dark AI panel glow) was
+> retuned from a generic purple/aqua pairing to a OneHope teal duotone (`--egd-ai`/`--egd-ai-2`), and
+> the rail logotype ("OH") uses a separate OneHope-orange brand token (`--egd-brand-accent`) so the
+> two never share a hue. Both the rail mark and the AI panel's badge are bare icon/type — no
+> gradient box behind them — and every button on the page has an explicit `background`/`border`
+> (native buttons default to a beveled, grey UA style otherwise, which read as broken chrome).
+> Because the palette is intentionally not Brotherhood Mutual's brand blue, every color lives as a
+> locally scoped custom property under a `.egd` root class in `design-system/explore-god-dashboard.css`
+> (parallel to how `dashboard.css` added its own primitives for Universal Profile) rather than
+> bending the shared `tokens.css` scale to a use it wasn't meant for; the page still loads
+> `tokens.css`/`base.css` for the reset, spacing, and radius scale, so it reads as built from this
+> system even though its palette and display font don't. See `COMPONENTS.md`'s "OneHope CRM
+> Dashboard" entry for the component/data breakdown.
 >
 > Its four pipeline stages (New Contact/Active Conversation/Christian Formation/Discipleship
 > Journey) share one fixed color mapping everywhere they appear — the KPI sparklines, the funnel

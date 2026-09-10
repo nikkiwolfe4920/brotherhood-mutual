@@ -825,7 +825,7 @@ else.
 Same inline-styles/table-layout rationale as `/email` applies (see that entry) — this is not a new
 pattern, just a third content variant of the same transactional template.
 
-## ExploreGod CRM Dashboard — `/ExploreGod-CRM-Dashboard`
+## OneHope CRM Dashboard — `/ExploreGod-CRM-Dashboard`
 
 An eighth page, and the first that isn't Brotherhood Mutual-branded — see DESIGN.md's "Eighth
 page" note for why its palette lives entirely in a new `design-system/explore-god-dashboard.css`
@@ -837,6 +837,13 @@ the KPI row is data-driven, rendered by `js/explore-god-dashboard.js` from small
 (there is no backend) rather than hand-written per-row markup, since every panel needed either
 filtering (the queue) or a count large enough (20 reps) that hardcoding each row would drift from
 its data.
+
+The rail logotype (`.egd-rail__mark`, "OH") and the AI panel's badge (`.egd-ai-badge`) are bare
+type/icon on the dark rail/panel background — no gradient rounded box behind either, so they read
+as part of the surface rather than a separate chip. Every native `<button>` on the page (assign
+menu options, the AI card CTA, the header avatars) sets its own `background`/`border` explicitly;
+leaving either unset falls back to the browser's default beveled, grey button chrome, which is what
+made the assign menu and CTAs look broken before this was fixed.
 
 ### Stage color system
 
@@ -876,7 +883,11 @@ pre-rendered rows — simplest correct option at six rows. Each row's wait chip
 paired with the "waiting Nm" text and a clock icon — color is never the only signal. `.egd-assign`
 is a lightweight popover (not a native `<select>`, since one option needs the "AI pick" tag) built
 and torn down on click; picking a name sets `row.assignedTo` and re-renders, which is also what
-keeps the panel's "N unassigned" eyebrow count live.
+keeps the panel's "N unassigned" eyebrow count live. The menu is appended to `<body>` and
+positioned with `position: fixed` from the trigger's bounding rect rather than living inside
+`.egd-assign` — the queue panel needs `overflow: hidden` to keep its own rounded corners, which
+clipped the menu before it was moved out to a body-level portal; it closes on outside click and on
+scroll, since a fixed-position menu doesn't track its trigger as the page scrolls.
 
 ### Regional Journey Funnel — `.egd-funnel`
 
@@ -896,7 +907,7 @@ isn't gated behind any loading state.
 
 ### AI Opportunities — `.egd-ai-panel`
 
-A dark glass card (`--egd-ai`/`--egd-ai-2` gradient badge) — the one panel allowed to break from
+A dark glass card (`--egd-ai`/`--egd-ai-2` teal-duotone glow and sparkle icon) — the one panel allowed to break from
 the page's light surface, since it's meant to read as a distinct "assistant" surface the way
 `.panel-card--dark`/`.promo-banner` do on `/universal-profile`. Each `.egd-ai-card__cta` swaps to a
 checked "is-done" state (`Applied`/`Notified`/`Reassigned`/`Viewed`) on click rather than
