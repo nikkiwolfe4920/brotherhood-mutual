@@ -237,9 +237,14 @@ raise it rather than silently deviating.
 > defaults; a later revision white-labeled it for OneHope, and a further pass pushed it toward a
 > lighter, softer, more premium reference (an airy light-grey canvas, a white icon rail instead of a
 > dark one, restrained low-opacity gradients) after an earlier iteration read as too dark and bold.
-> The page's header type (the greeting, panel titles) uses "Instrument Serif" — loaded on this page
-> only, at its natural regular weight rather than a synthetic bold — instead of the shared Fraunces
-> display face, for a more editorial feel; UI type still borrows Manrope. The icon rail
+> The page's header type (the greeting, panel titles) uses "Newsreader" — loaded on this page only,
+> at medium weight — instead of the shared Fraunces display face, for a warmer, more editorial feel
+> without Fraunces' idiosyncratic letterforms. (An earlier pass tried "Instrument Serif"; its
+> unusual proportions read as too condensed/quirky at display size, and "Pavilion" — the serif
+> initially requested — turned out to be a paid commercial font with no Google Fonts equivalent, so
+> Newsreader was chosen as the closest free alternative: same warm, soft-curved, large-x-height
+> editorial character, plus an `opsz` axis that keeps it legible at both the greeting's large size
+> and panel titles' smaller one.) UI type still borrows Manrope. The icon rail
 > (`.egd-rail`) is a white surface with a hairline border, not the dark-navy treatment earlier
 > revisions used — its active nav state is a soft blue tint (`--egd-stage-new-soft`, the same token
 > the rest of the page uses for its primary accent) rather than a bespoke dark-rail treatment. The
