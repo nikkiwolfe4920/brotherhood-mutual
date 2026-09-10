@@ -1,5 +1,5 @@
 /**
- * ExploreGod CRM Dashboard — data + rendering for /ExploreGod-CRM-Dashboard.
+ * OneHope CRM Dashboard — data + rendering for /ExploreGod-CRM-Dashboard.
  *
  * All colors are referenced by CSS custom property name (`var(--egd-stage-*)`,
  * defined in explore-god-dashboard.css) rather than duplicated as hex here, so
@@ -210,6 +210,15 @@ document.getElementById("queue-tabs").addEventListener("click", (event) => {
   renderQueue(tab.dataset.filter);
 });
 
+// The menu is appended to <body> and positioned with `position: fixed` from
+// the trigger's bounding rect, rather than living inside `.egd-assign` — the
+// queue panel clips overflow to keep its own rounded corners, which cut the
+// absolutely-positioned menu off before this change.
+function closeAssignMenus() {
+  document.querySelectorAll(".egd-assign__btn").forEach((btn) => btn.setAttribute("aria-expanded", "false"));
+  document.querySelectorAll(".egd-assign__menu").forEach((menu) => menu.remove());
+}
+
 queueList.addEventListener("click", (event) => {
   const menuOption = event.target.closest(".egd-assign__option");
   if (menuOption) {
@@ -223,8 +232,7 @@ queueList.addEventListener("click", (event) => {
   const trigger = event.target.closest(".egd-assign__btn");
   if (!trigger) return;
   const wasOpen = trigger.getAttribute("aria-expanded") === "true";
-  document.querySelectorAll(".egd-assign__btn").forEach((btn) => btn.setAttribute("aria-expanded", "false"));
-  document.querySelectorAll(".egd-assign__menu").forEach((menu) => menu.remove());
+  closeAssignMenus();
   if (wasOpen) return;
 
   trigger.setAttribute("aria-expanded", "true");
@@ -240,14 +248,21 @@ queueList.addEventListener("click", (event) => {
       </button>
     `
   ).join("");
-  trigger.parentElement.appendChild(menu);
+  document.body.appendChild(menu);
+
+  const rect = trigger.getBoundingClientRect();
+  menu.style.top = `${rect.bottom + 6}px`;
+  menu.style.right = `${document.documentElement.clientWidth - rect.right}px`;
 });
 
 document.addEventListener("click", (event) => {
-  if (event.target.closest(".egd-assign")) return;
-  document.querySelectorAll(".egd-assign__btn").forEach((btn) => btn.setAttribute("aria-expanded", "false"));
-  document.querySelectorAll(".egd-assign__menu").forEach((menu) => menu.remove());
+  if (event.target.closest(".egd-assign") || event.target.closest(".egd-assign__menu")) return;
+  closeAssignMenus();
 });
+
+// A fixed-position menu stays put in the viewport, so close it on scroll
+// rather than letting it drift away from the trigger that opened it.
+document.querySelector(".egd-scroll").addEventListener("scroll", closeAssignMenus);
 
 renderQueue();
 
