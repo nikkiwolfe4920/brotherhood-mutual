@@ -830,17 +830,18 @@ pattern, just a third content variant of the same transactional template.
 An eighth page, and the first that isn't Brotherhood Mutual-branded — see DESIGN.md's "Eighth
 page" note for why its palette lives entirely in a new `design-system/explore-god-dashboard.css`
 under a `.egd` root class instead of the shared brand tokens. Layout: a fixed 84px icon rail
-(`.egd-rail`, dark navy) + a scrollable main column (`.egd-topbar` sticky header, then
-`.egd-scroll`), not the `.app-shell`/`.app-sidebar` pattern the Brotherhood Mutual dashboards use —
-deliberately different chrome for a page that isn't part of that product family. All content below
-the KPI row is data-driven, rendered by `js/explore-god-dashboard.js` from small in-file arrays
-(there is no backend) rather than hand-written per-row markup, since every panel needed either
-filtering (the queue) or a count large enough (20 reps) that hardcoding each row would drift from
-its data.
+(`.egd-rail`, a light surface with a hairline border — an earlier revision used a dark navy rail,
+which read as too bold next to the rest of the page) + a scrollable main column (`.egd-topbar`
+sticky header, then `.egd-scroll`), not the `.app-shell`/`.app-sidebar` pattern the Brotherhood
+Mutual dashboards use — deliberately different chrome for a page that isn't part of that product
+family. All content below the KPI row is data-driven, rendered by `js/explore-god-dashboard.js`
+from small in-file arrays (there is no backend) rather than hand-written per-row markup, since
+every panel needed either filtering (the queue) or a count large enough (20 reps) that hardcoding
+each row would drift from its data.
 
 The rail logotype (`.egd-rail__mark`, "OH") and the AI panel's badge (`.egd-ai-badge`) are bare
-type/icon on the dark rail/panel background — no gradient rounded box behind either, so they read
-as part of the surface rather than a separate chip. Every native `<button>` on the page (assign
+type/icon on the surface — no gradient rounded box behind either, so they read as part of the
+surface rather than a separate chip. Every native `<button>` on the page (assign
 menu options, the AI card CTA, the header avatars) sets its own `background`/`border` explicitly;
 leaving either unset falls back to the browser's default beveled, grey button chrome, which is what
 made the assign menu and CTAs look broken before this was fixed.
@@ -907,9 +908,10 @@ isn't gated behind any loading state.
 
 ### AI Opportunities — `.egd-ai-panel`
 
-A dark glass card (`--egd-ai`/`--egd-ai-2` teal-duotone glow and sparkle icon) — the one panel allowed to break from
-the page's light surface, since it's meant to read as a distinct "assistant" surface the way
-`.panel-card--dark`/`.promo-banner` do on `/universal-profile`. Each `.egd-ai-card__cta` swaps to a
+A light surface like every other panel, not a dark glass card (an earlier revision used one and it
+read as too bold/heavy) — the one visual tell that it's a distinct "assistant" surface is a single
+whisper-soft teal wash in one corner (`--egd-ai-soft`) and the sparkle badge icon, not a dedicated
+dark treatment. Each `.egd-ai-card__cta` swaps to a
 checked "is-done" state (`Applied`/`Notified`/`Reassigned`/`Viewed`) on click rather than
 navigating anywhere — this page has no backend to apply a recommendation against, so the click
 gives honest local feedback instead of a fake success toast that implies a server round-trip that

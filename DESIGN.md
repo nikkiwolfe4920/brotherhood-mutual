@@ -234,16 +234,30 @@ raise it rather than silently deviating.
 > mockup, white-labeled for OneHope — it tracks "seekers" moving through a faith-formation pipeline
 > for a ministry's outreach team, unrelated to the insurance product the rest of this site markets.
 > Originally built from a low-fidelity wireframe against Brotherhood Mutual's Fraunces/navy-teal-amber
-> defaults; a later revision white-labeled it for OneHope and raised its fidelity to match a premium
-> analytics-dashboard reference. The page's header type (the greeting, panel titles) now uses
-> "Instrument Serif" — loaded on this page only, at its natural regular weight rather than a
-> synthetic bold — instead of the shared Fraunces display face, for a more editorial feel; UI type
-> still borrows Manrope. The "AI" accent (badge icon, rail active-state, dark AI panel glow) was
-> retuned from a generic purple/aqua pairing to a OneHope teal duotone (`--egd-ai`/`--egd-ai-2`), and
-> the rail logotype ("OH") uses a separate OneHope-orange brand token (`--egd-brand-accent`) so the
-> two never share a hue. Both the rail mark and the AI panel's badge are bare icon/type — no
-> gradient box behind them — and every button on the page has an explicit `background`/`border`
-> (native buttons default to a beveled, grey UA style otherwise, which read as broken chrome).
+> defaults; a later revision white-labeled it for OneHope, and a further pass pushed it toward a
+> lighter, softer, more premium reference (an airy light-grey canvas, a white icon rail instead of a
+> dark one, restrained low-opacity gradients) after an earlier iteration read as too dark and bold.
+> The page's header type (the greeting, panel titles) uses "Newsreader" — loaded on this page only,
+> at medium weight — instead of the shared Fraunces display face, for a warmer, more editorial feel
+> without Fraunces' idiosyncratic letterforms. (An earlier pass tried "Instrument Serif"; its
+> unusual proportions read as too condensed/quirky at display size, and "Pavilion" — the serif
+> initially requested — turned out to be a paid commercial font with no Google Fonts equivalent, so
+> Newsreader was chosen as the closest free alternative: same warm, soft-curved, large-x-height
+> editorial character, plus an `opsz` axis that keeps it legible at both the greeting's large size
+> and panel titles' smaller one.) UI type still borrows Manrope. The icon rail
+> (`.egd-rail`) is a white surface with a hairline border, not the dark-navy treatment earlier
+> revisions used — its active nav state is a soft blue tint (`--egd-stage-new-soft`, the same token
+> the rest of the page uses for its primary accent) rather than a bespoke dark-rail treatment. The
+> "AI" accent (badge icon, AI panel wash, "AI pick"/CTA chips) is a single soft OneHope teal
+> (`--egd-ai-text`/`--egd-ai-soft`) rather than a bold dark glass card — the AI Opportunities panel
+> is now a light surface like every other panel, just with a whisper of teal in one corner, since an
+> earlier all-caps-dark treatment read as too heavy next to the rest of the page. The rail logotype
+> ("OH") uses a separate, darker-for-legibility OneHope-orange brand token (`--egd-brand-accent`) so
+> it never shares a hue with the AI teal. Both the rail mark and the AI panel's badge are bare
+> icon/type — no gradient box behind them — and every button on the page has an explicit
+> `background`/`border` (native buttons default to a beveled, grey UA style otherwise, which read as
+> broken chrome). Shadows across the page (`--egd-shadow-card`/`--egd-shadow-lift`) are low-opacity
+> and diffuse rather than dark drop shadows, in keeping with the lighter, more premium direction.
 > Because the palette is intentionally not Brotherhood Mutual's brand blue, every color lives as a
 > locally scoped custom property under a `.egd` root class in `design-system/explore-god-dashboard.css`
 > (parallel to how `dashboard.css` added its own primitives for Universal Profile) rather than

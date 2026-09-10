@@ -25,16 +25,15 @@
   --egd-ink: #0b1120;
   --egd-ink-soft: #5b6472;
   --egd-ink-muted: #6b7684;
-  --egd-canvas: #f4f2ec;
+  --egd-canvas: #f3f4f7;
   --egd-surface: #ffffff;
-  --egd-surface-alt: #fbfaf6;
-  --egd-border: rgba(11, 17, 32, 0.08);
-  --egd-border-strong: rgba(11, 17, 32, 0.14);
+  --egd-surface-alt: #f7f8fa;
+  --egd-border: rgba(15, 23, 42, 0.07);
+  --egd-border-strong: rgba(15, 23, 42, 0.12);
 
-  --egd-navy-900: #05070d;
+  /* Only used by the sparkline hover tooltip now that the rail and AI panel
+     are light surfaces. */
   --egd-navy-800: #0a0f1e;
-  --egd-navy-700: #131b31;
-  --egd-navy-600: #202c48;
 
   /* Pipeline stage identity — fixed order, never remapped per chart */
   --egd-stage-new: #2a78d6;
@@ -56,15 +55,15 @@
   --egd-critical-soft: rgba(208, 59, 59, 0.12);
 
   /* AI / intelligence accent — reserved for AI surfaces & badges only.
-     OneHope teal duotone (was a generic purple/aqua pairing). */
-  --egd-ai: #2ca8a4;
+     OneHope teal, used only as a whisper-soft wash and a text-safe darker
+     step (was a bolder, darker-surfaced purple/aqua pairing). */
   --egd-ai-text: #1f7d78;
   --egd-ai-soft: rgba(44, 168, 164, 0.14);
-  --egd-ai-2: #52dbc9;
 
   /* Brand mark accent (rail logo only) — OneHope orange, kept separate from
-     the teal AI accent so a hue never carries two meanings. */
-  --egd-brand-accent: #f2994a;
+     the teal AI accent so a hue never carries two meanings. Darker than the
+     brand's saturated orange so it clears 4.5:1 as text on the now-light rail. */
+  --egd-brand-accent: #c15f13;
 
   /* Text-safe variants — the stage/status hues above are tuned for fills and
      dots (validated by the dataviz skill's palette check with direct labels
@@ -77,19 +76,19 @@
   --egd-accent-ink: #ffffff;
 
   /* Display serif for the greeting and panel titles only — deliberately not
-     the site's shared Fraunces face, and set at its natural regular weight
-     since Instrument Serif ships without a distinct bold/semibold cut (a
-     synthetic bold would distort its thin/thick contrast). */
-  --egd-font-display: "Instrument Serif", Georgia, serif;
+     the site's shared Fraunces face. Newsreader's opsz axis (requested as a
+     range in index.html's font link) auto-adjusts letter shapes for its
+     rendered size, so it stays warm and readable at both the large greeting
+     and the smaller panel titles without a separate display cut. */
+  --egd-font-display: "Newsreader", Georgia, serif;
 
   --egd-radius-lg: 22px;
   --egd-radius-md: 14px;
   --egd-radius-sm: 10px;
   --egd-radius-pill: 999px;
 
-  --egd-shadow-card: 0 1px 2px rgba(11, 17, 32, 0.04), 0 16px 40px -20px rgba(11, 17, 32, 0.18);
-  --egd-shadow-lift: 0 30px 70px -24px rgba(11, 17, 32, 0.32);
-  --egd-shadow-navy: 0 24px 60px -20px rgba(5, 7, 13, 0.55);
+  --egd-shadow-card: 0 1px 2px rgba(15, 23, 42, 0.03), 0 14px 32px -22px rgba(15, 23, 42, 0.10);
+  --egd-shadow-lift: 0 20px 48px -20px rgba(15, 23, 42, 0.14);
 
   background: var(--egd-canvas);
   color: var(--egd-ink);
@@ -127,10 +126,8 @@
   align-items: center;
   gap: var(--space-6);
   padding-block: var(--space-5);
-  background:
-    radial-gradient(120% 60% at 50% 0%, rgba(44, 168, 164, 0.18), transparent 60%),
-    linear-gradient(180deg, var(--egd-navy-800), var(--egd-navy-900));
-  box-shadow: var(--egd-shadow-navy);
+  background: var(--egd-surface);
+  border-right: 1px solid var(--egd-border);
   z-index: 20;
 }
 
@@ -141,7 +138,7 @@
   place-items: center;
   color: var(--egd-brand-accent);
   font-family: var(--egd-font-display);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-2xl);
   letter-spacing: 0.01em;
 }
@@ -161,7 +158,7 @@
   display: grid;
   place-items: center;
   border-radius: var(--egd-radius-sm);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--egd-ink-muted);
   transition: color var(--duration-base) var(--easing-standard),
     background var(--duration-base) var(--easing-standard);
 }
@@ -172,25 +169,13 @@
 }
 
 .egd-rail__link:hover {
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--egd-ink);
+  background: var(--egd-surface-alt);
 }
 
 .egd-rail__link[aria-current="page"] {
-  color: #fff;
-  background: rgba(44, 168, 164, 0.22);
-}
-
-.egd-rail__link[aria-current="page"]::before {
-  content: "";
-  position: absolute;
-  left: -13px;
-  top: 50%;
-  translate: 0 -50%;
-  width: 3px;
-  height: 20px;
-  border-radius: var(--egd-radius-pill);
-  background: linear-gradient(180deg, var(--egd-ai), var(--egd-ai-2));
+  color: var(--egd-accent-text);
+  background: var(--egd-stage-new-soft);
 }
 
 .egd-rail__avatar {
@@ -203,7 +188,6 @@
   place-items: center;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
-  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .egd-main {
@@ -219,7 +203,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   padding: var(--space-4) var(--space-7);
-  background: rgba(244, 242, 236, 0.82);
+  background: rgba(243, 244, 247, 0.82);
   backdrop-filter: blur(var(--blur-md));
   -webkit-backdrop-filter: blur(var(--blur-md));
   border-bottom: 1px solid var(--egd-border);
@@ -308,7 +292,7 @@
 
 .egd-greeting {
   font-family: var(--egd-font-display);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   font-size: clamp(2.375rem, 1.8rem + 2vw, 3.25rem);
   letter-spacing: -0.01em;
   color: var(--egd-ink);
@@ -480,7 +464,7 @@
 .egd-panel__title {
   font-family: var(--egd-font-display);
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   color: var(--egd-ink);
 }
 
@@ -800,7 +784,7 @@
   gap: var(--space-2);
   padding-inline: var(--space-3);
   transition: width 900ms var(--easing-standard);
-  box-shadow: inset 0 -14px 20px -14px rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 -14px 20px -14px rgba(0, 0, 0, 0.1);
 }
 
 .egd-funnel-stage__count {
@@ -830,15 +814,8 @@
 
 .egd-ai-panel {
   background:
-    radial-gradient(140% 100% at 100% 0%, rgba(82, 219, 201, 0.22), transparent 55%),
-    radial-gradient(120% 100% at 0% 100%, rgba(44, 168, 164, 0.28), transparent 60%),
-    linear-gradient(165deg, var(--egd-navy-700), var(--egd-navy-900));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.egd-ai-panel .egd-panel__title {
-  color: #fff;
+    radial-gradient(120% 100% at 100% 0%, var(--egd-ai-soft), transparent 60%),
+    var(--egd-surface);
 }
 
 .egd-ai-panel .egd-panel__header {
@@ -854,12 +831,12 @@
 .egd-ai-badge svg {
   width: 24px;
   height: 24px;
-  color: var(--egd-ai-2);
+  color: var(--egd-ai-text);
 }
 
 .egd-ai-sub {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--egd-ink-muted);
   margin-top: 1px;
 }
 
@@ -873,8 +850,8 @@
 }
 
 .egd-ai-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--egd-surface-alt);
+  border: 1px solid var(--egd-border);
   border-radius: var(--egd-radius-md);
   padding: var(--space-4);
   transition: background var(--duration-base) var(--easing-standard),
@@ -882,25 +859,25 @@
 }
 
 .egd-ai-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
+  background: var(--egd-surface);
+  border-color: var(--egd-border-strong);
 }
 
 .egd-ai-card__text {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--egd-ink-soft);
   margin-bottom: 2px;
 }
 
 .egd-ai-card__text strong {
-  color: #fff;
+  color: var(--egd-ink);
   font-weight: var(--font-weight-semibold);
 }
 
 .egd-ai-card__meta {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--egd-ink-muted);
   margin-bottom: var(--space-3);
 }
 
@@ -913,8 +890,8 @@
   padding: 7px 13px;
   border: none;
   border-radius: var(--egd-radius-pill);
-  background: #fff;
-  color: var(--egd-navy-900);
+  background: var(--egd-ai-soft);
+  color: var(--egd-ai-text);
   transition: transform var(--duration-fast) var(--easing-standard),
     background var(--duration-base) var(--easing-standard),
     color var(--duration-base) var(--easing-standard);
@@ -930,8 +907,8 @@
 }
 
 .egd-ai-card__cta.is-done {
-  background: var(--egd-ai-soft);
-  color: var(--egd-ai-2);
+  background: var(--egd-surface);
+  color: var(--egd-ink-muted);
   pointer-events: none;
 }
 
@@ -1096,14 +1073,6 @@
     flex-direction: row;
     flex: 1;
     justify-content: center;
-  }
-
-  .egd-rail__link[aria-current="page"]::before {
-    left: 50%;
-    top: -7px;
-    translate: -50% 0;
-    width: 20px;
-    height: 3px;
   }
 
   .egd-topbar {
