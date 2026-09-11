@@ -928,72 +928,201 @@ hash of the rep's name (`caseloadMix()`) so it's stable across reloads instead o
 stage legend at the bottom of the panel is the one place identity is spelled out in text for the
 whole list, rather than repeating a label on every row.
 
-## Global Overview — `/ExploreGod-Global`
+## Global Engagement Command Center — `/ExploreGod-Global`
 
-A ninth page: a cross-region rollup of the OneHope CRM, reached from a new "Global overview" globe
-icon in the shared rail (added to both pages' nav — see DESIGN.md's "Ninth page" note). It loads
-`design-system/explore-god-dashboard.css` unchanged for the shell and every shared component, and
-`design-system/explore-god-global.css` for the handful of components unique to a rollup view: the
-ranked region-performance bar chart and the expandable regions list. `js/explore-god-global.js`
-follows the same one-file-per-page convention as `explore-god-dashboard.js` — small helpers
-(`escapeHtml`, `hashString`, `initials`, `renderSparkline`, the `STAGES`/`stageVar()` pair) are
-duplicated rather than factored into a shared module, since that would be a second use, not the
-third this codebase's "no premature abstraction" rule waits for.
+Replaces the earlier "Global Overview" cross-region rollup outright — see DESIGN.md's "Ninth page,
+replaced" note for why this is a different product for a different role (Bronwyn, a global
+engagement intelligence lead), not a bigger/filtered copy of either sibling dashboard. Reached from
+the shared rail's globe icon, now labeled "Global Engagement Command Center" on all three pages. It
+loads `design-system/explore-god-dashboard.css` unchanged for the shell and every shared component
+(`.egd-panel`, `.egd-stat`, `.egd-tabs`/`.egd-tab`, `.egd-avatar`, `.egd-ai-panel`), and
+`design-system/explore-god-global.css` for everything unique to this lens. `js/explore-god-global.js`
+follows the same one-file-per-page convention as the other two pages' JS — small helpers
+(`escapeHtml`, `hashString`, `initials`, `renderSparkline`, `CTA_ARROW`) are duplicated rather than
+imported, and the CSS file duplicates `.egd-btn-cta` and the `.egd-attn-row*` disclosure shell from
+`explore-god-dashboard-2.css` for the same reason — this page never loads a sibling page's
+stylesheet, only the shared base plus its own file.
 
-Regions (`REGIONS` in the JS) are placeholders — `#Region 1` through `#Region 8` — not real, defined
-regions; this is a prototype. Region 6's pipeline counts intentionally match the Southeast Region
-funnel on `/ExploreGod-CRM-Dashboard`, so a reader who's seen both pages finds one consistent story,
-not two datasets that happen to share a UI.
+The page follows the product brief's own hierarchy top to bottom: page-head controls (date range,
+scope, **Generate Global Briefing**) → **Needs Attention** → a **Global Engagement Health** AI
+summary → the 7-metric Global Health KPI row → a two-column area (**Regional Health**, **Campaign
+Intelligence**, **Conversation Quality**, **Outcome Integrity**, **Discipleship Intelligence** in the
+main column; **AI Insights & Coaching**, **Recent Investigations**, **Reports** in the sidebar) →
+**Ask Engagement Intelligence** full-width at the bottom. An in-page `.egd-section-nav` under the
+greeting anchors to each of these (same topbar-offset scroll technique `js/dashboard-partner.js` and
+`js/explore-god-dashboard-2.js` established, reimplemented as this page's own `scrollToSection()`).
+The brief's fuller navigation list (Conversations/Resources/Admin as top-level destinations) is
+intentionally not built as separate sections here — this is a single-page prototype like its
+siblings, and those three don't correspond to any content this page actually has (conversation
+investigation lives inside Needs Attention/Quality/Outcome Integrity instead, and there's no
+permissions or training-content data to back a real Admin/Resources section) — a deliberate scope
+cut, not an oversight. The date-range and scope `<select>`s in the page-head controls are decorative
+for the same reason every `.egd` page's topbar search/notification buttons already are — re-deriving
+every panel's data per filter combination is out of scope for a static prototype with no real data
+source behind it.
 
-### Formation → Discipleship by Region — `.egd-region-perf`
+Regions are real, named regions this time (Africa, India, Indonesia, Philippines — matching the
+brief's own example table) rather than the old page's `#Region 1`–`8` placeholders, since the brief
+gives explicit data for them.
+
+### Needs Attention — single-finding insight cards
+
+Reuses `/ExploreGod-CRM-Dashboard-2`'s `.egd-attn-row`/`.egd-attn-row__summary`/`__dot`/`__body`/
+`__title`/`__desc`/`__toggle` disclosure shell verbatim (duplicated into this page's CSS — see
+above), but the expanded *content* is new: one AI-reasoned finding per tier (a `.egd-insight-why`
+bullet list, a row of `.egd-insight-stat` comparison chips, one `.egd-btn-cta`) instead of a list of
+individual people — at the global level, each severity tier in `ATTENTION_ITEMS` **is** one finding,
+not a queue of many rows. The three tiers match the brief's own examples: Africa's quality decline
+(critical, expanded by default), the "Hope for Families" campaign investigation (warning), and the
+outcome-integrity data-quality flag (caution). Each finding's CTA does one of three things via a
+single dispatcher, `handleActionButton()` (reused by every other panel's CTAs too, rather than each
+panel wiring its own copy of the same three behaviors): open the Conversation Review Workspace
+(`data-open-conversation`), scroll to another section (`data-scroll-to`), or expand a specific
+campaign row before scrolling to it (`data-expand-campaign` — Hope for Families' "Investigate
+campaign" button sets both, so clicking it lands on the campaign already expanded).
+
+### Global Engagement Health — `.egd-global-summary` + `.egd-global-kpis`
+
+The AI-generated global summary (`.egd-global-summary`, reusing `.egd-ai-panel`'s corner-wash
+treatment) sits directly above the KPI row per the brief's own layout, not folded into the sidebar
+AI panel — this is a page-level headline, not one more insight card. Its findings render as a
+wrapping row of cards (`.egd-global-summary__list`), not a plain vertical bullet list: at this
+panel's full page width (unlike the narrower sidebar `.egd-ai-panel` the visual language borrows
+from), a single-column list left most of the card empty.
+
+The 7-metric KPI row (`.egd-global-kpis`, reusing `.egd-stat` verbatim) is where an up-trending
+number isn't always good news — Unanswered conversations rose 18%, which is bad, unlike every other
+metric's rise. `.egd-stat__delta--up`/`--down` couple arrow direction and color together (up=good,
+down=critical) everywhere else in the product; this page's `GLOBAL_KPIS` data carries a `sentiment`
+field independent of `direction` so the render step can pick `.egd-stat__delta--up-critical` (a new
+modifier added to the *shared* `explore-god-dashboard.css`, since any future page could hit the same
+"up isn't good" case) for the one metric where they disagree, while Response Rate's decline just
+uses the existing `--down` as-is (down and bad already agree there).
+
+### Regional Health matrix — `.egd-rmatrix-*`
 
 ```js
 const REGIONS = [
-  { id: "region-1", name: "#Region 1", lead: "Grace Adeyemi", missionaries: 38,
-    stages: { new: 480, chatting: 360, formation: 240, discipleship: 168 } },
+  { id: "africa", name: "Africa", volume: 8420, response: 79, quality: 76, engagement: 21,
+    tier: "critical", countries: [ /* South Africa · English, Nigeria · English, Kenya · … */ ] },
   // …
 ];
 ```
 
-A ranked horizontal bar per region, sorted best-first (highest formation → discipleship conversion
-rate) — read like a leaderboard. Each bar is colored by `performanceTier()` (good/warning/critical
-against a 60% `GOAL_PCT`), not by pipeline-stage identity: conversion-vs-goal is a threshold
-measurement, the same category of thing as the intake queue's waiting-time urgency on the other
-page, so it reuses that hue family (`--egd-good`/`--egd-warning`/`--egd-critical`) rather than the
-stage palette. `--egd-warning` didn't exist as a bare fill color before this page — only
-`-text`/`-soft` steps did — so it was added at the same hue rather than inventing a new one. A
-dashed `.egd-region-bar__goal` marker at the 60% mark makes the goal itself visible on the chart,
-not just implied by color.
+A matrix, not a leaderboard, per the brief's explicit caution against making "best region" the
+primary interaction: region / volume / response / quality / engagement / a colored `.egd-attn-dot`
+(good/warning/critical) in one row, expandable per region. Expanding reveals the brief's
+Global→Region→Country/Language drill-down (`.egd-country-row`s: country, language, conversation
+count, count requiring review, the driving campaign, and a "View flagged conversation" button) —
+without ever leaving the dashboard or exporting a spreadsheet, per the brief's stated goal. Reuses
+the exact disclosure/`[hidden]`-specificity-fix pattern every other expandable list on these three
+pages already established (flagged again in the CSS since it's an easy bug to reintroduce). "Export
+all regions" builds a real CSV client-side (same `toCSV()`/`downloadCSV()` technique the old Global
+Overview page used) rather than a fake success state.
 
-### All Regions — `.egd-regions`
+### Campaign Intelligence — `.egd-campaign-row`
 
-The same data, tuned for a different job: default sort is worst-first (ascending conversion), so
-the regions most needing attention are the first thing a reader scans, without an extra click or a
-config default someone has to know about. Clicking the "Formation → Discipleship" column header
-(`#regions-sort-btn`) toggles direction; the `.egd-tabs`/`.egd-tab` filter (All Regions/On Goal/
-Below Goal) is the exact same component the intake queue's filter tabs use on the other page, not a
-new one, since the two are the same interaction (filter a list of rows by a computed property).
+```js
+{ id: "hope-for-families", name: "Hope for Families", leads: 1482, engagement: 22, quality: 84,
+  traffic: [{ source: "Facebook", count: 582 }, /* … */],
+  topics: [{ name: "Parenting", seekers: 392, quality: 74, flagged: true }, /* … */] }
+```
 
-Each row expands (`.egd-region-row__toggle`, `aria-expanded`/`aria-controls`) to reveal that
-region's full 4-stage funnel, its Regional Lead, and its Online Missionary count — expanded state
-lives in a JS-side `expandedIds` Set keyed by region id, so it survives a filter/sort re-render
-instead of collapsing back out from under you. One easy-to-reintroduce bug worth flagging for
-future edits to this component: `.egd-region-row__detail` sets `display: flex` for when it's
-visible, and the `hidden` attribute and that class selector are equal CSS specificity — author CSS
-beats the UA stylesheet's `[hidden] { display: none }` regardless of source order, so without the
-explicit `.egd-region-row__detail[hidden] { display: none }` override, every row renders expanded
-regardless of what `hidden` says (this shipped as a real bug once already and was caught by
-screenshot-testing the collapsed state, not by reading the CSS).
+Directly answers the brief's stated gap — "her current system can't distinguish Campaign A/B/C when
+they all point to the same landing page" — by giving each campaign its own traffic-source breakdown
+(`.egd-traffic-item` bars) and per-topic quality (`.egd-topic-row`, each topic's own `flagged`
+field switching its quality bar to a warning fill and adding `⚠️` next to the number, rather than a
+computed threshold) when expanded, using the exact Hope for Families numbers from the brief's own
+worked example (Family 91% vs. Parenting 74%) so the page's data agrees with the brief that inspired
+it.
 
-### Export — real CSVs, not a fake success state
+### Conversation Quality Center — `.egd-quality`
 
-Both the per-region "Export regional metrics" button (inside the expanded detail) and the panel
-header's "Export all regions" button build an actual CSV client-side (`toCSV()` + `downloadCSV()`:
-a `Blob` and a temporary `<a download>`, no backend) rather than showing a fake success toast — a
-static site can genuinely produce a file download without a server round-trip, so unlike the AI
-cards' local-only "is-done" state, this is real functionality, not a stand-in for one. "Export all
-regions" always exports the full `REGIONS` set regardless of the active tab filter, matching its
-label rather than silently exporting "what's currently visible."
+A single global quality score (87/100) breaks down into six buckets (`QUALITY_BREAKDOWN`: Active &
+engaging → Unmarked) as a segmented `.egd-quality-bar` (2px gaps between segments, same "surface gap
+separates touching marks" spec `.egd-mix`/`.egd-roster` already use elsewhere in this product) with
+a legend below, followed by a "Why quality changed" callout naming the specific contributors (Africa
+−7%, India −5%, Parenting campaign −9%) and an `Investigate` CTA that scrolls back to Needs
+Attention — the quality score and the Needs Attention finding are the same underlying fact seen from
+two altitudes, so the panel points back to where the actual investigation happens rather than
+duplicating it.
+
+### Outcome Integrity — `.egd-outcome-row`
+
+The brief's "Accepted Christ vs. Faith conversation" audit, turned into a reviewable queue rather
+than something Bronwyn hunts for manually: each row shows the recorded outcome, an arrow, the AI's
+assessed outcome, a confidence badge, a "View conversation" link into the Review Workspace, and
+**Confirm**/**Keep classification** actions. Resolving a row (either button) replaces the action
+pair with a plain resolved state — local-only feedback, the same honest "no backend to actually
+apply this" pattern the AI cards' `is-done` state already uses elsewhere in this product, not a fake
+network round-trip.
+
+### Discipleship Intelligence — `.egd-disc-region` / `.egd-disc-focus`
+
+Per-region notes (Africa/India/Philippines, using the brief's own wording almost verbatim) plus one
+`.egd-disc-focus` recommended-coaching card for Africa (open-ended questioning, sustained relational
+engagement, an invitation-based close, responding to seekers who identify as Christian but show
+uncertainty) — a single card rather than one per region, since the brief only worked through Africa's
+recommendation in detail; adding invented coaching text for India/Philippines wasn't asked for.
+
+### AI Insights & Coaching, Recent Investigations, Reports (sidebar)
+
+`.egd-ai-panel`/`.egd-ai-list`/`.egd-ai-card` reused verbatim from the sibling pages (down to the
+local `is-done` click feedback), repurposed for this page's Coaching Insights content (the "OM
+provides information → seeker closes" taper-off pattern, discipleship opportunities, the two
+low-engagement campaigns, the outcome-mismatch nudge) — several cards also carry a `scrollTarget` so
+"View evidence"/"Review classifications" actually lands on the section being referenced, not just a
+local checkmark. **Recent Investigations** (`.egd-investigation-row`) is a plain status list, not
+interactive — a log of what's already in motion, matching the brief's "Recent Investigations"
+sidebar entry. **Reports** (`.egd-report-row`, `.egd-tabs` for Weekly/Monthly/Custom) exports a real,
+data-driven CSV of the page's current Global Health + Regional Health figures per report row (not a
+static canned file) — "Build report" and "Ask AI to summarize" give honest local feedback instead
+(the former queues with a status message, the latter jumps to and runs a canned Ask Engagement
+Intelligence query), since neither has a backend to actually act on.
+
+### Ask Engagement Intelligence — `.egd-ask`
+
+A natural-language input plus five example-question chips lifted directly from the brief
+(`ASK_ANSWERS`, keyed by the exact question text). Every answer — canned, not a real model call, this
+is a static site — follows the brief's required shape: Summary → Evidence → Metrics → Conversations
+→ Recommended action, never a bare chatbot reply. Typing anything else falls back to one honest,
+scoped message (`FALLBACK_ANSWER`) rather than an improvised answer — the same principle Shep's
+free-text fallback already established on the marketing site (see the Shep section above): admit
+the limits of a prototype instead of faking a capability that isn't there.
+
+### Conversation Review Workspace — `.egd-review` (native `<dialog>`)
+
+A single reusable dialog (`openReviewDialog(conversationId)`), populated from a small `CONVERSATIONS`
+map — same governing pattern as `/dashboard-partner`'s `.org-detail` (native `<dialog>` +
+`showModal()` for a free focus trap/Esc/`::backdrop`, reimplemented under `.egd` tokens rather than
+shared across design systems, since the two pages share no stylesheet). Left column: seeker id, OM,
+timeline, previous interactions. Right column: the brief's AI Quality Assessment fields (Listening/
+Empathy/Follow-through/Discipleship/Conflict handling/Outcome classification, each ✓/⚠️/🔴), an AI
+explanation callout, suggested coaching, the recorded vs. AI-assessed outcome, and a **Flag for
+review** button (local `is-done` feedback, same reasoning as Outcome Integrity's Confirm/Keep). Three
+representative conversations (`18392` Africa quality, `24601` an outcome mismatch, `31170` the
+Parenting-campaign quality flag) are reused across every "View conversation"/"Review conversations"
+entry point on the page (Needs Attention, the Regional Health drill-down, Outcome Integrity) rather
+than one conversation per entry point — the same "a handful of representative rows, not one per
+button" precedent the rest of this product already follows.
+
+### Global Briefing dialog — `.egd-briefing`
+
+"Generate Global Briefing" (page-head, always visible) opens a second dialog with the brief's own
+worked example verbatim — seeker/conversation totals, the three flagged areas, a recommended action
+— something Bronwyn could genuinely take into a leadership meeting per the brief's framing. "View
+evidence" closes the dialog and scrolls to Needs Attention rather than just closing it inertly.
+
+### Two shared-file fixes this page's layout surfaced
+
+Documented in full in DESIGN.md's "Ninth page, replaced" note (both are general fixes in
+`explore-god-dashboard.css`, not page-specific overrides): `.egd-shell`'s grid template was a bare
+`1fr` (base rule and its `≤640px` override) instead of `minmax(0, 1fr)`, which let the Regional
+Health matrix's `min-width: 560px` table force the whole page body to scroll horizontally at narrow
+widths — the first panel on any of these three pages to put such wide, internally-scrolling content
+inside `.egd-main`. `.egd-panel` also picked up an explicit `min-width: 0` for the same reason. And
+the rail's `≤640px` "icons become a horizontal row" treatment never wrapped, which was invisible
+until the rail grew to 8 links across the three sibling pages — `.egd-rail__nav` now wraps.
 
 ## Engagement Command Center — `/ExploreGod-CRM-Dashboard-2`
 

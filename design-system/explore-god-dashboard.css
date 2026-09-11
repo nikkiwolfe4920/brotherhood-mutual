@@ -139,7 +139,15 @@
 
 .egd-shell {
   display: grid;
-  grid-template-columns: 84px 1fr;
+  /* A bare `1fr` track (unlike `.egd-grid`'s own `minmax(0, 1fr)` below) is
+     shorthand for `minmax(auto, 1fr)` — its automatic minimum is the content
+     column's min-content size, not 0. That was invisible on every earlier
+     page (nothing inside `.egd-main` was ever wider than the viewport at any
+     breakpoint) until /ExploreGod-Global's Regional Health matrix put a wide
+     `overflow-x: auto` table inside it, which then forced this track — and
+     with it the whole page body — wider than the viewport instead of
+     scrolling internally, exactly what DESIGN.md's responsive rule forbids. */
+  grid-template-columns: 84px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -403,6 +411,18 @@
   background: var(--egd-critical-soft);
 }
 
+/* An up-trending value isn't always good news (e.g. /ExploreGod-Global's
+   "Unanswered conversations" KPI, which rose 18%) — --up/--down otherwise
+   couple the arrow glyph and the color together, so this decouples them for
+   the one direction that needed it: an up-arrow that should still read as
+   critical rather than the good/green --up gives. There's no matching
+   --down-critical variant because --down is already critical-colored by
+   default — a "down is bad" metric just uses --down as-is. */
+.egd-stat__delta--up-critical {
+  color: var(--egd-critical);
+  background: var(--egd-critical-soft);
+}
+
 .egd-stat__value {
   font-family: var(--font-family-base);
   font-size: var(--font-size-4xl);
@@ -477,6 +497,15 @@
   border-radius: var(--egd-radius-lg);
   box-shadow: var(--egd-shadow-card);
   overflow: hidden;
+  /* A `.egd-panel` is always a flex item of `.egd-col-main`/`.egd-col-side`
+     (`min-width: 0` further up doesn't help a *descendant*'s own default) —
+     without this, a panel containing a wide `overflow-x: auto` table (e.g.
+     /ExploreGod-Global's Regional Health matrix) forces the whole panel,
+     and with it the page body, wider than the viewport at narrow widths
+     instead of scrolling internally, since a flex item's automatic minimum
+     size is its content's min-content size unless overridden. Harmless for
+     every panel that has no such internal min-width content. */
+  min-width: 0;
 }
 
 .egd-panel__header {
@@ -1092,7 +1121,10 @@
 
 @media (max-width: 640px) {
   .egd-shell {
-    grid-template-columns: 1fr;
+    /* Same bare-`1fr`-has-a-content-based-minimum gotcha as the base rule
+       above — this is the declaration that actually wins below 640px, so
+       the base rule's fix alone doesn't help at this breakpoint. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .egd-rail {
@@ -1104,8 +1136,14 @@
 
   .egd-rail__nav {
     flex-direction: row;
+    flex-wrap: wrap;
     flex: 1;
     justify-content: center;
+    /* Enough rail links (this grew to 8 across the three sibling pages) no
+       longer fit one row at the width this breakpoint targets — wrapping
+       keeps the rail contained instead of forcing the whole page body to
+       scroll horizontally, which DESIGN.md's responsive rule forbids. */
+    row-gap: var(--space-1);
   }
 
   .egd-topbar {
