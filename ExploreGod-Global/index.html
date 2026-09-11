@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OneHope CRM Dashboard — Global Overview</title>
+  <title>OneHope CRM Dashboard — Global Engagement Command Center</title>
   <meta
     name="description"
-    content="OneHope CRM — global performance across every region: formation-to-discipleship conversion, regional leadership, missionary staffing, and AI recommendations."
+    content="OneHope CRM — Global Engagement Command Center: what's happening across global engagement, where problems or opportunities are emerging, and what needs investigation."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,7 +32,7 @@
         <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard/" aria-label="Home">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
         </a>
-        <a class="egd-rail__link" href="#" aria-current="page" aria-label="Global overview">
+        <a class="egd-rail__link" href="#" aria-current="page" aria-label="Global Engagement Command Center">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.4 4 5.6 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.6-4-9s1.5-6.6 4-9z" /></svg>
         </a>
         <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard-2/" aria-label="Command Center">
@@ -47,7 +47,7 @@
         <a class="egd-rail__link" href="#" aria-label="Journeys">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
         </a>
-        <a class="egd-rail__link" href="#" aria-label="Reports">
+        <a class="egd-rail__link" href="#reports-title" aria-label="Reports">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4" /><path d="M9 13h6" /><path d="M9 17h6" /></svg>
         </a>
         <a class="egd-rail__link" href="#" aria-label="Settings">
@@ -55,100 +55,207 @@
         </a>
       </nav>
 
-      <button class="egd-rail__avatar" type="button" aria-label="Marcus Reyes — account">MR</button>
+      <button class="egd-rail__avatar" type="button" aria-label="Bronwyn — account">BW</button>
     </aside>
 
     <div class="egd-main">
       <header class="egd-topbar">
         <div class="egd-topbar__meta">
           <span class="egd-live-dot" aria-hidden="true"></span>
-          All Regions · Thu, 14 May · 09:42
+          Global · All Regions · Thu, 14 May · 09:42
         </div>
         <div class="egd-topbar__actions">
           <button class="egd-icon-btn" type="button" aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
           </button>
-          <button class="egd-icon-btn" type="button" aria-label="Notifications — 3 unread">
+          <button class="egd-icon-btn" type="button" aria-label="Notifications — 5 unread">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
             <span class="egd-icon-btn__dot" aria-hidden="true"></span>
           </button>
-          <button class="egd-topbar__avatar" type="button" aria-label="Marcus Reyes — account">MR</button>
+          <button class="egd-topbar__avatar" type="button" aria-label="Bronwyn — account">BW</button>
         </div>
       </header>
 
       <main id="main-content" class="egd-scroll">
         <div class="egd-page-head">
-          <h1 class="egd-greeting">Global Overview</h1>
-          <p class="egd-subtitle">Formation-to-discipleship performance, staffing, and AI recommendations across every region worldwide.</p>
+          <div class="egd-controls">
+            <div class="egd-select-group">
+              <label class="visually-hidden" for="date-range-select">Date range</label>
+              <select class="egd-select" id="date-range-select">
+                <option>Last 30 days</option>
+                <option>Last 7 days</option>
+                <option>This quarter</option>
+                <option>Year to date</option>
+              </select>
+              <label class="visually-hidden" for="scope-select">Scope</label>
+              <select class="egd-select" id="scope-select">
+                <option>Global — all regions</option>
+                <option>Africa</option>
+                <option>India</option>
+                <option>Indonesia</option>
+                <option>Philippines</option>
+              </select>
+            </div>
+            <button class="egd-btn-cta" type="button" id="generate-briefing-btn">
+              Generate Global Briefing
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /></svg>
+            </button>
+          </div>
+          <h1 class="egd-greeting">Good morning, Bronwyn</h1>
+          <p class="egd-subtitle">Global engagement is healthy overall. Three areas need your attention this period.</p>
+          <nav class="egd-section-nav" aria-label="Page sections">
+            <a href="#attention-title">Needs Attention</a>
+            <a href="#regions-title">Regions</a>
+            <a href="#campaigns-title">Campaigns</a>
+            <a href="#quality-title">Quality</a>
+            <a href="#discipleship-title">Discipleship</a>
+            <a href="#reports-title">Reports</a>
+            <a href="#ask-title">Ask AI</a>
+          </nav>
         </div>
 
-        <section class="egd-kpis" aria-label="Global metrics">
-          <article class="egd-stat">
-            <div class="egd-stat__head">
-              <span class="egd-stat__label">Regions reporting</span>
-              <span class="egd-stat__delta egd-stat__delta--up">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                +1 this quarter
-              </span>
+        <section class="egd-panel egd-attention" aria-labelledby="attention-title">
+          <div class="egd-panel__header">
+            <div class="egd-panel__heading">
+              <div>
+                <h2 class="egd-panel__title" id="attention-title">Needs Attention</h2>
+                <p class="egd-panel__subtitle">AI continuously identifies things worth investigating — expand a card for the evidence behind it</p>
+              </div>
             </div>
-            <p class="egd-stat__value">8</p>
-            <svg class="egd-sparkline" data-stage="new" data-points="7,7,7,7,7,7,7,8,8,8,8,8,8,8" viewBox="0 0 220 46" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </article>
-
-          <article class="egd-stat">
-            <div class="egd-stat__head">
-              <span class="egd-stat__label">Online Missionaries</span>
-              <span class="egd-stat__delta egd-stat__delta--up">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                14%
-              </span>
-            </div>
-            <p class="egd-stat__value">253</p>
-            <svg class="egd-sparkline" data-stage="new" data-points="214,210,218,222,225,230,228,235,240,238,244,248,245,253" viewBox="0 0 220 46" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </article>
-
-          <article class="egd-stat">
-            <div class="egd-stat__head">
-              <span class="egd-stat__label">Contacts in formation</span>
-              <span class="egd-stat__delta egd-stat__delta--up">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                5%
-              </span>
-            </div>
-            <p class="egd-stat__value">1,541</p>
-            <svg class="egd-sparkline" data-stage="formation" data-points="1440,1455,1448,1465,1472,1480,1495,1488,1502,1510,1505,1520,1530,1541" viewBox="0 0 220 46" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </article>
-
-          <article class="egd-stat">
-            <div class="egd-stat__head">
-              <span class="egd-stat__label">Formation → Discipleship rate</span>
-              <span class="egd-stat__delta egd-stat__delta--up">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                3%
-              </span>
-            </div>
-            <p class="egd-stat__value">61%</p>
-            <svg class="egd-sparkline" data-stage="discipleship" data-points="56,55,57,56,58,57,59,58,60,59,61,60,61,61" viewBox="0 0 220 46" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </article>
+          </div>
+          <ul class="egd-attention-list" id="attention-list"></ul>
         </section>
+
+        <section class="egd-panel egd-global-summary" aria-labelledby="summary-title">
+          <span class="egd-ai-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /><path d="M20 3v4" /><path d="M22 5h-4" /><path d="M4 17v2" /><path d="M5 18H3" /></svg>
+          </span>
+          <div class="egd-global-summary__body">
+            <h2 class="egd-panel__title" id="summary-title" style="margin-bottom: var(--space-2)">Global Engagement Health</h2>
+            <p class="egd-global-summary__lede">Engagement is healthy overall, but three areas need attention this period.</p>
+            <ul class="egd-global-summary__list" id="summary-list"></ul>
+          </div>
+        </section>
+
+        <section class="egd-global-kpis" id="global-kpis" aria-label="Global health metrics"></section>
 
         <div class="egd-grid">
           <div class="egd-col-main">
-            <section class="egd-panel egd-region-perf" aria-labelledby="region-perf-title">
+            <section class="egd-panel" aria-labelledby="regions-title">
               <div class="egd-panel__header">
                 <div class="egd-panel__heading">
                   <div>
-                    <h2 class="egd-panel__title" id="region-perf-title">Formation → Discipleship by Region</h2>
-                    <p class="egd-panel__subtitle">Ranked by conversion rate, highest first · dashed line marks the 60% global goal</p>
+                    <h2 class="egd-panel__title" id="regions-title">Regional Health</h2>
+                    <p class="egd-panel__subtitle">Where is the system behaving differently than expected? Expand a region to drill into country and language detail.</p>
                   </div>
                 </div>
-                <span class="egd-stat__delta egd-stat__delta--up">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                  61% global rate
-                </span>
               </div>
-              <div class="egd-region-perf__body" id="region-perf-body"></div>
-              <p class="egd-region-perf-note">Regions are placeholders (#Region 1–8) for this prototype — swap in real region names once defined.</p>
+              <div class="egd-region-matrix__actions">
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" id="export-regions-btn">
+                  Export all regions
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
+                </button>
+              </div>
+              <div class="egd-rmatrix-scroll">
+                <div class="egd-rmatrix-head">
+                  <span aria-hidden="true"></span>
+                  <span>Region</span>
+                  <span>Volume</span>
+                  <span>Response</span>
+                  <span>Quality</span>
+                  <span>Engagement</span>
+                  <span>Attention</span>
+                </div>
+                <ul class="egd-region-matrix-list" id="region-matrix-list"></ul>
+              </div>
+            </section>
+
+            <section class="egd-panel" aria-labelledby="campaigns-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="campaigns-title">Campaign Intelligence</h2>
+                    <p class="egd-panel__subtitle">Distinguishes campaigns pointed at the same landing page — expand one for its traffic sources and topic-level quality.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-campaign-head">
+                <span aria-hidden="true"></span>
+                <span>Campaign</span>
+                <span>Leads</span>
+                <span>Engagement</span>
+                <span>Quality</span>
+              </div>
+              <ul class="egd-campaign-list" id="campaign-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-quality" id="quality-panel" aria-labelledby="quality-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="quality-title">Conversation Quality</h2>
+                    <p class="egd-panel__subtitle">How every conversation resolves, globally</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-quality__body">
+                <div class="egd-quality-score">
+                  <span class="egd-quality-score__value">87</span>
+                  <span class="egd-quality-score__of">/ 100 global quality score</span>
+                </div>
+                <div class="egd-quality-bar" role="img" aria-label="Active and engaging 61%, active and ongoing 22%, tapers off quickly 8%, no follow-through 5%, no response or spam 3%, unmarked 1%" id="quality-bar"></div>
+                <ul class="egd-quality-legend" id="quality-legend"></ul>
+                <div class="egd-quality-why">
+                  <p class="egd-quality-why__title">Why quality changed</p>
+                  <ul class="egd-quality-why__list">
+                    <li>Quality decreased 4% this month.</li>
+                    <li>Primary contributors: <strong>Africa −7%</strong>, <strong>India −5%</strong>, <strong>Parenting campaign −9%</strong>.</li>
+                  </ul>
+                  <button class="egd-btn-cta" type="button" data-scroll-to="#attention-title">Investigate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></button>
+                </div>
+              </div>
+            </section>
+
+            <section class="egd-panel" aria-labelledby="outcomes-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="outcomes-title">Outcome Integrity</h2>
+                    <p class="egd-panel__subtitle">47 conversations may be classified with an outcome that doesn't match what was actually said</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-outcomes__actions">
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" id="export-outcomes-btn">
+                  Export
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
+                </button>
+              </div>
+              <ul class="egd-outcome-list" id="outcome-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-discipleship" aria-labelledby="discipleship-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="discipleship-title">Discipleship Intelligence</h2>
+                    <p class="egd-panel__subtitle">Where the organization is struggling to move from evangelism to discipleship</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-discipleship__body">
+                <div class="egd-disc-regions" id="discipleship-regions"></div>
+                <div class="egd-disc-focus">
+                  <p class="egd-disc-focus__title">Recommended focus — Africa</p>
+                  <p style="font-size: var(--font-size-xs); color: var(--egd-ink-muted); margin-bottom: var(--space-2)">Train OMs on:</p>
+                  <ul class="egd-disc-focus__list">
+                    <li>Open-ended questioning</li>
+                    <li>Sustained relational engagement</li>
+                    <li>Closing conversations with an invitation to continue</li>
+                    <li>Responding to seekers who identify as Christian but show uncertainty</li>
+                  </ul>
+                </div>
+              </div>
             </section>
           </div>
 
@@ -160,56 +267,158 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /><path d="M20 3v4" /><path d="M22 5h-4" /><path d="M4 17v2" /><path d="M5 18H3" /></svg>
                   </span>
                   <div>
-                    <h2 class="egd-panel__title" id="ai-title">AI Recommendations</h2>
-                    <p class="egd-ai-sub">Cross-region insights</p>
+                    <h2 class="egd-panel__title" id="ai-title">AI Insights &amp; Coaching</h2>
+                    <p class="egd-ai-sub">Patterns across thousands of conversations</p>
                   </div>
                 </div>
               </div>
               <ul class="egd-ai-list" id="ai-list"></ul>
             </section>
+
+            <section class="egd-panel" aria-labelledby="investigations-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="investigations-title">Recent Investigations</h2>
+              </div>
+              <ul class="egd-investigation-list" id="investigations-list"></ul>
+            </section>
+
+            <section class="egd-panel" aria-labelledby="reports-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="reports-title">Reports</h2>
+              </div>
+              <div class="egd-tabs" role="tablist" aria-label="Report period" id="report-tabs">
+                <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="weekly">Weekly</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="monthly">Monthly</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="custom">Custom</button>
+              </div>
+              <div class="egd-reports__body">
+                <ul class="egd-report-list" id="report-list"></ul>
+                <div class="egd-report-custom" id="report-custom" hidden>
+                  <p class="egd-report-custom__hint">Filter by date, region, country, language, campaign, topic, source, outcome, quality, OM, and conversation status.</p>
+                  <div class="egd-report-actions">
+                    <button class="egd-btn-cta" type="button" id="report-build-btn">Build report</button>
+                    <button class="egd-btn-cta egd-btn-cta--muted" type="button" id="report-ask-ai-btn">Ask AI to summarize</button>
+                  </div>
+                </div>
+              </div>
+            </section>
           </aside>
         </div>
 
-        <section class="egd-panel egd-regions" aria-labelledby="regions-title">
+        <section class="egd-panel egd-ask" aria-labelledby="ask-title">
           <div class="egd-panel__header">
             <div class="egd-panel__heading">
               <div>
-                <h2 class="egd-panel__title" id="regions-title">All Regions</h2>
-                <p class="egd-panel__subtitle">Regional leadership, missionary staffing, and pipeline detail — expand a region to export its metrics.</p>
+                <h2 class="egd-panel__title" id="ask-title">Ask Engagement Intelligence</h2>
+                <p class="egd-panel__subtitle">Ask anything about global engagement — every answer includes the evidence and metrics behind it</p>
               </div>
             </div>
           </div>
-
-          <div class="egd-tabs" role="tablist" aria-label="Filter regions" id="regions-tabs">
-            <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="all">All Regions</button>
-            <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="good">On Goal</button>
-            <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="below">Below Goal</button>
-          </div>
-
-          <div class="egd-regions__actions">
-            <button class="egd-export-btn" type="button" id="export-all-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
-              Export all regions
-            </button>
-          </div>
-
-          <div class="egd-regions-scroll">
-            <div class="egd-regions-head">
-              <span aria-hidden="true"></span>
-              <span>Region</span>
-              <span>Regional Lead</span>
-              <span>Missionaries</span>
-              <button class="egd-regions-head__sort" type="button" id="regions-sort-btn" data-dir="asc" aria-label="Sort by Formation → Discipleship rate, ascending">
-                Formation → Discipleship
-                <svg class="egd-sort-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          <div class="egd-ask__body">
+            <form class="egd-ask__form" id="ask-form">
+              <label class="visually-hidden" for="ask-input">Ask Engagement Intelligence</label>
+              <input class="egd-ask__input" id="ask-input" type="text" placeholder="Ask anything about global engagement…" autocomplete="off" />
+              <button class="egd-ask__submit" type="submit">
+                Ask
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
               </button>
-            </div>
-            <ul class="egd-regions-list" id="regions-list"></ul>
+            </form>
+            <ul class="egd-ask__examples" id="ask-examples">
+              <li><button class="egd-ask-example" type="button">Summarize Philippines English conversations from the last 30 days.</button></li>
+              <li><button class="egd-ask-example" type="button">Why did engagement drop in Africa?</button></li>
+              <li><button class="egd-ask-example" type="button">Which campaigns have high volume but low engagement?</button></li>
+              <li><button class="egd-ask-example" type="button">Show me conversations where the outcome may be incorrect.</button></li>
+              <li><button class="egd-ask-example" type="button">What are the biggest discipleship gaps globally?</button></li>
+            </ul>
+            <div class="egd-ask-answer" id="ask-answer" hidden></div>
           </div>
         </section>
       </main>
     </div>
   </div>
+
+  <!-- Conversation Review Workspace — a single reusable dialog, populated
+       per-conversation by explore-god-global.js (openReviewDialog), same
+       native-<dialog> pattern as /dashboard-partner's .org-detail. -->
+  <dialog class="egd-review" id="review-dialog" aria-labelledby="review-seeker-id">
+    <div class="egd-review__header">
+      <div>
+        <p class="egd-review__title" id="review-seeker-id"></p>
+        <p class="egd-review__subtitle" id="review-context"></p>
+      </div>
+      <button class="egd-review__close" type="button" id="review-close" aria-label="Close conversation review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+    <div class="egd-review__body">
+      <div class="egd-review__left">
+        <div class="egd-review__field">
+          <span class="egd-review__field-label">Online Missionary</span>
+          <p class="egd-review__om" id="review-om"></p>
+        </div>
+        <div class="egd-review__field">
+          <span class="egd-review__field-label">Timeline</span>
+          <p class="egd-review__field-value" id="review-timeline"></p>
+        </div>
+        <div class="egd-review__field">
+          <span class="egd-review__field-label">Previous interactions</span>
+          <p class="egd-review__field-value" id="review-previous"></p>
+        </div>
+      </div>
+      <div class="egd-review__right">
+        <div class="egd-review__right-heading">
+          <h3>AI Quality Assessment</h3>
+          <span class="egd-review__overall" id="review-overall"></span>
+        </div>
+        <ul class="egd-review-assess" id="review-assessment"></ul>
+        <div class="egd-review__callout">
+          <p class="egd-review__callout-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /></svg>
+            AI explanation
+          </p>
+          <p id="review-explanation"></p>
+        </div>
+        <div class="egd-review__callout">
+          <p class="egd-review__callout-label">Suggested coaching</p>
+          <p id="review-coaching"></p>
+        </div>
+        <div class="egd-review__outcome">
+          <p class="egd-review__outcome-row">Marked: <strong id="review-recorded"></strong></p>
+          <p class="egd-review__outcome-row">AI assessment: <strong id="review-ai-assessment"></strong></p>
+          <button class="egd-btn-cta egd-btn-cta--muted" type="button" id="review-flag-btn">Flag for review</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Global Briefing — opened by "Generate Global Briefing" in the page head. -->
+  <dialog class="egd-briefing" id="briefing-dialog" aria-labelledby="briefing-title">
+    <div class="egd-briefing__header">
+      <div>
+        <p class="egd-briefing__title" id="briefing-title">Global Engagement Briefing</p>
+        <p class="egd-briefing__subtitle">September 1–10</p>
+      </div>
+      <button class="egd-briefing__close" type="button" id="briefing-close" aria-label="Close briefing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+    <div class="egd-briefing__body">
+      <p>12,482 unique seekers generated 28,491 conversations. Overall engagement increased 8%. Conversation quality increased 3%.</p>
+      <p>Three areas require attention:</p>
+      <ul class="egd-briefing__list">
+        <li><strong>1. Africa</strong>Response rate declined 8%.</li>
+        <li><strong>2. India</strong>Discipleship indicators declined 5%.</li>
+        <li><strong>3. Hope for Families campaign</strong>Parenting topic generated 32% more conversations but 18% lower engagement.</li>
+      </ul>
+      <div class="egd-briefing__action">
+        <p><strong>Recommended action:</strong> Review 24 flagged conversations and coordinate with Africa and India leadership on coaching.</p>
+      </div>
+      <button class="egd-btn-cta" type="button" id="briefing-view-evidence">
+        View evidence
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+      </button>
+    </div>
+  </dialog>
 
   <script src="../js/explore-god-global.js" type="module"></script>
 </body>
