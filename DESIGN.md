@@ -421,6 +421,43 @@ raise it rather than silently deviating.
 > squiggle instead of a clean mirrored ↘. Both cards' icons — the only two places this shared,
 > hand-authored SVG path was ever used — were corrected to `M8 17h9v-9`, the true vertical mirror of
 > the up-arrow's `M8 7h9v9`.
+>
+> **Eleventh page — Team Engagement Operations:** `/ExploreGod-team` is a fourth lens on the same
+> OneHope CRM, built from a full product brief for **Siji**, a team lead who runs the India
+> engagement team's day-to-day operations — a distinct role from the other three: a regional
+> coordinator assigning intake (`/ExploreGod-CRM-Dashboard`), a program coordinator triaging a
+> missionary roster (`/ExploreGod-CRM-Dashboard-2`), and a global intelligence lead investigating
+> patterns (`/ExploreGod-Global`). Siji's job is narrower and more operational than any of those:
+> "run the team" — claim, assign, and close conversations; see who's overloaded; cover shifts; get a
+> resource into a conversation fast. The brief is explicit that this should feel like "mission
+> control inbox," not another chart-heavy dashboard, so the page leads with queues and actionable
+> lists — the KPI row exists only for a once-a-glance pulse check, not as the page's content.
+>
+> It loads `explore-god-dashboard.css` unchanged for the shell, tokens, and every shared component
+> (`.egd-panel`, `.egd-stat`, `.egd-tabs`/`.egd-tab`, `.egd-avatar`, `.egd-channel`, `.egd-wait`,
+> `.egd-assign`/`.egd-assign__menu`/`.egd-assign__option`, `.egd-load`), and
+> `design-system/explore-god-team.css` for everything unique to this lens.
+> `js/explore-god-team.js` follows the same one-file-per-page convention as the other three —
+> `.egd-btn-cta` (first built for `/ExploreGod-CRM-Dashboard-2`), `.egd-status`/`.egd-status--online`
+> (first built there too), and `.egd-section-nav` (first built for `/ExploreGod-Global`) are
+> duplicated rather than cross-loaded, since every page here loads only the shared base plus its own
+> file, never a sibling's.
+>
+> The rail's previously-unused "Team" icon (a decorative `href="#"` stub on all three earlier pages)
+> now links here — reusing an already-reserved nav slot rather than growing the rail to a ninth icon,
+> which would have reopened the mobile-wrap fix made for the Global Engagement Command Center. See
+> `COMPONENTS.md`'s "Team Engagement Operations" entry for the full component/data breakdown,
+> including the shared Conversation Queue/Expiring/Follow-Up row anatomy, the Conversation Review
+> quick-view and QA feedback dialogs, and the Resource Library's language-first filtering.
+>
+> Building this surfaced one real bug in a pattern this page reuses three times (the Conversation
+> Queue's kebab menu, the Triage "Reassign triage" button, and the Resource Library's "Send to
+> conversation" picker all open the same body-portal `.egd-assign__menu`): the page's single
+> "click outside closes the open menu" listener only recognized the Queue's own kebab trigger as a
+> valid opener, so opening the menu from the Triage or Resource Library button immediately closed it
+> again — that trigger's own click bubbles to the same document-level listener, which saw a target
+> it didn't recognize and closed what had just opened. Fixed by having that one listener recognize
+> every trigger that opens this style of menu, not just the first one written.
 
 ## Design Principles
 

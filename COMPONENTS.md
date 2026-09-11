@@ -1292,3 +1292,211 @@ heading rather than an inert button — reuses the exact "land the target headin
 sticky topbar" offset technique `js/dashboard-partner.js` established for `/dashboard-partner`'s
 section navigation, adapted here for `window` scroll (this page's `.egd-scroll` has no `overflow` of
 its own, unlike that page's internally-scrolling container).
+
+## Team Engagement Operations — `/ExploreGod-team`
+
+An eleventh page: a fourth lens on the same OneHope CRM, built for Siji — a team lead who runs the
+India engagement team's day-to-day operations. See DESIGN.md's "Eleventh page" note for the role
+distinction from the other three pages and why it ships as a sibling page. It loads
+`explore-god-dashboard.css` unchanged for the shell and every shared component, and
+`design-system/explore-god-team.css` for the components unique to this lens.
+`js/explore-god-team.js` renders every panel from small in-file arrays, following the same
+one-file-per-page convention as the other three pages' JS.
+
+### Today / Team Pulse — `.egd-pulse-kpis`
+
+Eight `.egd-stat` cards (reused verbatim from the shared file) giving a once-a-glance read on the
+day — New/Active/Unclaimed/Seekers Responded/Expiring Soon/Follow-ups Due/Escalations/Closed
+Today. Deliberately without the shared `.egd-stat__delta` trend badges the other three pages'
+KPI rows use — a pulse check doesn't need a trend arrow on "18 seekers responded," it needs the
+number and a sparkline, and adding a delta here would just be decoration competing with the
+Needs Attention panel immediately below it for the same information.
+
+### Needs Attention — `.egd-alert-row`
+
+```js
+{ tier: "critical", title: "Seeker Responded", count: 18, desc: "…",
+  action: "Respond now", target: { type: "queue", filter: "responded" } }
+```
+
+A different shape from the disclosure-based Needs Attention on `/ExploreGod-CRM-Dashboard-2` and
+`/ExploreGod-Global` on purpose: every row here is a single whole-row action, not an
+expand/collapse — Siji's brief is explicit that each item should be "clickable directly into the
+conversations," so clicking a row either sets the Conversation Queue's tab filter and scrolls to it
+(`{ type: "queue", filter }`) or scrolls straight to a dedicated section (`{ type: "scroll",
+selector }` — used for Expiring Conversations and Team QA, since those are richer destinations than
+a queue filter can express). `handleActionButton()`-style dispatch lives inline in the click
+handler rather than as a separate function, since this page only has the one caller (unlike
+`/ExploreGod-Global`, which reuses its dispatcher from several panels).
+
+The seven tiers intentionally share color across pairs that the brief itself groups at the same
+severity (🔴 Seeker Responded/Expiring Soon both `critical`; 🟠 No Response-Follow-up/Unclaimed/
+Stalled all `warning`; 🟡 Escalations/Needs Team Lead Review both `caution`) — this mirrors the
+brief's own tiering rather than inventing a finer-grained palette the brief doesn't ask for.
+
+### Conversation Queue — `.egd-cq-row`
+
+Nine tabs (All/New/Unclaimed/Responded/Active/Expiring/Follow-up/Escalated/Stalled — one more than
+the brief's own example list; "Stalled" was added since Needs Attention already surfaces it as its
+own severity and a queue with no way to actually filter to it would be a dead end). Each row: a
+bulk-select checkbox, seeker + channel/language, topic, assigned OM (or an "Unclaimed" badge), a
+status pill, a wait/expiry chip, a priority dot, a contextual primary action (Claim/Respond/View/
+Follow up/Review, from `PRIMARY_ACTION`), and a kebab "more actions" menu. Reuses `.egd-avatar`/
+`.egd-channel`/`.egd-wait`/`.egd-assign` verbatim from the shared file rather than inventing
+row-level primitives from scratch.
+
+The kebab menu is the same `.egd-assign__menu` body-portal popover `/ExploreGod-CRM-Dashboard`
+introduced (`openRowMenu()`/`applyRowMenuAction()` are this page's generalization of that file's
+`renderQueue`-scoped assign logic to a shared record lookup, `findQueueRow()`, since the same
+popover is now reused across three different lists — the Conversation Queue, Expiring
+Conversations, and Follow-Up — against the same underlying record shape). Choosing "Assign"/
+"Reassign" swaps the menu's own contents for the OM picker rather than opening a second popover.
+
+### Bulk actions — `.egd-cq-bulkbar`
+
+Checking any row reveals a bulk bar ("N selected · Close as: No Response / Resolved / Follow-up ·
+Clear") — this is Siji's most explicit feature request in the brief, made because closing dozens of
+conversations one at a time was consuming significant time. Choosing an outcome removes every
+selected row from `QUEUE` and shows a brief toast (`.egd-bulk-toast`, appended to `<body>` so it
+survives the list re-render that just emptied it) confirming what happened and how many — honest
+local feedback, not a real backend write, same as the AI cards' `is-done` state elsewhere in this
+product, just phrased as a toast since "close N conversations" is an action on many rows at once
+rather than a single card's own state changing.
+
+### Team Workload — `.egd-workload-row`
+
+```js
+{ name: "Divya Krishnan", status: "online", active: 157, new: 8, waiting: 7, needsAction: 8,
+  avgResponse: "11m", workload: "high" }
+```
+
+A table, not a chart, per the brief's own "standard component of operational dashboards" framing —
+active/new/waiting/needs-action/avg. response/a `.egd-load`-colored workload badge (reused from
+`/ExploreGod-CRM-Dashboard-2`'s Team Health), and online/break/offline status via `.egd-status`
+(duplicated from that same page — see file header). "Reassign" doesn't open a per-conversation
+picker from this row — it scrolls to the Conversation Queue, where the actual per-conversation
+Assign/Reassign action already lives, rather than building a second, competing reassignment surface.
+
+### Shift & Coverage — `.egd-shift-card`
+
+Two static cards (Current Shift / Next Shift) rather than a live scheduling system — this is a
+prototype with no real shift-scheduling backend. Current Shift lists who's working, who's running
+triage, who's handling existing conversations, incoming volume, and a `.egd-coverage-meter` bar;
+Next Shift lists who's scheduled and what will be waiting for them (follow-ups due, conversations
+expiring before the shift begins) plus a handoff note — directly modeling the brief's own "Next
+Shift: 2 OMs scheduled, 18 conversations requiring follow-up, 4 conversations expiring before shift
+begins" example.
+
+### Triage Management — `.egd-triage-body`
+
+Incoming/unclaimed/claimed counts, current and next triage owner, and a "Reassign triage" button
+that opens the same `.egd-assign__menu` popover pattern (a fresh instance built inline in
+`js/explore-god-team.js` rather than routed through `openRowMenu()`, since triage reassignment has
+no underlying conversation record — it's reassigning a *role*, not a row). `triageState` is a tiny
+local object so reassigning re-renders the "current owner" line without a full page reload.
+
+### Expiring Conversations — `.egd-expiring-buckets`
+
+Its own feature, per the brief, rather than folded into the Conversation Queue's "Expiring" tab —
+WhatsApp's 24-hour session window doesn't distinguish "expiring in an hour" from "expiring this
+weekend," and a team lead needs to see those very differently. Five buckets (Within 1 hour/Today/
+Tomorrow/Weekend/Already expired) as `.egd-tabs`-style buttons with a live count per bucket
+(`.egd-tab__count`), each showing the compact row variant described below. "Already expired" is
+included deliberately, not hidden — Siji still needs to know what was missed, even if nothing can
+be done about the expiry itself.
+
+### Compact row variant — `.egd-cq-row--compact`
+
+Expiring Conversations and Follow-Up both reuse a lighter version of the Conversation Queue row
+(`renderCompactRow()`): no checkbox, no status badge (the section/bucket the row is already inside
+of *is* the status), just who/topic/assigned/wait-or-expiry/priority/actions. Both lists share the
+row renderer and the same kebab-menu wiring (`openRowMenu`/`applyRowMenuAction`) as the full queue,
+parameterized by which render function to call afterward — one row anatomy, reused three times,
+not three near-duplicate row components.
+
+### Follow-Up — `.egd-followup` (panel), reusing `.egd-cq-row--compact`
+
+Seven tabs (Due Today/Overdue/No Response/Waiting on Seeker/Waiting on OM/Long-running/
+High-priority) filtering one `FOLLOWUPS` array by a single `category` field. This is the page's
+answer to the brief's own framing — protecting "having deeper conversations with seekers" from
+being crowded out by administrative cleanup — so unlike Expiring Conversations (which is about a
+hard deadline), nothing here has a countdown chip; the wait chip is a plain elapsed-time signal.
+
+### Team QA / Conversation Review — `.egd-qa-row` + `.egd-qadialog`
+
+A review queue (`QA_QUEUE`) tagging each entry with why it's there (New team member/Escalated/
+Random QA sample/Needs coaching) — directly modeling the brief's description of senior OMs
+monitoring new team members' conversations for their first 2–3 months. "Review" opens a dedicated
+QA dialog (`.egd-qadialog`, a second native `<dialog>` alongside the conversation quick-view, not a
+repurposed version of it — a coaching review is Siji's own assessment, not an AI-generated one, so
+its content is a short excerpt plus a real feedback form, not an AI quality breakdown) with an
+"Overall assessment" select and a coaching-notes textarea; submitting shows a brief "Feedback saved"
+confirmation (local-only, same honesty convention as everywhere else in this product) before
+closing.
+
+### Onboarding & Training — `.egd-onboard-row`
+
+Two new team members (`ONBOARDING`), each showing week-of-N progress, two training checkmarks
+(ECHO/Conversation training, styled via `.egd-onboard-check.is-done` — a plain colored pill, not
+reusing `.egd-checklist` from `/ExploreGod-CRM-Dashboard-2` since there's no ordered sequence here,
+just two independent facts), ready-for-shift status, remaining QA monitoring weeks, and an open
+coaching-task count.
+
+### Alerts — `.egd-alertfeed-row`
+
+A short, proactive, dismissible list (`ALERTS`) — genuinely different from Needs Attention's
+per-conversation triage: these are team/operations-level signals (a specific OM's workload, a
+resource gap in a specific language) that don't map to a single queue filter. Dismissing an alert
+just removes it from the DOM (`element.remove()`) — there's no backend to persist the dismissal,
+consistent with this being a prototype.
+
+### Conversation Analytics — `.egd-analytics-body`
+
+Deliberately secondary and compact, per the brief's own instruction to keep this layer secondary to
+the operational queue above it: a handful of rows (avg. response time, no-response rate, today's
+outcome breakdown) plus a small volume-by-language bar list (`.egd-lang-volume`). No sparkline-heavy
+KPI treatment here — that visual weight is reserved for the Today/Team Pulse row, not repeated here.
+
+### Resource Library — `.egd-resource-card`
+
+```js
+{ id: "r1", title: "Understanding Fear", type: "video", language: "Hindi", topic: "Fear",
+  duration: "4:12", sent: 42, opened: 31, watched: 18 }
+```
+
+Much more prominent than on any other page, per the brief — a full-width panel, not a sidebar
+card. Filterable by language (`.egd-lang-chips`, a quick-filter row — Hindi/Malayalam/Tamil/Telugu/
+Bengali/English/Other — directly answering the brief's specific pain point about finding resources
+in Indian languages), topic, and type, plus a Most Used/Recently Added sort toggle. Each card shows
+a compact engagement funnel (`engagementLine()`: Sent → Opened → Watched for video/testimony, Sent
+→ Opened → Downloaded for PDFs, Sent → Opened for scripture text) — the brief specifically wants to
+know whether seekers engage with what's sent, not just that it was sent. "Send to conversation"
+opens the same `.egd-assign__menu` popover pattern used elsewhere (listing a handful of recent
+conversations, since this page has no single "currently open" conversation the way the quick-view
+dialog does), then shows a temporary "Sent to Seeker #…" confirmation on the button itself before
+reverting — repeatable, unlike the AI cards' one-time `is-done` state, since sending a resource is
+something you'd do again for a different seeker.
+
+### Conversation quick view — `.egd-convo` (native `<dialog>`)
+
+A single reusable dialog (`openConversationDialog()`), the same governing pattern as
+`/dashboard-partner`'s `.org-detail` and `/ExploreGod-Global`'s `.egd-review` — populated per
+conversation, native focus trap/Esc/`::backdrop` for free. Shows the seeker's quote/topic, key
+facts (assigned OM, waiting time, priority, expiry if relevant), a **Recommended Resources** list
+matched to the conversation's topic by simple keyword rules (`RESOURCES_BY_TOPIC_KEYWORD`) each with
+its own "Send" button, and a contextual action row (Claim only if unclaimed, Respond always,
+Escalate/Follow up/Close). This is the page's answer to the brief's resource-recommendation
+intelligence (section 14 of the brief) — recommendations only ever appear in the context of an
+actual conversation, never as a standalone "browse recommendations" feature, since a recommendation
+without a seeker to send it to isn't actionable.
+
+### Shared "click outside closes the menu" fix
+
+Three different triggers on this page open the same body-portal `.egd-assign__menu` (the Queue's
+kebab, Triage's "Reassign triage," and the Resource Library's "Send to conversation"). The single
+document-level listener that closes an open menu on an outside click originally only recognized the
+Queue's kebab (`.egd-cq-more`) as a valid opener — so opening the menu from either of the other two
+triggers immediately closed it again, because that trigger's own click bubbles up to the same
+document listener, which didn't recognize it and closed what had just opened. Fixed by listing every
+valid trigger (`.egd-cq-more`, `#triage-reassign-btn`, `[data-send-id]`) in the one guard condition —
+see DESIGN.md's "Eleventh page" note.
