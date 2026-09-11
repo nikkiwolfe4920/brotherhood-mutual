@@ -277,6 +277,38 @@ raise it rather than silently deviating.
 > "-text" variant (`--egd-good-text`, `--egd-warning-text`, `--egd-accent-text`, `--egd-gold-text`,
 > `--egd-ai-text`) for anywhere that hue is set on actual text rather than a swatch, since several of
 > the fill-tuned steps clear the dataviz skill's 3:1 non-text floor but not the 4.5:1 text floor.
+>
+> **Ninth page — Global Overview:** `/ExploreGod-Global` is a cross-region rollup for the same
+> product, reached from a new "Global overview" rail icon added to both pages' nav (the rail mark
+> and Home link now point back at `/ExploreGod-CRM-Dashboard`). It loads `explore-god-dashboard.css`
+> unchanged for the shell, tokens, and every shared component (`.egd-panel`, `.egd-stat`,
+> `.egd-tabs`/`.egd-tab`, `.egd-avatar`, `.egd-ai-panel`) rather than duplicating any of it, and adds
+> only the components a rollup view actually needs in a new `design-system/explore-god-global.css` —
+> parallel to how `explore-god-dashboard.css` itself was added alongside the shared `tokens.css`/
+> `base.css` rather than bending them to a use they weren't meant for. `js/explore-god-global.js`
+> follows the same per-page-file convention as `explore-god-dashboard.js` (small helpers like
+> `escapeHtml`/`hashString` duplicated rather than shared, per this project's "no premature
+> abstraction" rule — see `js/dashboard.js` vs. `js/explore-god-dashboard.js` for the existing
+> precedent).
+>
+> Regions are intentionally placeholders (`#Region 1`–`#Region 8`) rather than named/defined
+> regions — this is a prototype and real region names haven't been decided. Region 6's pipeline
+> counts (312/248/126/58) intentionally match the Southeast Region funnel on
+> `/ExploreGod-CRM-Dashboard`, so the two pages agree with each other about the same underlying
+> data rather than telling two different stories.
+>
+> The page's headline metric — each region's formation → discipleship conversion rate — is a
+> goal-vs-actual measurement, not a stage identity, so it's colored with the existing good/warning/
+> critical trio (extended with a new bare `--egd-warning` fill token, since that hue previously only
+> had `-text`/`-soft` steps) rather than the pipeline-stage palette, which stays reserved for stage
+> identity only. The ranked "Formation → Discipleship by Region" chart sorts best-first (a
+> leaderboard) while the "All Regions" list below it defaults to worst-first (an action list, so the
+> regions most needing attention surface without an extra click) — a deliberate difference between
+> the two views of the same data, each suited to its own purpose. Exporting is real, not simulated:
+> both the per-region and "Export all regions" buttons build an actual CSV client-side (a `Blob` +
+> a temporary `<a download>`, no backend) rather than a fake success state, since a static site can
+> genuinely produce a file download without one. See `COMPONENTS.md`'s "Global Overview" entry for
+> the component/data breakdown.
 
 ## Design Principles
 

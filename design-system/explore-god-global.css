@@ -1,0 +1,421 @@
+/**
+ * OneHope CRM — Global Overview — page-specific styles for /ExploreGod-Global.
+ *
+ * Loaded alongside `explore-god-dashboard.css` (not instead of it) — this page
+ * reuses that file's shell (`.egd-rail`/`.egd-topbar`), tokens, and shared
+ * components (`.egd-panel`, `.egd-stat`, `.egd-tabs`/`.egd-tab`, `.egd-avatar`,
+ * `.egd-ai-panel` and friends) so it reads as the same product as
+ * /ExploreGod-CRM-Dashboard rather than a new one. Only the components unique
+ * to a cross-region rollup — the ranked region performance chart and the
+ * regions list with its expandable per-region drill-down — get new classes
+ * here, parallel to how `explore-god-dashboard.css` itself added its own
+ * primitives alongside the shared `tokens.css`/`base.css`.
+ *
+ * Region performance (the "formation → discipleship" goal) is measured
+ * against a threshold, so it's colored with the good/warning/critical trio
+ * already defined in `explore-god-dashboard.css` for exactly that purpose —
+ * never with the pipeline-stage palette, which stays reserved for stage
+ * identity only.
+ */
+
+/* ---------- Region performance (ranked bar chart) ---------- */
+
+.egd-region-perf__body {
+  padding: var(--space-2) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.egd-region-bar {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.egd-region-bar__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-region-bar__track {
+  position: relative;
+  height: 30px;
+  background: var(--egd-surface-alt);
+  border-radius: var(--egd-radius-sm);
+}
+
+.egd-region-bar__goal {
+  position: absolute;
+  inset-block: -4px;
+  width: 0;
+  border-left: 2px dashed var(--egd-border-strong);
+  z-index: 1;
+}
+
+.egd-region-bar__fill {
+  position: relative;
+  height: 100%;
+  width: 0;
+  border-radius: var(--egd-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: var(--space-2);
+  transition: width 900ms var(--easing-standard);
+}
+
+.egd-region-bar__pct {
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.egd-region-perf-note {
+  padding: 0 var(--space-5) var(--space-5);
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+/* ---------- Regions list ---------- */
+
+.egd-regions__actions {
+  padding: 0 var(--space-5) var(--space-4);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.egd-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  background: var(--egd-surface-alt);
+  border: 1px solid var(--egd-border-strong);
+  border-radius: var(--egd-radius-pill);
+  padding: 8px 16px;
+  transition: background var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-export-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.egd-export-btn:hover {
+  background: var(--egd-surface);
+  border-color: var(--egd-ink-muted);
+}
+
+.egd-export-btn--region {
+  background: var(--egd-ai-soft);
+  border: none;
+  color: var(--egd-ai-text);
+}
+
+.egd-export-btn--region:hover {
+  background: var(--egd-surface);
+  box-shadow: var(--egd-shadow-card);
+}
+
+.egd-regions-scroll {
+  overflow-x: auto;
+}
+
+.egd-regions-head,
+.egd-region-row__summary {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1.3fr) minmax(0, 1.1fr) 0.85fr 1.3fr;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 640px;
+}
+
+.egd-regions-head {
+  padding: 0 var(--space-5) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.egd-regions-head__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  background: none;
+  border: none;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  justify-self: start;
+}
+
+.egd-regions-head__sort:hover {
+  color: var(--egd-ink);
+}
+
+.egd-sort-caret {
+  width: 10px;
+  height: 10px;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-regions-head__sort[data-dir="desc"] .egd-sort-caret {
+  transform: rotate(180deg);
+}
+
+.egd-regions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.egd-region-row {
+  border-top: 1px solid var(--egd-border);
+}
+
+.egd-region-row__summary {
+  padding: var(--space-3) var(--space-5);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-region-row__summary:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-region-row__toggle {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  border-radius: var(--egd-radius-sm);
+  color: var(--egd-ink-muted);
+}
+
+.egd-region-row__toggle:hover {
+  color: var(--egd-ink);
+  background: var(--egd-surface);
+}
+
+.egd-region-row__toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-region-row__toggle[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.egd-region-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-region-row__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+}
+
+.egd-region-row__lead span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.egd-avatar--sm {
+  width: 26px;
+  height: 26px;
+  font-size: 11px;
+}
+
+.egd-region-row__missionaries {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.egd-region-row__conversion {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.egd-region-row__bar {
+  flex: 1;
+  height: 8px;
+  border-radius: var(--egd-radius-pill);
+  background: var(--egd-surface-alt);
+  overflow: hidden;
+}
+
+.egd-region-row__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--egd-radius-pill);
+}
+
+.egd-region-row__pct {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 2px 8px;
+  border-radius: var(--egd-radius-pill);
+  white-space: nowrap;
+}
+
+.egd-region-row__pct--good {
+  color: var(--egd-good-text);
+  background: var(--egd-good-soft);
+}
+
+.egd-region-row__pct--warning {
+  color: var(--egd-warning-text);
+  background: var(--egd-warning-soft);
+}
+
+.egd-region-row__pct--critical {
+  color: var(--egd-critical);
+  background: var(--egd-critical-soft);
+}
+
+.egd-region-row__detail {
+  padding: 0 var(--space-5) var(--space-5) calc(28px + var(--space-3) + var(--space-5));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* `[hidden]` and `.egd-region-row__detail` are equal specificity, and author
+   CSS beats the UA stylesheet's `[hidden] { display: none }` regardless of
+   source order — so the base `display: flex` above needs this explicit
+   override or every row renders expanded no matter what `hidden` says. */
+.egd-region-row__detail[hidden] {
+  display: none;
+}
+
+.egd-region-detail__funnel {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.egd-region-detail__stage {
+  background: var(--egd-surface-alt);
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-3);
+}
+
+.egd-region-detail__stage-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-muted);
+  margin-bottom: 4px;
+}
+
+.egd-region-detail__stage-label::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--egd-radius-sm);
+  background: var(--stage-color);
+  flex-shrink: 0;
+}
+
+.egd-region-detail__stage-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--egd-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.egd-region-detail__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.egd-region-detail__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.egd-region-detail__lead strong {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink);
+}
+
+.egd-region-detail__lead span {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+.egd-region-detail__missionaries {
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+}
+
+.egd-region-detail__missionaries strong {
+  color: var(--egd-ink);
+}
+
+.egd-region-detail__export {
+  margin-left: auto;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .egd-region-bar {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .egd-region-detail__funnel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .egd-regions__actions {
+    justify-content: stretch;
+  }
+
+  .egd-export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .egd-region-row__detail {
+    padding-left: var(--space-5);
+  }
+
+  .egd-region-detail__export {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -927,3 +927,70 @@ across the four stages; the split is decorative sample data, generated determini
 hash of the rep's name (`caseloadMix()`) so it's stable across reloads instead of reshuffling. The
 stage legend at the bottom of the panel is the one place identity is spelled out in text for the
 whole list, rather than repeating a label on every row.
+
+## Global Overview — `/ExploreGod-Global`
+
+A ninth page: a cross-region rollup of the OneHope CRM, reached from a new "Global overview" globe
+icon in the shared rail (added to both pages' nav — see DESIGN.md's "Ninth page" note). It loads
+`design-system/explore-god-dashboard.css` unchanged for the shell and every shared component, and
+`design-system/explore-god-global.css` for the handful of components unique to a rollup view: the
+ranked region-performance bar chart and the expandable regions list. `js/explore-god-global.js`
+follows the same one-file-per-page convention as `explore-god-dashboard.js` — small helpers
+(`escapeHtml`, `hashString`, `initials`, `renderSparkline`, the `STAGES`/`stageVar()` pair) are
+duplicated rather than factored into a shared module, since that would be a second use, not the
+third this codebase's "no premature abstraction" rule waits for.
+
+Regions (`REGIONS` in the JS) are placeholders — `#Region 1` through `#Region 8` — not real, defined
+regions; this is a prototype. Region 6's pipeline counts intentionally match the Southeast Region
+funnel on `/ExploreGod-CRM-Dashboard`, so a reader who's seen both pages finds one consistent story,
+not two datasets that happen to share a UI.
+
+### Formation → Discipleship by Region — `.egd-region-perf`
+
+```js
+const REGIONS = [
+  { id: "region-1", name: "#Region 1", lead: "Grace Adeyemi", missionaries: 38,
+    stages: { new: 480, chatting: 360, formation: 240, discipleship: 168 } },
+  // …
+];
+```
+
+A ranked horizontal bar per region, sorted best-first (highest formation → discipleship conversion
+rate) — read like a leaderboard. Each bar is colored by `performanceTier()` (good/warning/critical
+against a 60% `GOAL_PCT`), not by pipeline-stage identity: conversion-vs-goal is a threshold
+measurement, the same category of thing as the intake queue's waiting-time urgency on the other
+page, so it reuses that hue family (`--egd-good`/`--egd-warning`/`--egd-critical`) rather than the
+stage palette. `--egd-warning` didn't exist as a bare fill color before this page — only
+`-text`/`-soft` steps did — so it was added at the same hue rather than inventing a new one. A
+dashed `.egd-region-bar__goal` marker at the 60% mark makes the goal itself visible on the chart,
+not just implied by color.
+
+### All Regions — `.egd-regions`
+
+The same data, tuned for a different job: default sort is worst-first (ascending conversion), so
+the regions most needing attention are the first thing a reader scans, without an extra click or a
+config default someone has to know about. Clicking the "Formation → Discipleship" column header
+(`#regions-sort-btn`) toggles direction; the `.egd-tabs`/`.egd-tab` filter (All Regions/On Goal/
+Below Goal) is the exact same component the intake queue's filter tabs use on the other page, not a
+new one, since the two are the same interaction (filter a list of rows by a computed property).
+
+Each row expands (`.egd-region-row__toggle`, `aria-expanded`/`aria-controls`) to reveal that
+region's full 4-stage funnel, its Regional Lead, and its Online Missionary count — expanded state
+lives in a JS-side `expandedIds` Set keyed by region id, so it survives a filter/sort re-render
+instead of collapsing back out from under you. One easy-to-reintroduce bug worth flagging for
+future edits to this component: `.egd-region-row__detail` sets `display: flex` for when it's
+visible, and the `hidden` attribute and that class selector are equal CSS specificity — author CSS
+beats the UA stylesheet's `[hidden] { display: none }` regardless of source order, so without the
+explicit `.egd-region-row__detail[hidden] { display: none }` override, every row renders expanded
+regardless of what `hidden` says (this shipped as a real bug once already and was caught by
+screenshot-testing the collapsed state, not by reading the CSS).
+
+### Export — real CSVs, not a fake success state
+
+Both the per-region "Export regional metrics" button (inside the expanded detail) and the panel
+header's "Export all regions" button build an actual CSV client-side (`toCSV()` + `downloadCSV()`:
+a `Blob` and a temporary `<a download>`, no backend) rather than showing a fake success toast — a
+static site can genuinely produce a file download without a server round-trip, so unlike the AI
+cards' local-only "is-done" state, this is real functionality, not a stand-in for one. "Export all
+regions" always exports the full `REGIONS` set regardless of the active tab filter, matching its
+label rather than silently exporting "what's currently visible."

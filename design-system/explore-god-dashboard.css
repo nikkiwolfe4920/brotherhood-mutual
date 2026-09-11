@@ -45,10 +45,15 @@
   --egd-stage-discipleship: #c98500;
   --egd-stage-discipleship-soft: rgba(201, 133, 0, 0.14);
 
-  /* Waiting-time urgency — separate hue family from stage identity */
+  /* Good/warning/critical — separate hue family from stage identity, reused
+     anywhere something is measured against a threshold (waiting-time
+     urgency here; goal-vs-actual region performance on /ExploreGod-Global).
+     --egd-warning didn't need a bare fill until a solid-color use appeared
+     there — added at the same hue as the existing -text/-soft steps. */
   --egd-good: #0b8a3a;
   --egd-good-text: #0a7a33;
   --egd-good-soft: rgba(11, 138, 58, 0.12);
+  --egd-warning: #fab219;
   --egd-warning-text: #8a5a06;
   --egd-warning-soft: rgba(250, 178, 25, 0.16);
   --egd-critical: #c22f2f;
