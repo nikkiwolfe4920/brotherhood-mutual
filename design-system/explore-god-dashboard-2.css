@@ -24,6 +24,60 @@
  * page rather than introducing a second palette for the same four stages.
  */
 
+/* ---------- Shared CTA button ---------- */
+/*
+ * A real action (View conversation, Check in with Daniel, Begin handoff…)
+ * needs to read unmistakably as a button, never as the status/tag chip
+ * sitting right next to it (a wait-time chip, a load chip) — this page
+ * originally styled both as similarly-weighted soft-colored pills, which is
+ * exactly the ambiguity this class exists to remove. `.egd-btn-cta` is the
+ * one CTA treatment reused everywhere on this page a click does something:
+ * a solid `--egd-accent` fill, white text, and a trailing arrow — modeled on
+ * Ready for Handoff's "Begin handoff" button, which is where this pattern
+ * first appeared. A tag/status stays a soft-tinted pill with no arrow (see
+ * `.egd-attn-item__chip`, `.egd-load`, `.egd-wait`, `.egd-stat__flag`) so the
+ * two categories never share a visual weight. `.egd-btn-cta--muted` is the
+ * one deliberate exception — the Follow-Up Queue's "Schedule" action is a
+ * real button too, just a lower-urgency one than "Message now," so it drops
+ * to a neutral fill while keeping the same shape and arrow (still obviously
+ * clickable, just visually quieter). Not applied to Quick Actions or the AI
+ * Copilot cards — those are a shortcuts list and an assistant panel
+ * respectively, not a single CTA sitting beside a status chip, so the
+ * ambiguity this class solves doesn't apply there.
+ */
+
+.egd-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #fff;
+  background: var(--egd-accent);
+  border: none;
+  border-radius: var(--egd-radius-pill);
+  padding: 7px 14px;
+  white-space: nowrap;
+  transition: transform var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+}
+
+.egd-btn-cta svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.egd-btn-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--egd-shadow-card);
+}
+
+.egd-btn-cta--muted {
+  color: var(--egd-ink-soft);
+  background: var(--egd-surface-alt);
+}
+
 /* ---------- Needs Attention ---------- */
 
 .egd-attention-list {
@@ -166,22 +220,9 @@
   background: var(--tier-soft);
 }
 
-.egd-attn-item__action {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--egd-accent-text);
-  background: var(--egd-stage-new-soft);
-  border: 1px solid transparent;
-  border-radius: var(--egd-radius-pill);
-  padding: 6px 12px;
-  white-space: nowrap;
-  transition: background var(--duration-fast) var(--easing-standard), color var(--duration-fast) var(--easing-standard);
-}
-
-.egd-attn-item__action:hover {
-  background: var(--egd-accent);
-  color: #fff;
-}
+/* .egd-attn-item__action carries no styling of its own — it's a bare hook
+   for the responsive grid-column rule further down; its look comes entirely
+   from the shared `.egd-btn-cta` class alongside it in the markup. */
 
 /* ---------- Ministry Today stat row ---------- */
 
@@ -219,34 +260,45 @@
   margin-top: var(--space-3);
 }
 
+/* A plain colored dot + text, not a filled pill — the original solid-color
+   capsule read as loud and button-like next to this card's much quieter
+   sparkline/value, and it's a pure status ("this needs a look"), never a
+   click target, so it shouldn't share a button's visual weight at all. */
 .egd-stat__flag {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  padding: 3px 10px;
-  border-radius: var(--egd-radius-pill);
+  font-weight: var(--font-weight-medium);
+}
+
+.egd-stat__flag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--flag-color);
+  flex-shrink: 0;
 }
 
 .egd-stat__flag--warning {
+  --flag-color: var(--egd-warning);
   color: var(--egd-warning-text);
-  background: var(--egd-warning-soft);
 }
 
 .egd-stat__flag--critical {
+  --flag-color: var(--egd-critical);
   color: var(--egd-critical);
-  background: var(--egd-critical-soft);
 }
 
 .egd-stat__flag--good {
+  --flag-color: var(--egd-good);
   color: var(--egd-good-text);
-  background: var(--egd-good-soft);
 }
 
 .egd-stat__flag--gold {
+  --flag-color: var(--egd-stage-discipleship);
   color: var(--egd-gold-text);
-  background: var(--egd-stage-discipleship-soft);
 }
 
 .egd-stat__note {
@@ -509,22 +561,9 @@
   background: var(--egd-critical-soft);
 }
 
-.egd-team-row__checkin {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--egd-ai-text);
-  background: var(--egd-ai-soft);
-  border: 1px solid transparent;
-  border-radius: var(--egd-radius-pill);
-  padding: 6px 12px;
-  white-space: nowrap;
-  transition: background var(--duration-fast) var(--easing-standard), color var(--duration-fast) var(--easing-standard);
-}
-
-.egd-team-row__checkin:hover {
-  background: var(--egd-ai-text);
-  color: #fff;
-}
+/* .egd-team-row__checkin carries no styling of its own — same bare-hook
+   pattern as .egd-attn-item__action above; its look comes from `.egd-btn-cta`
+   so it never again reads as just another status chip next to `.egd-load`. */
 
 /* ---------- Follow-up queue ---------- */
 
@@ -581,26 +620,9 @@
   white-space: nowrap;
 }
 
-.egd-followup-row__action {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: #fff;
-  background: var(--egd-accent);
-  border: none;
-  border-radius: var(--egd-radius-pill);
-  padding: 7px 13px;
-  white-space: nowrap;
-  transition: transform var(--duration-fast) var(--easing-standard);
-}
-
-.egd-followup-row__action:hover {
-  transform: translateY(-1px);
-}
-
-.egd-followup-row__action--muted {
-  color: var(--egd-ink-soft);
-  background: var(--egd-surface-alt);
-}
+/* .egd-followup-row__action carries no styling of its own — it and its
+   `--muted` "Schedule" variant come from `.egd-btn-cta`/`.egd-btn-cta--muted`
+   (see that class's comment for why "Schedule" gets the muted treatment). */
 
 /* ---------- Recent Progress feed ---------- */
 
@@ -730,28 +752,9 @@
   color: var(--egd-border-strong);
 }
 
-.egd-handoff-card__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: #fff;
-  background: var(--egd-accent);
-  border: none;
-  border-radius: var(--egd-radius-pill);
-  padding: 7px 14px;
-  transition: transform var(--duration-fast) var(--easing-standard);
-}
-
-.egd-handoff-card__cta:hover {
-  transform: translateY(-1px);
-}
-
-.egd-handoff-card__cta svg {
-  width: 14px;
-  height: 14px;
-}
+/* .egd-handoff-card__cta is the original CTA this whole page's button
+   treatment (`.egd-btn-cta`) was modeled on — it now carries no styling of
+   its own; the shared class is what actually renders it. */
 
 .egd-handoff-safety {
   display: flex;
@@ -834,31 +837,16 @@
   margin-top: 2px;
 }
 
+/* Layout-only overrides — this card's CTA is full-width and a touch larger
+   than the shared `.egd-btn-cta` default; color/background/shape come from
+   that shared class (it was previously its own outlined, unfilled button,
+   which is exactly the "doesn't read as a button" problem `.egd-btn-cta`
+   exists to fix). */
 .egd-testimony-cta {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 6px;
   width: 100%;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--egd-ink);
-  background: var(--egd-surface);
-  border: 1px solid var(--egd-border-strong);
-  border-radius: var(--egd-radius-pill);
   padding: 9px 16px;
-  transition: background var(--duration-fast) var(--easing-standard), border-color var(--duration-fast) var(--easing-standard);
-}
-
-.egd-testimony-cta:hover {
-  background: var(--egd-surface-alt);
-  border-color: var(--egd-ink-muted);
-}
-
-.egd-testimony-cta svg {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
 }
 
 /* ---------- Quick Actions ---------- */

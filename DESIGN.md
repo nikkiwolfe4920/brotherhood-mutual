@@ -372,6 +372,40 @@ raise it rather than silently deviating.
 > names), propagated through every other surface referencing those same missionaries by first name
 > (Needs Attention, the Follow-Up Queue, Recent Progress) so the same person's name stays consistent
 > across the whole page.
+>
+> **Engagement Command Center — a single CTA button treatment + tag/status cleanup:** a second
+> follow-up pass fixed two remaining readability problems on this page. First, several real action
+> buttons (Needs Attention's "View conversation"/"Send reminder"/"Nudge," Team Health's "Check in
+> with Daniel"/"Schedule one-on-one") were styled as softly-tinted pills — the same visual weight as
+> the status/tag chip sitting right next to them (a wait-time chip, a load chip), so a reader couldn't
+> tell which one was clickable. Every real action button on the page now shares one treatment,
+> `.egd-btn-cta` in `explore-god-dashboard-2.css`: a solid `--egd-accent` fill, white text, and a
+> trailing arrow (`CTA_ARROW` in `js/explore-god-dashboard-2.js`, one constant so the glyph can't
+> drift between copies) — modeled on Ready for Handoff's "Begin handoff" button, the one place this
+> pattern already read unambiguously as a CTA. The Follow-Up Queue's existing solid-blue action and
+> the Stories & Testimonies panel's previously outlined "Review testimonies" button were folded into
+> the same shared class rather than left as two more one-off variants. `.egd-btn-cta--muted` is the
+> one deliberate exception, for the Follow-Up Queue's lower-urgency "Schedule" action — still a real
+> button (same shape, same arrow), just visually quieter than "Message now." Quick Actions and the AI
+> Copilot cards were deliberately left out of this — neither sits beside a status chip it could be
+> confused with, so the ambiguity this class solves doesn't apply to them.
+>
+> Second, the Ministry Today row's four `.egd-stat__flag` chips ("12 need follow-up," "Emotionally
+> heavy or escalated," "Ready to go deeper this week," "Ready for local church connection") dropped
+> their filled-pill background in favor of a small colored dot + plain-weight colored text — a pure
+> status ("this needs a look," never a click target) has no business sharing a button's visual
+> weight, and the solid capsule read as loud and button-like next to the card's much quieter
+> sparkline. This is the same colored-dot-plus-text pattern the Needs Attention row titles and the
+> Seeker Journey stage labels already use elsewhere on this page, not a new one.
+>
+> Separately (not specific to this page): fixing the arrow on this page's new "High-priority
+> Conversations" down-trend badge surfaced that the down-trend icon path had been broken since it was
+> first authored for `/ExploreGod-CRM-Dashboard`'s "In formation" KPI card — its arrowhead bracket
+> path spanned the icon's full height instead of hugging the line's bottom-right endpoint the way the
+> up-arrow's bracket correctly hugs its top-right endpoint, so it rendered as an ambiguous small
+> squiggle instead of a clean mirrored ↘. Both cards' icons — the only two places this shared,
+> hand-authored SVG path was ever used — were corrected to `M8 17h9v-9`, the true vertical mirror of
+> the up-arrow's `M8 7h9v9`.
 
 ## Design Principles
 
