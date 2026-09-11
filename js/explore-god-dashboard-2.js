@@ -38,6 +38,13 @@ function initials(name) {
     .toUpperCase();
 }
 
+// The one arrow every `.egd-btn-cta` button uses (see that class's comment
+// in explore-god-dashboard-2.css) — a single constant so every CTA on the
+// page renders the exact same glyph rather than a hand-copied one drifting
+// from the others.
+const CTA_ARROW =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>';
+
 // ---------- Stage identity ----------
 // New/Active/Growing/Handoff are the same four fixed pipeline stages as
 // New Contact/Active Conversation/Christian Formation/Discipleship Journey
@@ -236,7 +243,7 @@ attentionList.innerHTML = ATTENTION_ITEMS.map((tier, index) => {
               <span class="egd-attn-item__meta">${escapeHtml(item.meta)}</span>
             </span>
             <span class="egd-attn-item__chip" style="--tier-soft: var(--egd-${tier.tier}-soft); --tier-text: var(--egd-${tier.tier === "critical" ? "critical" : tier.tier + "-text"})">${escapeHtml(item.chip)}</span>
-            <button class="egd-attn-item__action" type="button">${escapeHtml(item.action)}</button>
+            <button class="egd-attn-item__action egd-btn-cta" type="button">${escapeHtml(item.action)} ${CTA_ARROW}</button>
           </div>
         `
           )
@@ -401,7 +408,7 @@ document.getElementById("team-list").innerHTML = TEAM.map((person) => {
         ${person.note ? `<p class="egd-team-row__note">${escapeHtml(person.note)}</p>` : ""}
       </div>
       <span class="egd-load egd-load--${person.load}">${LOAD_LABEL[person.load]}</span>
-      ${person.checkin ? `<button class="egd-team-row__checkin" type="button">${escapeHtml(person.checkin)}</button>` : `<span></span>`}
+      ${person.checkin ? `<button class="egd-team-row__checkin egd-btn-cta" type="button">${escapeHtml(person.checkin)} ${CTA_ARROW}</button>` : `<span></span>`}
     </li>
   `;
 }).join("");
@@ -436,7 +443,7 @@ function renderFollowups(filter = "all") {
           </div>
           <span class="egd-wait egd-wait--${row.status === "today" ? "good" : row.status === "overdue" ? "critical" : "warning"}">${escapeHtml(row.chip)}</span>
           <div class="egd-followup-row__owner">with ${escapeHtml(row.owner)}</div>
-          <button class="egd-followup-row__action${row.status === "unscheduled" ? " egd-followup-row__action--muted" : ""}" type="button">${FOLLOWUP_ACTION[row.status]}</button>
+          <button class="egd-followup-row__action egd-btn-cta${row.status === "unscheduled" ? " egd-btn-cta--muted" : ""}" type="button">${FOLLOWUP_ACTION[row.status]} ${CTA_ARROW}</button>
         </li>
       `;
     })
@@ -597,9 +604,9 @@ document.getElementById("handoff-list").innerHTML = HANDOFFS.map(
           )
           .join("")}
       </ul>
-      <button class="egd-handoff-card__cta" type="button">
+      <button class="egd-handoff-card__cta egd-btn-cta" type="button">
         ${escapeHtml(card.cta)}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+        ${CTA_ARROW}
       </button>
     </div>
   `

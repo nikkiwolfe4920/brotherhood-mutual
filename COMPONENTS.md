@@ -1005,6 +1005,33 @@ shared component, and `design-system/explore-god-dashboard-2.css` for the compon
 lens. `js/explore-god-dashboard-2.js` renders every panel from small in-file arrays, following the
 same convention as the other two pages' JS files.
 
+### Shared CTA button — `.egd-btn-cta`
+
+```html
+<button class="egd-attn-item__action egd-btn-cta" type="button">
+  View conversation
+  <svg>…</svg> <!-- CTA_ARROW -->
+</button>
+```
+
+The one treatment every real action button on this page shares: a solid `--egd-accent` fill, white
+text, and a trailing arrow — modeled on Ready for Handoff's "Begin handoff" button. It exists because
+several buttons (Needs Attention's row actions, Team Health's "Check in with…") were originally
+styled as softly-tinted pills, the same visual weight as the status/tag chip sitting right next to
+them (`.egd-attn-item__chip`'s time-ago chip, `.egd-load`'s workload chip) — a reader couldn't tell
+which one was clickable. Every component-specific class that used to carry its own button styling
+(`.egd-attn-item__action`, `.egd-team-row__checkin`, `.egd-followup-row__action`,
+`.egd-handoff-card__cta`) now carries none of its own — `.egd-btn-cta` does the actual styling, and
+the specific class is kept only as a bare hook where a responsive rule needs to target that one
+button by context. `js/explore-god-dashboard-2.js`'s `CTA_ARROW` constant is the one copy of the
+arrow glyph every button interpolates, so it can't quietly drift into slightly different icons across
+call sites. `.egd-btn-cta--muted` is the one deliberate variant — the Follow-Up Queue's "Schedule"
+action is a real button too, just a lower-urgency one than "Message now," so it keeps the same shape
+and arrow but drops to a neutral fill. Quick Actions (`.egd-quick-action`) and the AI Copilot's
+`.egd-ai-card__cta` intentionally don't use this class — neither sits beside a status chip it could be
+mistaken for, so the ambiguity this class solves doesn't apply to them, and forcing five stacked
+Quick Actions to a solid-blue fill would just compete with this page's actual CTAs for visual weight.
+
 ### Needs Attention — `.egd-attention`
 
 ```js
@@ -1032,9 +1059,12 @@ next.
 Five stat tiles reusing `.egd-stat`'s full KPI-card anatomy verbatim — `.egd-stat__head` (label +
 colored `.egd-stat__delta` badge), the big value, then a gradient-filled `.egd-sparkline` — the same
 premium treatment `/ExploreGod-CRM-Dashboard`'s own KPI row uses, not a simplified variant of it. The
-colored flag naming the sub-metric that needs attention (`12 need follow-up`, `Emotionally heavy or
+flag naming the sub-metric that needs attention (`12 need follow-up`, `Emotionally heavy or
 escalated`) sits below the sparkline rather than replacing it, so the row carries both a trend at a
-glance and which sub-metric still needs a look. `sparklineColorVar()` extends the shared
+glance and which sub-metric still needs a look — as a colored dot + plain-weight text now, not the
+filled pill it launched with, since it's a pure status (never a click target) and the solid capsule
+read as loud and button-like next to the rest of the card; see this page's "Shared CTA button" entry
+above for the button-vs-tag distinction this is the other half of. `sparklineColorVar()` extends the shared
 `renderSparkline()` (duplicated into this page's JS per the one-file-per-page convention) to resolve
 either a pipeline-stage color or a bare `--egd-good`/`--egd-critical` token — two of these five cards
 (Missionaries Online, High-priority Conversations) aren't pipeline stages, so forcing them through
