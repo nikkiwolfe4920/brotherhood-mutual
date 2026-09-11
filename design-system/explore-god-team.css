@@ -254,10 +254,35 @@
 .egd-cq-head,
 .egd-cq-row {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1.3fr) minmax(0, 1.1fr) 0.9fr 0.8fr 0.9fr 0.55fr auto;
+  /* Every column but Topic is a fixed pixel width, not an `fr` share. The
+     head row and every data row are independent grid containers (a `<div>`
+     and each `<li>`), so `fr`/`auto` tracks are each recomputed per
+     container from whatever that one container happens to hold — a
+     14-character OM name is a different intrinsic width than "Unclaimed,"
+     an empty head placeholder is a different width than a real button pair
+     — and that let both the column boundaries drift out of line between
+     rows and the head, and occasionally truncate a longer name ("Priyanka
+     Menon") that would have fit under a plain proportional split. Fixed
+     widths, sized to comfortably fit the widest real value in each column
+     (see the per-column comments below), make every column identically
+     wide in the head and in every row regardless of content. Topic is the
+     one exception — it's meant to truncate (a topic is a full phrase), so
+     it stays `minmax(0, 1fr)` and absorbs whatever width is left over. */
+  grid-template-columns:
+    24px /* checkbox */
+    160px /* Seeker: avatar + "Seeker #NNNN" + channel/language line */
+    minmax(0, 1fr) /* Topic: intentionally truncates, absorbs remaining space */
+    135px /* Assigned: fits "Priyanka Menon" (the longest OM name) or the "Unclaimed" pill */
+    95px /* Status: fits "Responded", the longest status label */
+    130px /* Waiting: fits "expires in 2d", the longest wait/expiry chip */
+    70px /* Priority: fits "medium", the longest priority label */
+    140px; /* Actions: fits the widest primary-action + kebab pair */
   align-items: center;
   gap: var(--space-3);
-  min-width: 780px;
+  /* Sum of the fixed columns above (754px) + their 7 gaps (84px) + a
+     reasonable minimum for Topic (140px) so it never gets squeezed to
+     nothing on a narrower viewport before the horizontal scroll takes over. */
+  min-width: 980px;
 }
 
 .egd-cq-head {
@@ -337,8 +362,12 @@
 }
 
 .egd-cq-status {
+  /* Vertically centers with the rest of the row (the grid's own
+     `align-items: center`) instead of pinning to the top of a row made
+     tall by the two-line seeker cell next to it — the previous
+     `align-self: start` here was what made this badge look like it had
+     floated up and out of its own row. */
   display: inline-flex;
-  align-self: start;
   font-size: 11px;
   font-weight: var(--font-weight-semibold);
   color: var(--tier-text);
@@ -469,7 +498,12 @@
 .egd-workload-head,
 .egd-workload-row {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) 0.5fr 0.5fr 0.6fr 0.7fr 0.7fr 0.7fr auto;
+  /* Fixed 100px trailing column, not `auto` — same reason as the
+     Conversation Queue's head/row mismatch above: the head's placeholder
+     and each row's real "Reassign" button are independent grid containers,
+     so an `auto` track (sized to each container's own content) throws off
+     every `fr` column's width by a different amount unless it's fixed. */
+  grid-template-columns: minmax(0, 2fr) 0.5fr 0.5fr 0.6fr 0.7fr 0.7fr 0.7fr 100px;
   align-items: center;
   gap: var(--space-3);
   min-width: 720px;
@@ -731,7 +765,13 @@
 
 .egd-qa-row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  /* The tag column is a fixed width, not `auto` — each row is its own grid
+     container, so an `auto` first column sizes to that row's own tag text
+     ("Escalated" vs. the much wider "Random QA sample"), which pushes the
+     conversation title to a different starting position in every row. A
+     fixed width (150px comfortably fits the widest tag, "Random QA sample")
+     gives every row's title the same left edge. */
+  grid-template-columns: 150px minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-5);
@@ -743,6 +783,10 @@
 }
 
 .egd-qa-row__tag {
+  /* Grid items stretch to fill their track by default — without this the
+     pill's colored background would stretch across the full fixed-width
+     tag column instead of staying a snug pill at its own natural width. */
+  justify-self: start;
   font-size: 11px;
   font-weight: var(--font-weight-semibold);
   color: var(--egd-ai-text);

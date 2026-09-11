@@ -458,6 +458,41 @@ raise it rather than silently deviating.
 > again — that trigger's own click bubbles to the same document-level listener, which saw a target
 > it didn't recognize and closed what had just opened. Fixed by having that one listener recognize
 > every trigger that opens this style of menu, not just the first one written.
+>
+> **Team Engagement Operations — table alignment pass:** a follow-up revision fixed the Conversation
+> Queue, Team Workload, and Team QA / Conversation Review tables, whose columns didn't line up
+> cleanly under their headers. The root cause was the same in the first two: the head row and every
+> data row are independent CSS Grid containers (a `<div>` and each `<li>`), so a trailing `fr`/`auto`
+> column sizes to *that one container's own content* — an empty placeholder in the head vs. a real
+> button pair in a row, a 9-character OM name vs. "Unclaimed" — which throws off how much space is
+> left for every other column's `fr` share by a different amount in the head than in any given row.
+> The drift compounded left-to-right (each column a little further off than the last) and, at the
+> extreme, could truncate a genuinely long value ("Priyanka Menon") that would have fit under a
+> naive proportional split. Fixed by giving every column but one fixed pixel widths — sized to
+> comfortably fit the actual widest real value per column (documented per-column in
+> `explore-god-team.css`) — so the head and every row resolve to the identical column widths
+> regardless of what each happens to contain; only the Conversation Queue's Topic column stays
+> `minmax(0, 1fr)` and absorbs the remainder, since a topic is a full phrase that's *supposed* to
+> truncate, unlike a name or a status label. The Conversation Queue's status badge also had
+> `align-self: start`, which pinned it to the top of the row instead of centering with the taller
+> two-line seeker cell beside it — removed, since nothing else in the row overrides the grid's own
+> `align-items: center`. Separately, the queue's Status column was showing "Unclaimed" for an
+> unclaimed conversation even though the Assigned column already shows an "Unclaimed" pill for the
+> exact same fact — Status now always shows the conversation's real category (so an unclaimed
+> conversation reads "New" there, not a second "Unclaimed"), leaving each column with one job. The
+> Team QA list's tag column had the identical `auto`-first-column problem one row at a time (no head
+> row to compare against there, just row-to-row: "Escalated" is a different width than "Random QA
+> sample," so the conversation title after it started at a different x per row) — same fix, a fixed
+> width sized to the widest tag.
+>
+> One accepted trade-off from this pass: the Conversation Queue's minimum width grew (780px → 980px)
+> to fit its now-fixed columns without truncating real content, which is wider than the panel's
+> ~854px share of the two-column layout at a common 1440px viewport — so the table now scrolls
+> horizontally within its own `overflow-x: auto` container by default at that width, where it
+> previously fit without scrolling. This is the same pattern the Global Engagement Command Center's
+> Regional Health and Campaign Intelligence tables already use deliberately for dense data — correct,
+> legible, unclipped columns that scroll internally beat columns narrow enough to fit but too
+> cramped to read.
 
 ## Design Principles
 

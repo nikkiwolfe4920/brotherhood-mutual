@@ -1352,6 +1352,16 @@ popover is now reused across three different lists — the Conversation Queue, E
 Conversations, and Follow-Up — against the same underlying record shape). Choosing "Assign"/
 "Reassign" swaps the menu's own contents for the OM picker rather than opening a second popover.
 
+Every column but Topic is a fixed pixel width (not an `fr` share) in both `.egd-cq-head` and
+`.egd-cq-row` — see DESIGN.md's "table alignment pass" note for why: the head and each row are
+independent grid containers, so a proportional split resolves to a different pixel width in each
+one depending on what that particular container holds, which both misaligns columns and can
+truncate a long OM name. Topic alone stays `minmax(0, 1fr)` and absorbs the leftover space, since
+truncating a topic phrase is expected. This pushed the panel's minimum width past its ~854px share
+of the two-column layout at a common desktop viewport, so the table now scrolls horizontally within
+its own container there by default — a deliberate trade (legible, correctly aligned columns) over
+the alternative (columns narrow enough to avoid scrolling but too cramped to read).
+
 ### Bulk actions — `.egd-cq-bulkbar`
 
 Checking any row reveals a bulk bar ("N selected · Close as: No Response / Resolved / Follow-up ·
@@ -1376,6 +1386,11 @@ active/new/waiting/needs-action/avg. response/a `.egd-load`-colored workload bad
 (duplicated from that same page — see file header). "Reassign" doesn't open a per-conversation
 picker from this row — it scrolls to the Conversation Queue, where the actual per-conversation
 Assign/Reassign action already lives, rather than building a second, competing reassignment surface.
+
+Same fixed-column-widths fix as the Conversation Queue above, for the same reason — see DESIGN.md's
+"table alignment pass" note. Team Member is the one flexible column here (it had enough headroom
+that it never actually misaligned or truncated a name, unlike the Conversation Queue's narrower
+Assigned column).
 
 ### Shift & Coverage — `.egd-shift-card`
 
@@ -1433,6 +1448,13 @@ its content is a short excerpt plus a real feedback form, not an AI quality brea
 "Overall assessment" select and a coaching-notes textarea; submitting shows a brief "Feedback saved"
 confirmation (local-only, same honesty convention as everywhere else in this product) before
 closing.
+
+The tag column (`.egd-qa-row__tag`) is a fixed 150px, not `auto` — each row is its own grid
+container, so an `auto` tag column sized to that row's own tag text ("Escalated" vs. the much wider
+"Random QA sample"), pushing the conversation title after it to a different starting x per row. A
+fixed width, with `justify-self: start` on the tag itself so its pill doesn't stretch to fill the
+now-wider column, gives every row's title the same left edge — see DESIGN.md's "table alignment
+pass" note.
 
 ### Onboarding & Training — `.egd-onboard-row`
 

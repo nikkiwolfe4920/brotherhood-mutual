@@ -242,7 +242,6 @@ const QUEUE = [
 
 const STATUS_LABEL = {
   new: "New",
-  unclaimed: "Unclaimed",
   responded: "Responded",
   active: "Active",
   expiring: "Expiring",
@@ -305,8 +304,6 @@ function renderQueue() {
   queueList.innerHTML = rows
     .map((row) => {
       const level = waitLevel(row.waitMinutes);
-      const unclaimed = !row.assignedTo;
-      const statusKey = unclaimed && row.status === "new" ? "unclaimed" : row.status;
       const tier = STATUS_TIER[row.status] ?? "accent";
       const tierText = tier === "critical" ? "critical" : `${tier}-text`;
       return `
@@ -321,7 +318,7 @@ function renderQueue() {
           </div>
           <span class="egd-cq-row__topic">${escapeHtml(row.topic)}</span>
           <span class="egd-cq-row__assigned">${row.assignedTo ? escapeHtml(row.assignedTo) : '<span class="egd-cq-unclaimed">Unclaimed</span>'}</span>
-          <span class="egd-cq-status" style="--tier-color: var(--egd-${tier}); --tier-soft: var(--egd-${tier}-soft); --tier-text: var(--egd-${tierText})">${escapeHtml(STATUS_LABEL[statusKey] ?? row.status)}</span>
+          <span class="egd-cq-status" style="--tier-color: var(--egd-${tier}); --tier-soft: var(--egd-${tier}-soft); --tier-text: var(--egd-${tierText})">${escapeHtml(STATUS_LABEL[row.status] ?? row.status)}</span>
           <span class="egd-wait egd-wait--${level}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
             ${row.status === "expiring" && row.expiresInMinutes != null ? `expires in ${formatWait(row.expiresInMinutes)}` : `waiting ${formatWait(row.waitMinutes)}`}
