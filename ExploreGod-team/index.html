@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneHope CRM Dashboard — Team Engagement Operations</title>
+  <meta
+    name="description"
+    content="OneHope CRM — Team Engagement Operations: run the India engagement team's queue, workload, shifts, triage, and resources from one screen."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-dashboard.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-team.css" />
+</head>
+<body class="egd">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="egd-shell">
+    <aside class="egd-rail" aria-label="Primary">
+      <a class="egd-rail__mark" href="../ExploreGod-CRM-Dashboard/" aria-label="OneHope CRM home">OH</a>
+
+      <nav class="egd-rail__nav" aria-label="Sections">
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard/" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-Global/" aria-label="Global Engagement Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.4 4 5.6 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.6-4-9s1.5-6.6 4-9z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard-2/" aria-label="Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M7 12h2.5l1.5-3.5L13 15l1.5-3H17" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Live queue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-current="page" aria-label="Team Engagement Operations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5" /><circle cx="18" cy="7.5" r="2.5" /><path d="M15.8 14.5c2.9.3 5.7 2 5.7 5.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Journeys">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#resources-title" aria-label="Reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4" /><path d="M9 13h6" /><path d="M9 17h6" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </a>
+      </nav>
+
+      <button class="egd-rail__avatar" type="button" aria-label="Siji Oommen — account">SO</button>
+    </aside>
+
+    <div class="egd-main">
+      <header class="egd-topbar">
+        <div class="egd-topbar__meta">
+          <span class="egd-live-dot" aria-hidden="true"></span>
+          India Team · Morning Shift · Thu, 14 May · 09:42
+        </div>
+        <div class="egd-topbar__actions">
+          <button class="egd-icon-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          </button>
+          <button class="egd-icon-btn" type="button" aria-label="Notifications — 6 unread">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
+            <span class="egd-icon-btn__dot" aria-hidden="true"></span>
+          </button>
+          <button class="egd-topbar__avatar" type="button" aria-label="Siji Oommen — account">SO</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="egd-scroll">
+        <div class="egd-page-head">
+          <h1 class="egd-greeting">Good morning, Siji</h1>
+          <p class="egd-subtitle">Here's how the India team is doing right now.</p>
+          <p class="egd-shift-strip">
+            <span class="egd-status egd-status--online">3 of 5 OMs active</span>
+            · Morning Shift (7:00 AM – 3:00 PM IST) · Sarah is running triage
+          </p>
+          <nav class="egd-section-nav" aria-label="Page sections">
+            <a href="#attention-title">Needs Attention</a>
+            <a href="#queue-title">Queue</a>
+            <a href="#workload-title">Team</a>
+            <a href="#shift-title">Shift</a>
+            <a href="#triage-title">Triage</a>
+            <a href="#expiring-title">Expiring</a>
+            <a href="#followup-title">Follow-up</a>
+            <a href="#qa-title">QA</a>
+            <a href="#resources-title">Resources</a>
+          </nav>
+        </div>
+
+        <section class="egd-pulse-kpis" id="pulse-kpis" aria-label="Today's team pulse"></section>
+
+        <section class="egd-panel egd-attention" aria-labelledby="attention-title">
+          <div class="egd-panel__header">
+            <div class="egd-panel__heading">
+              <div>
+                <h2 class="egd-panel__title" id="attention-title">Needs Attention</h2>
+                <p class="egd-panel__subtitle">The things most worth the team's time right now — click straight into the conversations</p>
+              </div>
+            </div>
+          </div>
+          <ul class="egd-alert-list" id="attention-list"></ul>
+        </section>
+
+        <div class="egd-grid">
+          <div class="egd-col-main">
+            <section class="egd-panel egd-cq" aria-labelledby="queue-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="queue-title">Conversation Queue</h2>
+                    <p class="egd-panel__subtitle">Claim, assign, and close conversations without leaving the queue</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-tabs" role="tablist" aria-label="Filter conversations" id="queue-tabs">
+                <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="new">New</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="unclaimed">Unclaimed</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="responded">Responded</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="expiring">Expiring</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="follow-up">Follow-up</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="escalated">Escalated</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="stalled">Stalled</button>
+              </div>
+              <div class="egd-cq-bulkbar" id="cq-bulkbar" hidden>
+                <span id="cq-bulk-count">0 selected</span>
+                <span class="egd-cq-bulkbar__label">Close as:</span>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="No Response">No Response</button>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="Resolved">Resolved</button>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="Follow-up">Follow-up</button>
+                <button class="egd-cq-bulkbar__clear" type="button" id="cq-bulk-clear">Clear</button>
+              </div>
+              <div class="egd-cq-scroll">
+                <div class="egd-cq-head">
+                  <span aria-hidden="true"></span>
+                  <span>Seeker</span>
+                  <span>Topic</span>
+                  <span>Assigned</span>
+                  <span>Status</span>
+                  <span>Waiting</span>
+                  <span>Priority</span>
+                  <span aria-hidden="true"></span>
+                </div>
+                <ul class="egd-cq-list" id="queue-list"></ul>
+              </div>
+            </section>
+
+            <section class="egd-panel egd-workload" aria-labelledby="workload-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="workload-title">Team Workload</h2>
+                    <p class="egd-panel__subtitle">Who's overloaded, who has room — reassign before it becomes a backlog</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-workload-scroll">
+                <div class="egd-workload-head">
+                  <span>Team member</span>
+                  <span>Active</span>
+                  <span>New</span>
+                  <span>Waiting</span>
+                  <span>Needs action</span>
+                  <span>Avg. response</span>
+                  <span>Workload</span>
+                  <span aria-hidden="true"></span>
+                </div>
+                <ul class="egd-workload-list" id="workload-list"></ul>
+              </div>
+            </section>
+
+            <section class="egd-panel egd-expiring" aria-labelledby="expiring-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="expiring-title">Expiring Conversations</h2>
+                    <p class="egd-panel__subtitle">WhatsApp's 24-hour window doesn't pause for the weekend</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-expiring-buckets" id="expiring-buckets" role="tablist" aria-label="Expiring bucket"></div>
+              <ul class="egd-cq-list egd-cq-list--compact" id="expiring-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-followup" aria-labelledby="followup-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="followup-title">Follow-Up</h2>
+                    <p class="egd-panel__subtitle">The deeper relationships worth protecting from administrative cleanup</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-tabs" role="tablist" aria-label="Filter follow-ups" id="followup-tabs">
+                <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="due-today">Due Today</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="overdue">Overdue</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="no-response">No Response</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="waiting-seeker">Waiting on Seeker</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="waiting-om">Waiting on OM</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="long-running">Long-running</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="high-priority">High-priority</button>
+              </div>
+              <ul class="egd-cq-list egd-cq-list--compact" id="followup-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-qa" aria-labelledby="qa-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="qa-title">Team QA / Conversation Review</h2>
+                    <p class="egd-panel__subtitle">Senior OMs monitor new team members' conversations for their first 2–3 months</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="egd-qa-list" id="qa-list"></ul>
+            </section>
+          </div>
+
+          <aside class="egd-col-side">
+            <section class="egd-panel egd-alerts" aria-labelledby="alerts-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="alerts-title">Alerts</h2>
+              </div>
+              <ul class="egd-alertfeed-list" id="alertfeed-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-shift" aria-labelledby="shift-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="shift-title">Shift &amp; Coverage</h2>
+              </div>
+              <div class="egd-shift-body" id="shift-body"></div>
+            </section>
+
+            <section class="egd-panel egd-triage" aria-labelledby="triage-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="triage-title">Triage Management</h2>
+              </div>
+              <div class="egd-triage-body" id="triage-body"></div>
+            </section>
+
+            <section class="egd-panel egd-onboarding" aria-labelledby="onboarding-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="onboarding-title">Onboarding &amp; Training</h2>
+              </div>
+              <ul class="egd-onboard-list" id="onboard-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-analytics" aria-labelledby="analytics-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="analytics-title">Conversation Analytics</h2>
+                <p class="egd-panel__subtitle">Secondary — the queue above is where the day actually happens</p>
+              </div>
+              <div class="egd-analytics-body" id="analytics-body"></div>
+            </section>
+          </aside>
+        </div>
+
+        <section class="egd-panel egd-resources" aria-labelledby="resources-title">
+          <div class="egd-panel__header">
+            <div class="egd-panel__heading">
+              <div>
+                <h2 class="egd-panel__title" id="resources-title">Resource Library</h2>
+                <p class="egd-panel__subtitle">Send a resource straight into a conversation — no need to go hunting for it first</p>
+              </div>
+            </div>
+          </div>
+          <div class="egd-resources-filters">
+            <div class="egd-lang-chips" id="lang-chips" role="group" aria-label="Filter by language"></div>
+            <div class="egd-select-group">
+              <label class="visually-hidden" for="topic-select">Topic</label>
+              <select class="egd-select" id="topic-select">
+                <option value="all">All topics</option>
+              </select>
+              <label class="visually-hidden" for="type-select">Type</label>
+              <select class="egd-select" id="type-select">
+                <option value="all">All types</option>
+                <option value="video">Video</option>
+                <option value="scripture">Scripture</option>
+                <option value="pdf">PDF / Article</option>
+                <option value="testimony">Testimony</option>
+              </select>
+              <button class="egd-select egd-select--sort" type="button" id="resources-sort-btn" data-mode="used">Most used</button>
+            </div>
+          </div>
+          <div class="egd-resource-grid" id="resource-grid"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Conversation quick view — a single reusable dialog populated per
+       conversation by openConversationDialog() in explore-god-team.js. -->
+  <dialog class="egd-convo" id="convo-dialog" aria-labelledby="convo-seeker-id">
+    <div class="egd-convo__header">
+      <div>
+        <p class="egd-convo__title" id="convo-seeker-id"></p>
+        <p class="egd-convo__subtitle" id="convo-meta"></p>
+      </div>
+      <button class="egd-convo__close" type="button" id="convo-close" aria-label="Close conversation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+    <div class="egd-convo__body">
+      <p class="egd-convo__quote" id="convo-quote"></p>
+      <dl class="egd-convo__facts" id="convo-facts"></dl>
+      <div class="egd-convo__resources">
+        <p class="egd-convo__resources-label">Recommended Resources</p>
+        <div id="convo-resources"></div>
+      </div>
+    </div>
+    <div class="egd-convo__footer" id="convo-actions"></div>
+  </dialog>
+
+  <!-- QA / coaching review — a single reusable dialog populated per
+       conversation by openQaDialog() in explore-god-team.js. -->
+  <dialog class="egd-qadialog" id="qa-dialog" aria-labelledby="qa-dialog-title">
+    <div class="egd-convo__header">
+      <div>
+        <p class="egd-convo__title" id="qa-dialog-title"></p>
+        <p class="egd-convo__subtitle" id="qa-dialog-meta"></p>
+      </div>
+      <button class="egd-convo__close" type="button" id="qa-dialog-close" aria-label="Close review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+    <div class="egd-convo__body">
+      <p class="egd-convo__quote" id="qa-dialog-quote"></p>
+      <form class="egd-qaform" id="qa-form">
+        <label class="egd-qaform__label" for="qa-assessment">Overall assessment</label>
+        <select class="egd-select" id="qa-assessment">
+          <option>Excellent</option>
+          <option>Good</option>
+          <option>Needs improvement</option>
+        </select>
+        <label class="egd-qaform__label" for="qa-notes">Coaching notes</label>
+        <textarea class="egd-qaform__textarea" id="qa-notes" rows="4" placeholder="What went well, and what to work on next…"></textarea>
+        <button class="egd-btn-cta" type="submit" id="qa-submit">Save feedback</button>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="../js/explore-god-team.js" type="module"></script>
+</body>
+</html>
