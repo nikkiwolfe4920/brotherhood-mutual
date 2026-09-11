@@ -309,6 +309,48 @@ raise it rather than silently deviating.
 > a temporary `<a download>`, no backend) rather than a fake success state, since a static site can
 > genuinely produce a file download without one. See `COMPONENTS.md`'s "Global Overview" entry for
 > the component/data breakdown.
+>
+> **Tenth page — Engagement Command Center:** `/ExploreGod-CRM-Dashboard-2` is a second lens on the
+> same OneHope CRM, built for a different role than `/ExploreGod-CRM-Dashboard`'s regional
+> coordinator (Marcus, assigning an intake queue): a program coordinator overseeing a roster of
+> missionaries (Vero, in the originating product brief — 15 missionaries across an Indonesia field
+> team), whose job is triage, not assignment. It's a sibling page, not a redesign of the first one —
+> both stay live, reached from a new "Command Center" heartbeat-icon rail link added to both
+> existing pages' nav (same pattern as the Global Overview rail icon), and this page's own rail links
+> back to both. It loads `explore-god-dashboard.css` unchanged for the shell, tokens, and every shared
+> component (`.egd-panel`, `.egd-stat`, `.egd-tabs`/`.egd-tab`, `.egd-avatar`, `.egd-wait`,
+> `.egd-ai-panel`) and adds only the components this lens needs in a new
+> `design-system/explore-god-dashboard-2.css` — same convention as `explore-god-global.css`.
+> `js/explore-god-dashboard-2.js` follows the same one-file-per-page convention (small helpers
+> duplicated, not shared — see the Ninth page note above for the precedent).
+>
+> The page is organized as triage first, not a metrics dump: a "Your Ministry Today" stat row, then
+> **Needs Attention** (the feature the originating brief calls out as most important — three
+> severity tiers, each expandable to the actual flagged seekers, not just a count), a clickable
+> **Seeker Journey** stepper, **Team Health** (missionary workload paired with human, non-scored
+> "requested support"/"one-on-one due" notes — deliberately not a "spiritual health: 72%" metric, per
+> the brief's own caution about that), a **Follow-Up Queue**, **Recent Progress**, an **AI Copilot**
+> panel (briefs and stuck-conversation help — assistive, never auto-sending on a missionary's
+> behalf), **Ready for Handoff** (the local-church-connection checklist, with a standing safety note
+> that a seeker never sees a missionary's personal contact information), and a compact **Stories &
+> Testimonies** pipeline replacing the brief's described Google Doc workaround. Quick Actions are
+> real in-page navigation (the same topbar-offset scroll technique `dashboard-partner.js` uses), not
+> inert buttons.
+>
+> Seeker Journey's stage labels (New/Active/Growing/Handoff, matching the originating brief's
+> language) are the same four fixed pipeline stages as New Contact/Active Conversation/Christian
+> Formation/Discipleship Journey elsewhere in the product, in plainer wording for this audience —
+> same color per stage everywhere, never a second palette for one taxonomy. Putting a stage hue on
+> small text (the stepper's "View seekers" cta) for the first time surfaced that only New and
+> Discipleship had a text-safe `-text` step defined; `--egd-stage-chatting-text` and
+> `--egd-stage-formation-text` were added at the same hues, each independently verified past 4.5:1 on
+> white (~6.3:1 and ~6.5:1 respectively). Needs Attention's three severities (heavy conversations /
+> overdue follow-up / gone-quiet seekers) needed a distinct third tier below warning's amber, since
+> warning already means "overdue" on this page — `--egd-caution`/`-soft`/`-text` were added as a true
+> yellow, deliberately a different hue from warning rather than a lighter tint of it, with its text
+> step darkened well past the 4.5:1 floor (~6.4:1) so the two tiers read as different colors, not
+> different opacities of one. See `COMPONENTS.md`'s "Engagement Command Center" entry for the full
+> component/data breakdown.
 
 ## Design Principles
 

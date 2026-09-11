@@ -59,6 +59,20 @@
   --egd-critical: #c22f2f;
   --egd-critical-soft: rgba(208, 59, 59, 0.12);
 
+  /* A fourth, mildest step below warning — /ExploreGod-CRM-Dashboard-2's
+     Needs Attention panel triages three distinct severities (heavy
+     conversations / overdue follow-up / gone-quiet seekers), and warning's
+     amber already means "overdue" there — a true yellow, one hue further
+     from critical's red than warning is, gives the lowest tier its own
+     identity instead of forcing two different urgency levels to share
+     warning's color. --egd-caution-text is darkened well past the 4.5:1
+     floor (~6.4:1 on white) rather than matched to warning-text's exact
+     ratio, since the two need to read as visibly different colors, not
+     just different opacities of the same one. */
+  --egd-caution: #eab308;
+  --egd-caution-text: #7a5a00;
+  --egd-caution-soft: rgba(234, 179, 8, 0.16);
+
   /* AI / intelligence accent — reserved for AI surfaces & badges only.
      OneHope teal, used only as a whisper-soft wash and a text-safe darker
      step (was a bolder, darker-surfaced purple/aqua pairing). */
@@ -73,9 +87,16 @@
   /* Text-safe variants — the stage/status hues above are tuned for fills and
      dots (validated by the dataviz skill's palette check with direct labels
      as the relief); anywhere a hue is used as small text it needs its own
-     darker step to clear 4.5:1 on a white/tinted surface. */
+     darker step to clear 4.5:1 on a white/tinted surface. --egd-accent-text
+     and --egd-gold-text cover the New/Discipleship stages (used since the
+     first page); --egd-stage-chatting-text/--egd-stage-formation-text were
+     added for /ExploreGod-CRM-Dashboard-2, whose Seeker Journey stepper is
+     the first surface to put a stage hue on small text (a CTA label) for
+     the Active/Growing stages too. */
   --egd-accent-text: #1a5bb8;
   --egd-gold-text: #755b00;
+  --egd-stage-chatting-text: #a83c0a;
+  --egd-stage-formation-text: #0b6b49;
 
   --egd-accent: var(--egd-stage-new);
   --egd-accent-ink: #ffffff;

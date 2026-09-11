@@ -1,0 +1,977 @@
+/**
+ * OneHope CRM — Engagement Command Center — page-specific styles for
+ * /ExploreGod-CRM-Dashboard-2.
+ *
+ * Loaded alongside `explore-god-dashboard.css` (not instead of it), the same
+ * way `explore-god-global.css` loads for /ExploreGod-Global — this page
+ * reuses that file's shell (`.egd-rail`/`.egd-topbar`/`.egd-scroll`), tokens,
+ * and shared components (`.egd-panel`, `.egd-stat`, `.egd-tabs`/`.egd-tab`,
+ * `.egd-avatar`, `.egd-ai-panel`/`.egd-ai-card`, `.egd-wait` and friends) so
+ * it reads as the same product, not a fourth one. Only the components unique
+ * to a triage-first, per-missionary view — the Needs Attention list, the
+ * clickable Seeker Journey stepper, Team Health rows, the Follow-Up queue,
+ * the Recent Progress feed, Ready for Handoff, and Stories & Testimonies —
+ * get new classes here.
+ *
+ * This page is a different lens on the same underlying CRM as
+ * /ExploreGod-CRM-Dashboard (a regional coordinator's assignment queue) —
+ * see DESIGN.md's "Tenth page" note for why it exists as a sibling page
+ * instead of a redesign, and for the stage-label mapping used below (New /
+ * Active / Growing / Handoff here are the same four pipeline stages as
+ * New Contact / Active Conversation / Christian Formation / Discipleship
+ * Journey there, in the missionary-facing language Vero's dashboard brief
+ * uses) — so stage color stays the exact same fixed mapping across every
+ * page rather than introducing a second palette for the same four stages.
+ */
+
+/* ---------- Needs Attention ---------- */
+
+.egd-attention-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.egd-attn-row {
+  border-top: 1px solid var(--egd-border);
+}
+
+.egd-attn-row:first-child {
+  border-top: none;
+}
+
+.egd-attn-row__summary {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: none;
+  border: none;
+  text-align: left;
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-attn-row__summary:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-attn-row__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--tier-color);
+  box-shadow: 0 0 0 4px var(--tier-soft);
+}
+
+.egd-attn-row__body {
+  min-width: 0;
+}
+
+.egd-attn-row__title {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  margin-bottom: 2px;
+}
+
+.egd-attn-row__desc {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+.egd-attn-row__count {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--tier-text);
+  white-space: nowrap;
+}
+
+.egd-attn-row__toggle {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--egd-radius-sm);
+  color: var(--egd-ink-muted);
+}
+
+.egd-attn-row__toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-attn-row__summary[aria-expanded="true"] .egd-attn-row__toggle svg {
+  transform: rotate(180deg);
+}
+
+.egd-attn-row__detail {
+  padding: 0 var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* `[hidden]` and this class are equal specificity, so author CSS beats the
+   UA stylesheet's `[hidden] { display: none }` regardless of source order —
+   without this override every detail panel renders open no matter what
+   `hidden` says (the same gotcha `.egd-region-row__detail` documents on
+   /ExploreGod-Global; flagging it again here since it's easy to reintroduce
+   wherever this expand/collapse pattern gets copied next). */
+.egd-attn-row__detail[hidden] {
+  display: none;
+}
+
+.egd-attn-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--egd-surface-alt);
+  border-radius: var(--egd-radius-md);
+}
+
+.egd-attn-item__body {
+  min-width: 0;
+}
+
+.egd-attn-item__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-attn-item__meta {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.egd-attn-item__chip {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  padding: 3px 9px;
+  border-radius: var(--egd-radius-pill);
+  white-space: nowrap;
+  color: var(--tier-text);
+  background: var(--tier-soft);
+}
+
+.egd-attn-item__action {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-accent-text);
+  background: var(--egd-stage-new-soft);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-pill);
+  padding: 6px 12px;
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--easing-standard), color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-attn-item__action:hover {
+  background: var(--egd-accent);
+  color: #fff;
+}
+
+/* ---------- Ministry Today stat row ---------- */
+
+.egd-ministry {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.egd-stat--ministry .egd-stat__head {
+  margin-bottom: var(--space-2);
+}
+
+.egd-stat--ministry .egd-stat__value {
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.egd-stat__value-of {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--egd-ink-muted);
+}
+
+.egd-stat__meter {
+  height: 6px;
+  border-radius: var(--egd-radius-pill);
+  background: var(--egd-surface-alt);
+  margin-bottom: var(--space-2);
+  overflow: hidden;
+}
+
+.egd-stat__meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--egd-radius-pill);
+  background: var(--egd-good);
+}
+
+.egd-stat__flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 3px 10px;
+  border-radius: var(--egd-radius-pill);
+}
+
+.egd-stat__flag--warning {
+  color: var(--egd-warning-text);
+  background: var(--egd-warning-soft);
+}
+
+.egd-stat__flag--critical {
+  color: var(--egd-critical);
+  background: var(--egd-critical-soft);
+}
+
+.egd-stat__flag--good {
+  color: var(--egd-good-text);
+  background: var(--egd-good-soft);
+}
+
+.egd-stat__flag--gold {
+  color: var(--egd-gold-text);
+  background: var(--egd-stage-discipleship-soft);
+}
+
+.egd-stat__note {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+/* ---------- Seeker Journey stepper ---------- */
+
+.egd-journey__stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5) var(--space-5);
+}
+
+.egd-journey-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--egd-surface-alt);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-4);
+  text-align: left;
+  transition: background var(--duration-fast) var(--easing-standard), border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-journey-stage:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(var(--space-3) * -1 - 1px);
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--egd-border-strong);
+  border-right: 2px solid var(--egd-border-strong);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.egd-journey-stage:hover {
+  background: var(--egd-surface);
+  border-color: var(--egd-border-strong);
+}
+
+.egd-journey-stage[aria-expanded="true"] {
+  background: var(--stage-soft);
+  border-color: var(--stage-color);
+}
+
+.egd-journey-stage__label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-soft);
+}
+
+.egd-journey-stage__label::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: var(--egd-radius-sm);
+  background: var(--stage-color);
+  flex-shrink: 0;
+}
+
+.egd-journey-stage__count {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--egd-ink);
+  letter-spacing: -0.02em;
+}
+
+.egd-journey-stage__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--stage-text);
+}
+
+.egd-journey-stage__cta svg {
+  width: 11px;
+  height: 11px;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-journey-stage[aria-expanded="true"] .egd-journey-stage__cta svg {
+  transform: rotate(90deg);
+}
+
+.egd-journey__detail {
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.egd-journey__detail[hidden] {
+  display: none;
+}
+
+.egd-journey-seekers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.egd-journey-seeker {
+  background: var(--egd-surface-alt);
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.egd-journey-seeker__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.egd-journey-seeker__id {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-journey-seeker__days {
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+  white-space: nowrap;
+}
+
+.egd-journey-seeker__row {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  line-height: var(--line-height-normal);
+  margin-bottom: 4px;
+}
+
+.egd-journey-seeker__row:last-child {
+  margin-bottom: 0;
+}
+
+.egd-journey-seeker__row strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Team Health ---------- */
+
+.egd-team-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-2) var(--space-4);
+}
+
+.egd-team-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--egd-radius-md);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-team-row:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-team-row__body {
+  min-width: 0;
+}
+
+.egd-team-row__name-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 2px;
+}
+
+.egd-team-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--egd-ink-muted);
+}
+
+.egd-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--egd-ink-muted);
+}
+
+.egd-status--online {
+  color: var(--egd-good-text);
+}
+
+.egd-status--online::before {
+  background: var(--egd-good);
+  box-shadow: 0 0 0 3px var(--egd-good-soft);
+}
+
+.egd-team-row__caseload {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+}
+
+.egd-team-row__caseload strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-team-row__note {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  background: var(--egd-caution-soft);
+  border-radius: var(--egd-radius-sm);
+  padding: 6px 10px;
+}
+
+.egd-team-row__note strong {
+  color: var(--egd-ink);
+}
+
+.egd-load {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  padding: 3px 10px;
+  border-radius: var(--egd-radius-pill);
+  white-space: nowrap;
+}
+
+.egd-load--light {
+  color: var(--egd-good-text);
+  background: var(--egd-good-soft);
+}
+
+.egd-load--moderate {
+  color: var(--egd-warning-text);
+  background: var(--egd-warning-soft);
+}
+
+.egd-load--heavy {
+  color: var(--egd-critical);
+  background: var(--egd-critical-soft);
+}
+
+.egd-team-row__checkin {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ai-text);
+  background: var(--egd-ai-soft);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-pill);
+  padding: 6px 12px;
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--easing-standard), color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-team-row__checkin:hover {
+  background: var(--egd-ai-text);
+  color: #fff;
+}
+
+/* ---------- Follow-up queue ---------- */
+
+.egd-followup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.egd-followup-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--egd-border);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-followup-row:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-followup-row__body {
+  min-width: 0;
+}
+
+.egd-followup-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  margin-bottom: 2px;
+}
+
+.egd-followup-row__meta {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.egd-followup-row__meta strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-followup-row__owner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+  white-space: nowrap;
+}
+
+.egd-followup-row__action {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #fff;
+  background: var(--egd-accent);
+  border: none;
+  border-radius: var(--egd-radius-pill);
+  padding: 7px 13px;
+  white-space: nowrap;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-followup-row__action:hover {
+  transform: translateY(-1px);
+}
+
+.egd-followup-row__action--muted {
+  color: var(--egd-ink-soft);
+  background: var(--egd-surface-alt);
+}
+
+/* ---------- Recent Progress feed ---------- */
+
+.egd-progress-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.egd-progress-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.egd-progress-row__body {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.egd-progress-row__line {
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+  margin-bottom: 2px;
+}
+
+.egd-progress-row__line strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-progress-row__note {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+.egd-progress-row__time {
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+  white-space: nowrap;
+  margin-left: var(--space-2);
+}
+
+/* ---------- Ready for Handoff ---------- */
+
+.egd-handoff-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.egd-handoff-card {
+  background: var(--egd-surface-alt);
+  border: 1px solid var(--egd-border);
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-4);
+}
+
+.egd-handoff-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.egd-handoff-card__id {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-handoff-card__stage {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-gold-text);
+  background: var(--egd-stage-discipleship-soft);
+  padding: 2px 8px;
+  border-radius: var(--egd-radius-pill);
+  white-space: nowrap;
+}
+
+.egd-handoff-card__recommend {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  margin-bottom: var(--space-3);
+}
+
+.egd-checklist {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.egd-checklist__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+}
+
+.egd-checklist__item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.egd-checklist__item--done {
+  color: var(--egd-ink-soft);
+}
+
+.egd-checklist__item--done svg {
+  color: var(--egd-good);
+}
+
+.egd-checklist__item--pending svg {
+  color: var(--egd-border-strong);
+}
+
+.egd-handoff-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #fff;
+  background: var(--egd-accent);
+  border: none;
+  border-radius: var(--egd-radius-pill);
+  padding: 7px 14px;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.egd-handoff-card__cta:hover {
+  transform: translateY(-1px);
+}
+
+.egd-handoff-card__cta svg {
+  width: 14px;
+  height: 14px;
+}
+
+.egd-handoff-safety {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--egd-border);
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+  line-height: var(--line-height-normal);
+}
+
+.egd-handoff-safety svg {
+  width: 15px;
+  height: 15px;
+  color: var(--egd-ai-text);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---------- Stories & Testimonies ---------- */
+
+.egd-testimony-body {
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.egd-testimony-count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.egd-testimony-count__value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--egd-ink);
+  letter-spacing: -0.02em;
+}
+
+.egd-testimony-count__label {
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+}
+
+.egd-testimony-note {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+  margin-bottom: var(--space-4);
+}
+
+.egd-testimony-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.egd-testimony-pipeline__stage {
+  flex: 1;
+  min-width: 72px;
+  text-align: center;
+  background: var(--egd-surface-alt);
+  border-radius: var(--egd-radius-sm);
+  padding: var(--space-2);
+}
+
+.egd-testimony-pipeline__count {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--egd-ink);
+}
+
+.egd-testimony-pipeline__label {
+  display: block;
+  font-size: 10px;
+  color: var(--egd-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+.egd-testimony-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  background: var(--egd-surface);
+  border: 1px solid var(--egd-border-strong);
+  border-radius: var(--egd-radius-pill);
+  padding: 9px 16px;
+  transition: background var(--duration-fast) var(--easing-standard), border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-testimony-cta:hover {
+  background: var(--egd-surface-alt);
+  border-color: var(--egd-ink-muted);
+}
+
+.egd-testimony-cta svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ---------- Quick Actions ---------- */
+
+.egd-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.egd-quick-action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--egd-ink);
+  background: var(--egd-surface-alt);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-3);
+  text-align: left;
+  transition: background var(--duration-fast) var(--easing-standard), border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-quick-action:hover {
+  background: var(--egd-surface);
+  border-color: var(--egd-border-strong);
+}
+
+.egd-quick-action__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--egd-radius-sm);
+  background: var(--egd-stage-new-soft);
+  color: var(--egd-accent-text);
+}
+
+.egd-quick-action__icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1180px) {
+  .egd-ministry {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .egd-ministry {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .egd-journey__stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .egd-journey-stage:nth-child(2)::after,
+  .egd-journey-stage:last-child::after {
+    display: none;
+  }
+
+  .egd-attn-row__summary,
+  .egd-attn-item,
+  .egd-team-row,
+  .egd-followup-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    row-gap: var(--space-2);
+  }
+
+  .egd-attn-row__count,
+  .egd-attn-row__toggle,
+  .egd-attn-item__chip,
+  .egd-attn-item__action,
+  .egd-team-row__caseload,
+  .egd-followup-row .egd-wait,
+  .egd-followup-row__owner,
+  .egd-followup-row__action {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .egd-ministry {
+    grid-template-columns: 1fr;
+  }
+
+  .egd-journey__stages {
+    grid-template-columns: 1fr;
+  }
+
+  .egd-journey-stage::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .egd-quick-action,
+  .egd-followup-row__action,
+  .egd-handoff-card__cta {
+    transition: none;
+  }
+}

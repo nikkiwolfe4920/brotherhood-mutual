@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneHope CRM Dashboard — Command Center</title>
+  <meta
+    name="description"
+    content="OneHope CRM — Engagement Command Center: what needs a coordinator's attention today across missionaries, seekers, follow-ups, and handoffs."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-dashboard.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-dashboard-2.css" />
+</head>
+<body class="egd">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="egd-shell">
+    <aside class="egd-rail" aria-label="Primary">
+      <a class="egd-rail__mark" href="../ExploreGod-CRM-Dashboard/" aria-label="OneHope CRM home">OH</a>
+
+      <nav class="egd-rail__nav" aria-label="Sections">
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard/" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-Global/" aria-label="Global overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.4 4 5.6 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.6-4-9s1.5-6.6 4-9z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-current="page" aria-label="Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M7 12h2.5l1.5-3.5L13 15l1.5-3H17" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Live queue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Team">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5" /><circle cx="18" cy="7.5" r="2.5" /><path d="M15.8 14.5c2.9.3 5.7 2 5.7 5.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Journeys">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4" /><path d="M9 13h6" /><path d="M9 17h6" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </a>
+      </nav>
+
+      <button class="egd-rail__avatar" type="button" aria-label="Vero Salcedo — account">VS</button>
+    </aside>
+
+    <div class="egd-main">
+      <header class="egd-topbar">
+        <div class="egd-topbar__meta">
+          <span class="egd-live-dot" aria-hidden="true"></span>
+          Indonesia Field Team · Thu, 14 May · 09:42
+        </div>
+        <div class="egd-topbar__actions">
+          <button class="egd-icon-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          </button>
+          <button class="egd-icon-btn" type="button" aria-label="Notifications — 6 unread">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
+            <span class="egd-icon-btn__dot" aria-hidden="true"></span>
+          </button>
+          <button class="egd-topbar__avatar" type="button" aria-label="Vero Salcedo — account">VS</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="egd-scroll">
+        <div class="egd-page-head">
+          <h1 class="egd-greeting">Good morning, Vero</h1>
+          <p class="egd-subtitle">Here's what needs your attention across the team today.</p>
+        </div>
+
+        <section class="egd-ministry" aria-label="Your ministry today">
+          <article class="egd-stat egd-stat--ministry">
+            <div class="egd-stat__head">
+              <span class="egd-stat__label">Missionaries online</span>
+            </div>
+            <p class="egd-stat__value">8<span class="egd-stat__value-of">/ 15</span></p>
+            <div class="egd-stat__meter">
+              <span class="egd-stat__meter-fill" data-target="53"></span>
+            </div>
+            <p class="egd-stat__note">53% of the team is active right now</p>
+          </article>
+
+          <article class="egd-stat egd-stat--ministry">
+            <div class="egd-stat__head">
+              <span class="egd-stat__label">Active seekers</span>
+            </div>
+            <p class="egd-stat__value">47</p>
+            <span class="egd-stat__flag egd-stat__flag--warning">12 need follow-up</span>
+          </article>
+
+          <article class="egd-stat egd-stat--ministry">
+            <div class="egd-stat__head">
+              <span class="egd-stat__label">High-priority conversations</span>
+            </div>
+            <p class="egd-stat__value">6</p>
+            <span class="egd-stat__flag egd-stat__flag--critical">Emotionally heavy or escalated</span>
+          </article>
+
+          <article class="egd-stat egd-stat--ministry">
+            <div class="egd-stat__head">
+              <span class="egd-stat__label">Discipleship opportunities</span>
+            </div>
+            <p class="egd-stat__value">3</p>
+            <span class="egd-stat__flag egd-stat__flag--good">Ready to go deeper this week</span>
+          </article>
+
+          <article class="egd-stat egd-stat--ministry">
+            <div class="egd-stat__head">
+              <span class="egd-stat__label">Handoffs ready</span>
+            </div>
+            <p class="egd-stat__value">2</p>
+            <span class="egd-stat__flag egd-stat__flag--gold">Ready for local church connection</span>
+          </article>
+        </section>
+
+        <div class="egd-grid">
+          <div class="egd-col-main">
+            <section class="egd-panel egd-attention" aria-labelledby="attention-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="attention-title">Needs Attention</h2>
+                    <p class="egd-panel__subtitle">The three things most worth your time right now</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="egd-attention-list" id="attention-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-journey" aria-labelledby="journey-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="journey-title">Seeker Journey</h2>
+                    <p class="egd-panel__subtitle">Click a stage to see who's there and what's next</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-journey__stages" id="journey-stages" role="group" aria-label="Journey stage"></div>
+              <div class="egd-journey__detail" id="journey-detail"></div>
+            </section>
+
+            <section class="egd-panel egd-team" aria-labelledby="team-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="team-title">Team Health</h2>
+                <a class="egd-panel__link" href="#">View all 15 →</a>
+              </div>
+              <ul class="egd-team-list" id="team-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-followup" aria-labelledby="followup-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="followup-title">Follow-Up Queue</h2>
+                    <p class="egd-panel__subtitle">Nobody's relationship should go quiet because it slipped someone's mind</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-tabs" role="tablist" aria-label="Filter follow-ups" id="followup-tabs">
+                <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="today">Due Today</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="overdue">Overdue</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="unscheduled">Unscheduled</button>
+              </div>
+              <ul class="egd-followup-list" id="followup-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-progress" aria-labelledby="progress-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="progress-title">Recent Progress</h2>
+                    <p class="egd-panel__subtitle">Encouraging movement across the team</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="egd-progress-list" id="progress-list"></ul>
+            </section>
+          </div>
+
+          <aside class="egd-col-side">
+            <section class="egd-panel egd-ai-panel" aria-labelledby="ai-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <span class="egd-ai-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /><path d="M20 3v4" /><path d="M22 5h-4" /><path d="M4 17v2" /><path d="M5 18H3" /></svg>
+                  </span>
+                  <div>
+                    <h2 class="egd-panel__title" id="ai-title">AI Copilot</h2>
+                    <p class="egd-ai-sub">Briefs missionaries, never replaces them</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="egd-ai-list" id="ai-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-handoff" aria-labelledby="handoff-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="handoff-title">Ready for Handoff</h2>
+                    <p class="egd-panel__subtitle">A controlled, auditable path to local community</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-handoff-list" id="handoff-list"></div>
+              <p class="egd-handoff-safety">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6.5V11c0 4.8 3.4 9.3 8 10.5 4.6-1.2 8-5.7 8-10.5V6.5z" /></svg>
+                A seeker never sees a missionary's personal contact details — handoffs route through the program admin, and every contact exchange is logged.
+              </p>
+            </section>
+
+            <section class="egd-panel egd-testimony" aria-labelledby="testimony-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="testimony-title">Stories &amp; Testimonies</h2>
+              </div>
+              <div class="egd-testimony-body">
+                <div class="egd-testimony-count">
+                  <span class="egd-testimony-count__value">12</span>
+                  <span class="egd-testimony-count__label">potential stories</span>
+                </div>
+                <p class="egd-testimony-note">Seekers whose journeys are worth capturing for OneHope, tracked start to finish — no more Google Doc.</p>
+                <div class="egd-testimony-pipeline" id="testimony-pipeline"></div>
+                <button class="egd-testimony-cta" type="button">
+                  Review testimonies
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+                </button>
+              </div>
+            </section>
+
+            <section class="egd-panel egd-quick" aria-labelledby="quick-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="quick-title">Quick Actions</h2>
+              </div>
+              <div class="egd-quick-actions" id="quick-actions"></div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/explore-god-dashboard-2.js" type="module"></script>
+</body>
+</html>

@@ -994,3 +994,134 @@ static site can genuinely produce a file download without a server round-trip, s
 cards' local-only "is-done" state, this is real functionality, not a stand-in for one. "Export all
 regions" always exports the full `REGIONS` set regardless of the active tab filter, matching its
 label rather than silently exporting "what's currently visible."
+
+## Engagement Command Center — `/ExploreGod-CRM-Dashboard-2`
+
+A tenth page: a second, triage-first lens on the same OneHope CRM, built for a program coordinator
+overseeing a roster of missionaries rather than the regional coordinator's assignment queue on
+`/ExploreGod-CRM-Dashboard` — see DESIGN.md's "Tenth page" note for the role distinction and why it
+ships as a sibling page. It loads `explore-god-dashboard.css` unchanged for the shell and every
+shared component, and `design-system/explore-god-dashboard-2.css` for the components unique to this
+lens. `js/explore-god-dashboard-2.js` renders every panel from small in-file arrays, following the
+same convention as the other two pages' JS files.
+
+### Needs Attention — `.egd-attention`
+
+```js
+const ATTENTION_ITEMS = [
+  { id: "heavy", tier: "critical", title: "Heavy conversations", count: 3, items: [...] },
+  // …
+];
+```
+
+Three severity tiers (critical/warning/caution — see DESIGN.md for why a third tier, `--egd-caution`,
+was added rather than reusing warning for both "overdue" and "gone quiet"). Each row is a disclosure
+button (`aria-expanded`/`aria-controls`, not a tab — there's no shared single-open-at-a-time
+constraint) that expands to the actual flagged seekers, not just the count, so the panel is an
+operational worklist rather than a metrics tile. The heaviest tier renders expanded by default — the
+thing most worth a coordinator's attention shouldn't require a click to see. `tier.count` (the true
+total) and `tier.items` (a handful of representative rows) are deliberately separate fields; where
+`count` exceeds `items.length` the detail panel says "+N more — view all" rather than silently
+implying the shown rows are the whole list. Reuses the same `[hidden]`-specificity fix
+`.egd-region-row__detail` documents on `/ExploreGod-Global` — flagged again in this file's own
+comments since it's an easy bug to reintroduce wherever this expand/collapse pattern gets copied
+next.
+
+### Ministry Today — `.egd-ministry` / `.egd-stat--ministry`
+
+Five stat tiles reusing `.egd-stat`'s card shell (border/radius/shadow/hover-lift) with a new
+modifier that drops the sparkline in favor of either a proportion meter (Missionaries Online, grown
+in on first paint the same way the funnel bars on `/ExploreGod-CRM-Dashboard` are — a one-time
+reveal, not a loading state) or a colored flag naming the sub-metric that needs attention (`12 need
+follow-up`, `Emotionally heavy or escalated`) — the point of this row is what needs a look, not a
+trend line, so a KPI card here never carries a decorative chart it has no threshold-worthy data for.
+
+### Seeker Journey — `.egd-journey`
+
+```js
+const JOURNEY = [
+  { stageId: "new", count: 18, seekers: [{ id: "#512", days: "1 day", last: "Today", next: "…" }] },
+  // …
+];
+```
+
+Four stage tiles in a row (a stepper, not a descending funnel bar — this page's stage counts aren't
+monotonically decreasing, so a funnel taper would misrepresent the data) connected by a chevron
+pseudo-element between tiles. Clicking a tile is an accordion, not four independent toggles — only
+one stage's seekers show at a time in the shared `#journey-detail` region below the tiles, keyed by
+`activeJourneyStage` — this is "click into each stage" from the product brief, not a data dump of
+every seeker in every stage at once. Handoff opens by default (the smallest, most actionable stage).
+Each seeker card shows Last interaction and Next step exactly as the brief specifies, not just a
+count — the same "operational tool, not analytics" principle as Needs Attention.
+
+### Team Health — `.egd-team`
+
+```js
+const TEAM = [
+  { name: "Daniel Kurniawan", online: false, seekers: 9, load: "heavy",
+    note: 'Requested support — "Had several difficult conversations this week."',
+    checkin: "Check in with Daniel" },
+  // …
+];
+```
+
+Workload is a `.egd-load` chip (Light/Moderate/Heavy, colored good/warning/critical) paired with
+seeker/active-chat counts — never a single blended "score." Missionary health is a plain-text `note`
+field (a quoted, human reason — "requested support," "one-on-one due") rendered only for rows that
+have one, next to a `.egd-team-row__checkin` button, rather than any numeric wellness metric — this
+is a direct response to the brief's own warning against turning spiritual/emotional health into "a
+creepy score" (its literal example: don't build "Maria Spiritual Health: 72%"). A row with nothing to
+flag shows neither the note nor the button.
+
+### Follow-Up Queue — `.egd-followup`
+
+Same tabbed-filter interaction as the Live Intake Queue on `/ExploreGod-CRM-Dashboard` (`.egd-tabs`/
+`.egd-tab` driving a `renderFollowups(filter)` re-render from one `FOLLOWUPS` array) — reused
+verbatim rather than a new filter component, since it's the same interaction: filter a list of rows
+by a computed property. Urgency reuses `.egd-wait--good/warning/critical` (the exact chip the intake
+queue's wait time already uses) since "follow up today / overdue / unscheduled" is the same category
+of threshold-against-time signal, just a different threshold than intake wait time.
+
+### AI Copilot — `.egd-ai-panel`
+
+The same AI panel component as the other two pages (`.egd-ai-panel`/`.egd-ai-list`/`.egd-ai-card`,
+down to the "is-done" local-feedback click behavior), repurposed in copy for this page's two AI
+features from the product brief: a Conversation Brief ("what's happening, how long, what's already
+been asked, prefers Bahasa Indonesia") and stuck-conversation help for a missionary who flagged a
+conversation as too difficult. Every card's copy is framed as *assistance offered to* a missionary
+(“Help Daniel”, “Suggest messages”), never as the AI acting or replying on anyone's behalf — the
+brief's explicit "AI copilot, not AI missionary" distinction.
+
+### Ready for Handoff — `.egd-handoff`
+
+```js
+const HANDOFFS = [
+  { id: "#384", checklist: [{ label: "Trust established", done: true }, /* … */,
+      { label: "Handoff completed", done: false }], cta: "Begin handoff" },
+];
+```
+
+Each card is the exact checklist the product brief specifies (Trust established → Seeker interested
+→ Safety reviewed → Appropriate timing → Local church identified → Handoff initiated → Handoff
+completed) as a plain done/pending list — a controlled, auditable sequence, not a single "ready"
+toggle. The panel's standing footer note (a seeker never sees a missionary's personal contact
+details; handoffs route through the program admin) is this page's one safety-system touchpoint from
+the brief's larger safety-controls feature — deliberately a single, always-visible sentence here
+rather than a separate safety dashboard, since nothing else on this page exchanges contact
+information.
+
+### Stories & Testimonies — `.egd-testimony`
+
+A compact count-plus-pipeline card (`Potential → Reviewed → Approved → Shared`, matching the four
+statuses in the product brief) standing in for the Google Doc workaround the brief describes — kept
+deliberately small (a sidebar card, not a full panel) since the brief itself frames this as a
+secondary, real-but-smaller feature next to triage/workload/journey/follow-up.
+
+### Quick Actions — `.egd-quick`
+
+Five buttons matching the product brief's list (Find a seeker / Review conversations / Check on a
+missionary / Review handoffs / Add a testimony), each a real in-page anchor to the relevant panel's
+heading rather than an inert button — reuses the exact "land the target heading just below the
+sticky topbar" offset technique `js/dashboard-partner.js` established for `/dashboard-partner`'s
+section navigation, adapted here for `window` scroll (this page's `.egd-scroll` has no `overflow` of
+its own, unlike that page's internally-scrolling container).
