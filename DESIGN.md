@@ -351,6 +351,27 @@ raise it rather than silently deviating.
 > step darkened well past the 4.5:1 floor (~6.4:1) so the two tiers read as different colors, not
 > different opacities of one. See `COMPONENTS.md`'s "Engagement Command Center" entry for the full
 > component/data breakdown.
+>
+> **Engagement Command Center — Ministry Today premium pass + team roster:** a follow-up revision
+> replaced the Ministry Today row's meter-bar/plain-flag treatment with the same premium sparkline
+> card `/ExploreGod-CRM-Dashboard` already uses for its own KPI row (`.egd-stat__head`'s label +
+> colored delta badge, then the value, then a gradient-filled `.egd-sparkline`) — reused verbatim
+> rather than re-invented, with the qualitative flag/note kept below the chart instead of replacing
+> it, so the row keeps both signals: a trend at a glance, and which sub-metric still needs attention.
+> Three of the five cards' sparklines needed a color outside the four pipeline stages (good, for
+> Missionaries Online; critical, for High-priority Conversations); `sparklineColorVar()` in
+> `js/explore-god-dashboard-2.js` checks the stage list first and falls back to a bare
+> `--egd-good`/`--egd-critical` token rather than forcing every card through the stage palette.
+> Wiring up real delta badges surfaced a genuine, general bug in the shared `.egd-stat__delta svg`
+> rule: with no `flex-shrink: 0`, a longer badge label than this component had ever carried before
+> (this page's "1 this week"/"2 today," versus the original page's uniformly short "18%"/"6%") shrank
+> the icon toward 0 width instead of letting the text wrap — fixed at the shared component level in
+> `explore-god-dashboard.css` since it's a latent issue for any future badge with longer text, not
+> a one-off for this page. Separately, the team roster's names were corrected to be uniformly men's
+> names (Marco Villanueva, Andi Pratama, and Tunde Adeyemi replacing three that read as women's
+> names), propagated through every other surface referencing those same missionaries by first name
+> (Needs Attention, the Follow-Up Queue, Recent Progress) so the same person's name stays consistent
+> across the whole page.
 
 ## Design Principles
 

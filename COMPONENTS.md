@@ -1029,12 +1029,20 @@ next.
 
 ### Ministry Today — `.egd-ministry` / `.egd-stat--ministry`
 
-Five stat tiles reusing `.egd-stat`'s card shell (border/radius/shadow/hover-lift) with a new
-modifier that drops the sparkline in favor of either a proportion meter (Missionaries Online, grown
-in on first paint the same way the funnel bars on `/ExploreGod-CRM-Dashboard` are — a one-time
-reveal, not a loading state) or a colored flag naming the sub-metric that needs attention (`12 need
-follow-up`, `Emotionally heavy or escalated`) — the point of this row is what needs a look, not a
-trend line, so a KPI card here never carries a decorative chart it has no threshold-worthy data for.
+Five stat tiles reusing `.egd-stat`'s full KPI-card anatomy verbatim — `.egd-stat__head` (label +
+colored `.egd-stat__delta` badge), the big value, then a gradient-filled `.egd-sparkline` — the same
+premium treatment `/ExploreGod-CRM-Dashboard`'s own KPI row uses, not a simplified variant of it. The
+colored flag naming the sub-metric that needs attention (`12 need follow-up`, `Emotionally heavy or
+escalated`) sits below the sparkline rather than replacing it, so the row carries both a trend at a
+glance and which sub-metric still needs a look. `sparklineColorVar()` extends the shared
+`renderSparkline()` (duplicated into this page's JS per the one-file-per-page convention) to resolve
+either a pipeline-stage color or a bare `--egd-good`/`--egd-critical` token — two of these five cards
+(Missionaries Online, High-priority Conversations) aren't pipeline stages, so forcing them through
+the four-stage palette would have been the wrong fit. Wiring up real delta badges here (the first
+place this component carries longer label text than the original page's uniformly short "18%"/"6%")
+surfaced a genuine flex-shrink bug in the shared `.egd-stat__delta svg` rule — see DESIGN.md's
+"Ministry Today premium pass" note for the fix, made at the shared-component level since it's a
+latent issue for any future badge, not specific to this page.
 
 ### Seeker Journey — `.egd-journey`
 
