@@ -62,6 +62,99 @@ function avatarStage(name) {
   return STAGES[hashString(name) % STAGES.length];
 }
 
+// Ministry Today's sparklines need two colors outside the four-stage system
+// (good/critical, for "missionaries online" and "high-priority conversations"
+// — neither is a pipeline stage) alongside the four stage hues used for the
+// other three cards, so this checks STAGES first and falls back to a bare
+// good/critical token rather than forcing every sparkline through the stage
+// palette.
+function sparklineColorVar(key) {
+  const stage = stageById(key);
+  if (stage) return `var(${stage.var})`;
+  return `var(--egd-${key})`;
+}
+
+// ---------- Sparklines ----------
+// Same technique as explore-god-dashboard.js's renderSparkline — duplicated
+// per this project's one-file-per-page convention rather than imported —
+// adapted to color by sparklineColorVar() instead of a pipeline stage only.
+
+let sparklineSeq = 0;
+
+function renderSparkline(svg) {
+  const points = svg.dataset.points.split(",").map(Number);
+  const color = sparklineColorVar(svg.dataset.stage);
+  const width = 220;
+  const height = 46;
+  const padding = 4;
+  const min = Math.min(...points);
+  const max = Math.max(...points);
+  const range = max - min || 1;
+
+  const coords = points.map((value, index) => {
+    const x = (index / (points.length - 1)) * width;
+    const y = height - padding - ((value - min) / range) * (height - padding * 2);
+    return [x, y];
+  });
+
+  const linePath = coords.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L${width},${height} L0,${height} Z`;
+
+  sparklineSeq += 1;
+  const gradientId = `egd2-spark-fill-${sparklineSeq}`;
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="${gradientId}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" style="stop-color: ${color}; stop-opacity: 0.28" />
+        <stop offset="100%" style="stop-color: ${color}; stop-opacity: 0" />
+      </linearGradient>
+    </defs>
+    <path class="egd-sparkline__area" d="${areaPath}" style="fill: url(#${gradientId})" />
+    <path class="egd-sparkline__line" d="${linePath}" style="stroke: ${color}" />
+  `;
+
+  const [lastX, lastY] = coords[coords.length - 1];
+  const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  dot.setAttribute("class", "egd-sparkline__dot");
+  dot.setAttribute("cx", lastX.toFixed(1));
+  dot.setAttribute("cy", lastY.toFixed(1));
+  dot.setAttribute("r", "4");
+  dot.style.fill = color;
+  svg.appendChild(dot);
+
+  // Hover layer: a single shared tooltip per sparkline, positioned at the
+  // nearest sample to the pointer (dataviz skill — line charts ship a
+  // crosshair/tooltip by default).
+  const tooltip = document.createElement("div");
+  tooltip.className = "egd-sparkline-tooltip";
+  svg.parentElement.style.position = "relative";
+  svg.parentElement.appendChild(tooltip);
+
+  svg.addEventListener("mousemove", (event) => {
+    const rect = svg.getBoundingClientRect();
+    const relativeX = ((event.clientX - rect.left) / rect.width) * width;
+    let nearest = 0;
+    let nearestDist = Infinity;
+    coords.forEach(([x], index) => {
+      const dist = Math.abs(x - relativeX);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearest = index;
+      }
+    });
+    const [px, py] = coords[nearest];
+    tooltip.textContent = points[nearest].toLocaleString();
+    tooltip.style.left = `${(px / width) * rect.width}px`;
+    tooltip.style.top = `${(py / height) * rect.height}px`;
+    tooltip.classList.add("is-visible");
+  });
+
+  svg.addEventListener("mouseleave", () => tooltip.classList.remove("is-visible"));
+}
+
+document.querySelectorAll(".egd-sparkline").forEach(renderSparkline);
+
 // ---------- Needs Attention ----------
 
 // `count` is the tier's true total (3/8/4, matching the mockup); `items` is
@@ -78,7 +171,7 @@ const ATTENTION_ITEMS = [
     items: [
       { name: "Seeker #402", meta: "With Daniel · a recent loss came up", chip: "2h ago", action: "View conversation" },
       { name: "Seeker #178", meta: "With Ariel · a disclosure of past abuse", chip: "40m ago", action: "View conversation" },
-      { name: "Seeker #260", meta: "With Maria · mentioned feeling hopeless", chip: "5m ago", action: "View conversation" },
+      { name: "Seeker #260", meta: "With Marco · mentioned feeling hopeless", chip: "5m ago", action: "View conversation" },
     ],
   },
   {
@@ -89,7 +182,7 @@ const ATTENTION_ITEMS = [
     desc: "No response from the assigned missionary in 48+ hours.",
     items: [
       { name: "Seeker #193", meta: "With Daniel · last reply 5 days ago", chip: "5d overdue", action: "Send reminder" },
-      { name: "Seeker #331", meta: "With Nadia · last reply 3 days ago", chip: "3d overdue", action: "Send reminder" },
+      { name: "Seeker #331", meta: "With Andi · last reply 3 days ago", chip: "3d overdue", action: "Send reminder" },
       { name: "Seeker #087", meta: "With Josiah · last reply 4 days ago", chip: "4d overdue", action: "Send reminder" },
       { name: "Seeker #445", meta: "With Ariel · last reply 6 days ago", chip: "6d overdue", action: "Send reminder" },
     ],
@@ -101,7 +194,7 @@ const ATTENTION_ITEMS = [
     count: 4,
     desc: "No activity in 7+ days — the relationship risks going quiet.",
     items: [
-      { name: "Seeker #212", meta: "With Maria · last active 9 days ago", chip: "9d quiet", action: "Nudge" },
+      { name: "Seeker #212", meta: "With Marco · last active 9 days ago", chip: "9d quiet", action: "Nudge" },
       { name: "Seeker #356", meta: "With Daniel · last active 11 days ago", chip: "11d quiet", action: "Nudge" },
       { name: "Seeker #150", meta: "With Josiah · last active 14 days ago", chip: "14d quiet", action: "Nudge" },
     ],
@@ -267,7 +360,7 @@ renderJourney();
 
 const TEAM = [
   { name: "Ariel Domingo", online: true, seekers: 6, activeChats: 4, load: "moderate" },
-  { name: "Maria Villanueva", online: true, seekers: 3, activeChats: 2, load: "light" },
+  { name: "Marco Villanueva", online: true, seekers: 3, activeChats: 2, load: "light" },
   {
     name: "Daniel Kurniawan",
     online: false,
@@ -277,7 +370,7 @@ const TEAM = [
     note: 'Requested support — "Had several difficult conversations this week."',
     checkin: "Check in with Daniel",
   },
-  { name: "Nadia Pratama", online: true, seekers: 5, activeChats: 4, load: "moderate" },
+  { name: "Andi Pratama", online: true, seekers: 5, activeChats: 4, load: "moderate" },
   {
     name: "Josiah Bell",
     online: true,
@@ -289,7 +382,7 @@ const TEAM = [
   },
   { name: "Ethan Brooks", online: false, seekers: 4, activeChats: 1, load: "light" },
   { name: "Caleb Nguyen", online: true, seekers: 7, activeChats: 5, load: "moderate" },
-  { name: "Grace Adeyemi", online: false, seekers: 2, activeChats: 0, load: "light" },
+  { name: "Tunde Adeyemi", online: false, seekers: 2, activeChats: 0, load: "light" },
 ];
 
 const LOAD_LABEL = { light: "Light load", moderate: "Moderate load", heavy: "Heavy load" };
@@ -316,10 +409,10 @@ document.getElementById("team-list").innerHTML = TEAM.map((person) => {
 // ---------- Follow-up queue ----------
 
 const FOLLOWUPS = [
-  { seeker: "#284", meta: "Last conversation Monday · family and faith", owner: "Maria", status: "today", chip: "Follow up today" },
+  { seeker: "#284", meta: "Last conversation Monday · family and faith", owner: "Marco", status: "today", chip: "Follow up today" },
   { seeker: "#193", meta: "Last interaction 5 days ago", owner: "Daniel", status: "unscheduled", chip: "No follow-up scheduled" },
   { seeker: "#087", meta: "Last conversation Tuesday · job loss", owner: "Josiah", status: "overdue", chip: "3 days overdue" },
-  { seeker: "#331", meta: "Last conversation last week · marriage struggles", owner: "Nadia", status: "overdue", chip: "6 days overdue" },
+  { seeker: "#331", meta: "Last conversation last week · marriage struggles", owner: "Andi", status: "overdue", chip: "6 days overdue" },
   { seeker: "#512", meta: "First conversation yesterday", owner: "Ariel", status: "today", chip: "Follow up today" },
   { seeker: "#445", meta: "Last interaction a week ago", owner: "Ariel", status: "unscheduled", chip: "No follow-up scheduled" },
   { seeker: "#298", meta: "Last conversation 4 days ago · grief", owner: "Caleb", status: "overdue", chip: "2 days overdue" },
@@ -363,11 +456,11 @@ renderFollowups();
 // ---------- Recent Progress ----------
 
 const PROGRESS = [
-  { who: "Maria", seeker: "#284", note: "Meaningful faith conversation", time: "20m ago" },
+  { who: "Marco", seeker: "#284", note: "Meaningful faith conversation", time: "20m ago" },
   { who: "Daniel", seeker: "#193", note: "Ready for local church connection", time: "1h ago" },
   { who: "Ariel", seeker: "#421", note: "Follow-up needed", time: "2h ago" },
   { who: "Josiah", seeker: "#238", note: "Shared a testimony about answered prayer", time: "4h ago" },
-  { who: "Nadia", seeker: "#331", note: "First conversation about baptism", time: "6h ago" },
+  { who: "Andi", seeker: "#331", note: "First conversation about baptism", time: "6h ago" },
 ];
 
 document.getElementById("progress-list").innerHTML = PROGRESS.map((row) => {
@@ -569,14 +662,3 @@ document.getElementById("quick-actions").addEventListener("click", (event) => {
   window.scrollTo({ top: targetTop - topbarHeight - SCROLL_OFFSET_GAP, behavior: "smooth" });
 });
 
-// ---------- Ministry Today meter reveal ----------
-// Same "grow in on first paint" treatment the funnel bars use on
-// /ExploreGod-CRM-Dashboard — a one-time reveal, not a loading state.
-
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    document.querySelectorAll(".egd-stat__meter-fill[data-target]").forEach((fill) => {
-      fill.style.width = `${fill.dataset.target}%`;
-    });
-  });
-});

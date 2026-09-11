@@ -197,7 +197,7 @@
 }
 
 .egd-stat--ministry .egd-stat__value {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   display: flex;
   align-items: baseline;
   gap: 6px;
@@ -209,19 +209,14 @@
   color: var(--egd-ink-muted);
 }
 
-.egd-stat__meter {
-  height: 6px;
-  border-radius: var(--egd-radius-pill);
-  background: var(--egd-surface-alt);
-  margin-bottom: var(--space-2);
-  overflow: hidden;
-}
-
-.egd-stat__meter-fill {
-  display: block;
-  height: 100%;
-  border-radius: var(--egd-radius-pill);
-  background: var(--egd-good);
+/* The sparkline sits between the value and the flag/note — both of those
+   need a little breathing room from it, so this targets whichever one
+   follows rather than adding a margin the sparkline itself doesn't need
+   elsewhere (the KPI row on /ExploreGod-CRM-Dashboard reuses the same
+   `.egd-sparkline` unmodified). */
+.egd-stat--ministry .egd-sparkline + .egd-stat__flag,
+.egd-stat--ministry .egd-sparkline + .egd-stat__note {
+  margin-top: var(--space-3);
 }
 
 .egd-stat__flag {
