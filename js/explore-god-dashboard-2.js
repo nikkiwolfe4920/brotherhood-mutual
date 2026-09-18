@@ -367,6 +367,7 @@ renderJourney();
 
 const TEAM = [
   { name: "Ariel Domingo", online: true, seekers: 6, activeChats: 4, load: "moderate" },
+  { name: "Joseph Wijaya", online: true, seekers: 4, activeChats: 3, load: "light" },
   { name: "Marco Villanueva", online: true, seekers: 3, activeChats: 2, load: "light" },
   {
     name: "Daniel Kurniawan",

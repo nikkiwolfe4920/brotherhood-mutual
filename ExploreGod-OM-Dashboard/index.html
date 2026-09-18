@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneHope CRM Dashboard — Online Missionary</title>
+  <meta
+    name="description"
+    content="OneHope CRM — Joseph's Online Missionary dashboard: today's shift queue, resumable seeker conversations, the team, and formation, in one task-focused screen."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-dashboard.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-om-dashboard.css" />
+</head>
+<body class="egd">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="egd-shell">
+    <aside class="egd-rail" aria-label="Primary">
+      <a class="egd-rail__mark" href="../ExploreGod-CRM-Dashboard/" aria-label="OneHope CRM home">OH</a>
+
+      <nav class="egd-rail__nav" aria-label="Sections">
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard/" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-Global/" aria-label="Global Engagement Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.4 4 5.6 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.6-4-9s1.5-6.6 4-9z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard-2/" aria-label="Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M7 12h2.5l1.5-3.5L13 15l1.5-3H17" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-current="page" aria-label="Online Missionary Dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-team/" aria-label="Team Engagement Operations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5" /><circle cx="18" cy="7.5" r="2.5" /><path d="M15.8 14.5c2.9.3 5.7 2 5.7 5.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Journeys">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#onboarding-title" aria-label="Formation &amp; training">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4" /><path d="M9 13h6" /><path d="M9 17h6" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </a>
+      </nav>
+
+      <button class="egd-rail__avatar" type="button" aria-label="Joseph Wijaya — account">JW</button>
+    </aside>
+
+    <div class="egd-main">
+      <header class="egd-topbar">
+        <div class="egd-topbar__meta">
+          <span class="egd-live-dot" aria-hidden="true"></span>
+          Indonesia Field Team · Online Missionary · Thu, 14 May · 09:42
+        </div>
+        <div class="egd-topbar__actions">
+          <button class="egd-icon-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          </button>
+          <button class="egd-icon-btn" type="button" aria-label="Notifications — 3 unread">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
+            <span class="egd-icon-btn__dot" aria-hidden="true"></span>
+          </button>
+          <button class="egd-topbar__avatar" type="button" aria-label="Joseph Wijaya — account">JW</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="egd-scroll">
+        <div class="egd-page-head">
+          <h1 class="egd-greeting">Good morning, Joseph</h1>
+          <p class="egd-subtitle">Here's who's waiting on you and what your shift looks like today.</p>
+          <p class="egd-motivate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.35-9.5-8.8C1 7.9 2.4 4.5 5.8 3.8c2-.4 3.9.6 4.9 2.3a5.2 5.2 0 0 1 1.3-.9" /><path d="m12 20 1.8-3.3M12 20l-1.8-3.3M21.5 11.2C24 6.75 22.6 3.35 19.2 2.65a5.1 5.1 0 0 0-5.3 2.35" /><path d="M17.5 8.5c-2 1.6-3.6 4-5.5 6.5" /></svg>
+            You've helped <strong>14 people</strong> take a next step in their faith journey this week — keep going. This work matters, even on the quiet days.
+          </p>
+          <nav class="egd-section-nav" aria-label="Page sections">
+            <a href="#shift-title">My Shift</a>
+            <a href="#queue-title">My Conversations</a>
+            <a href="#feed-title">Team Feed</a>
+            <a href="#team-title">My Team</a>
+            <a href="#onboarding-title">Formation</a>
+            <a href="#wellbeing-title">How I'm Doing</a>
+          </nav>
+        </div>
+
+        <div class="egd-grid">
+          <div class="egd-col-main">
+            <section class="egd-panel egd-shift" aria-labelledby="shift-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="shift-title">
+                      My Shift
+                      <span class="egd-shift-badge" id="shift-badge" aria-label="4 things need you this shift">4</span>
+                    </h2>
+                    <p class="egd-panel__subtitle">What's waiting on you before you sign off — click straight into the conversation</p>
+                  </div>
+                </div>
+              </div>
+              <ul class="egd-shift-list" id="shift-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-myqueue" aria-labelledby="queue-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="queue-title">My Conversations</h2>
+                    <p class="egd-panel__subtitle">Every seeker assigned to you — resume any conversation right where you left off</p>
+                  </div>
+                </div>
+              </div>
+              <div class="egd-myqueue-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+                <label class="visually-hidden" for="myqueue-search-input">Search your conversations by keyword, seeker number, or date</label>
+                <input class="egd-myqueue-search__input" type="search" id="myqueue-search-input" placeholder="Search by keyword, seeker number, or date…" />
+              </div>
+              <div class="egd-tabs" role="tablist" aria-label="Filter conversations" id="myqueue-tabs">
+                <button class="egd-tab" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="waiting">Waiting on Me</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="expiring">Expiring</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="followup">Follow-up Due</button>
+                <button class="egd-tab" type="button" role="tab" aria-selected="false" data-filter="escalated">Escalated</button>
+              </div>
+              <div class="egd-myqueue-bulkbar" id="myqueue-bulkbar" hidden>
+                <span id="myqueue-bulk-count">0 selected</span>
+                <span class="egd-myqueue-bulkbar__label">Close as:</span>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="No Response">No Response</button>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="Resolved">Resolved</button>
+                <button class="egd-btn-cta egd-btn-cta--muted" type="button" data-bulk-outcome="Follow-up">Follow-up</button>
+                <button class="egd-myqueue-bulkbar__clear" type="button" id="myqueue-bulk-clear">Clear</button>
+              </div>
+              <div class="egd-myqueue-scroll">
+                <div class="egd-myqueue-head">
+                  <span aria-hidden="true"></span>
+                  <span>Seeker</span>
+                  <span>Last message</span>
+                  <span>Journey</span>
+                  <span>Waiting</span>
+                  <span>Last activity</span>
+                  <span aria-hidden="true"></span>
+                </div>
+                <ul class="egd-myqueue-list" id="myqueue-list"></ul>
+              </div>
+              <p class="egd-myqueue-empty" id="myqueue-empty" hidden>No conversations match your search.</p>
+            </section>
+
+            <section class="egd-panel egd-feed" aria-labelledby="feed-title">
+              <div class="egd-panel__header">
+                <div class="egd-panel__heading">
+                  <div>
+                    <h2 class="egd-panel__title" id="feed-title">Team Feed</h2>
+                    <p class="egd-panel__subtitle">Ask the team a question, or see what Vero and Siji want every OM to know</p>
+                  </div>
+                </div>
+              </div>
+              <form class="egd-feed-composer" id="feed-composer">
+                <label class="visually-hidden" for="feed-composer-input">Post to the team</label>
+                <textarea class="egd-feed-composer__input" id="feed-composer-input" rows="2" placeholder="Ask a question or share something with the team…"></textarea>
+                <button class="egd-btn-cta" type="submit">
+                  Post
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+                </button>
+              </form>
+              <ul class="egd-feed-list" id="feed-list"></ul>
+            </section>
+          </div>
+
+          <aside class="egd-col-side">
+            <section class="egd-panel egd-myteam" aria-labelledby="team-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="team-title">My Team</h2>
+              </div>
+              <ul class="egd-myteam-list" id="myteam-list"></ul>
+            </section>
+
+            <section class="egd-panel egd-onboarding" aria-labelledby="onboarding-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="onboarding-title">Formation &amp; Training</h2>
+                <p class="egd-panel__subtitle">Sent by Siji &amp; the ExploreGod team</p>
+              </div>
+              <div class="egd-onboard-progress" id="onboard-progress"></div>
+              <ul class="egd-onboard-tasks" id="onboard-tasks"></ul>
+              <div class="egd-onboard-note" id="onboard-coaching-note"></div>
+            </section>
+
+            <section class="egd-panel egd-wellbeing" aria-labelledby="wellbeing-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="wellbeing-title">How I'm Doing</h2>
+                <p class="egd-panel__subtitle">Your view only — Vero sees your load, never your conversations</p>
+              </div>
+              <div class="egd-wellbeing-body" id="wellbeing-body"></div>
+              <button class="egd-wellbeing-flag" type="button" id="wellbeing-flag-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6.5V11c0 4.8 3.4 9.3 8 10.5 4.6-1.2 8-5.7 8-10.5V6.5z" /></svg>
+                Flag that I need support
+              </button>
+              <p class="egd-wellbeing-hint" id="wellbeing-hint" hidden>Sent privately to Vero. It's okay to step back for a few minutes.</p>
+            </section>
+
+            <section class="egd-panel egd-quick" aria-labelledby="quick-title">
+              <div class="egd-panel__header">
+                <h2 class="egd-panel__title" id="quick-title">Quick Actions</h2>
+              </div>
+              <div class="egd-quick-actions" id="quick-actions"></div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/explore-god-om-dashboard.js" type="module"></script>
+</body>
+</html>

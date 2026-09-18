@@ -1,0 +1,944 @@
+/**
+ * OneHope CRM — Online Missionary Dashboard — page-specific styles for
+ * /ExploreGod-OM-Dashboard.
+ *
+ * Loaded alongside `explore-god-dashboard.css` (not instead of it), the same
+ * convention every sibling lens on this CRM follows — this page reuses that
+ * file's shell (`.egd-rail`/`.egd-topbar`/`.egd-scroll`), tokens, and shared
+ * components (`.egd-panel`, `.egd-tabs`/`.egd-tab`, `.egd-avatar`, `.egd-wait`,
+ * `.egd-status`). Small helpers and a handful of components first built for a
+ * sibling page (`.egd-btn-cta`, `.egd-section-nav`, `.egd-quick-action*`,
+ * the bulk-close bar) are duplicated here rather than cross-loaded — see
+ * DESIGN.md's "one-file-per-page" convention.
+ *
+ * This is a different role from every other lens on the CRM: Joseph is an
+ * Online Missionary (OM) — the person actually chatting with seekers, managed
+ * by Vero (`/ExploreGod-CRM-Dashboard-2`). His dashboard is deliberately
+ * task-focused rather than metrics-driven (no KPI row, no scored "spiritual
+ * health," no leaderboard) — see DESIGN.md's "Twelfth page" note for the full
+ * rationale and its mapping to the product brief's ten design principles.
+ * Seeker identity follows the same anonymized "Seeker #NNNN" convention used
+ * everywhere else in this product — no seeker's real name is ever shown to
+ * staff-facing UI.
+ */
+
+/* ---------- Page head extras ---------- */
+
+.egd-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--egd-border);
+}
+
+.egd-section-nav a {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-soft);
+}
+
+.egd-section-nav a:hover {
+  color: var(--egd-accent-text);
+}
+
+/* A single warm sentence, not a stat tile — the weekly count is prose, never
+   a scored/badged number, so it can't be mistaken for a productivity metric
+   (the brief is explicit that this dashboard should never read that way). */
+.egd-motivate {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background: var(--egd-ai-soft);
+  border-radius: var(--egd-radius-md);
+  color: var(--egd-ink-soft);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  max-width: 64ch;
+}
+
+.egd-motivate svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--egd-ai-text);
+}
+
+.egd-motivate strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Shared CTA button (see explore-god-dashboard-2.css's original
+   comment for the reasoning — duplicated per this project's convention) ---------- */
+
+.egd-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #fff;
+  background: var(--egd-accent);
+  border: none;
+  border-radius: var(--egd-radius-pill);
+  padding: 7px 14px;
+  white-space: nowrap;
+  transition: transform var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+}
+
+.egd-btn-cta svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.egd-btn-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--egd-shadow-card);
+}
+
+.egd-btn-cta--muted {
+  color: var(--egd-ink-soft);
+  background: var(--egd-surface-alt);
+}
+
+/* ---------- My Shift ---------- */
+
+.egd-panel__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* The one count badge this whole dashboard uses — My Shift is deliberately
+   the only module allowed to carry one (see the brief's design principle
+   #1), so every other list on this page shows plain rows instead. */
+.egd-shift-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--egd-radius-pill);
+  background: var(--egd-critical);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.egd-shift-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.egd-shift-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--egd-border);
+  color: inherit;
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-shift-row:first-child {
+  border-top: none;
+}
+
+.egd-shift-row:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-shift-row__body {
+  min-width: 0;
+}
+
+.egd-shift-row__name {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  margin-bottom: 2px;
+}
+
+.egd-shift-row__reason {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+}
+
+.egd-shift-row__arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--egd-ink-muted);
+  flex-shrink: 0;
+}
+
+/* ---------- My Conversations ---------- */
+
+.egd-myqueue-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 var(--space-5) var(--space-3);
+  padding: 0 var(--space-3);
+  background: var(--egd-surface-alt);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-pill);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-myqueue-search:focus-within {
+  border-color: var(--egd-border-strong);
+}
+
+.egd-myqueue-search svg {
+  width: 16px;
+  height: 16px;
+  color: var(--egd-ink-muted);
+  flex-shrink: 0;
+}
+
+.egd-myqueue-search__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink);
+  padding: 10px 0;
+}
+
+.egd-myqueue-search__input::placeholder {
+  color: var(--egd-ink-muted);
+}
+
+.egd-myqueue-search__input:focus {
+  outline: none;
+}
+
+.egd-myqueue-bulkbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 var(--space-5) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--egd-stage-new-soft);
+  border-radius: var(--egd-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-accent-text);
+  flex-wrap: wrap;
+}
+
+/* `[hidden]` and a class both setting `display` are equal specificity, so
+   author CSS beats the UA stylesheet's `[hidden] { display: none }`
+   regardless of source order — without this override the bar would render
+   visible whenever the JS sets the `hidden` attribute (see
+   explore-god-dashboard-2.css's identical note on `.egd-attn-row__detail`). */
+.egd-myqueue-bulkbar[hidden] {
+  display: none;
+}
+
+.egd-myqueue-bulkbar__label {
+  color: var(--egd-ink-soft);
+  font-weight: var(--font-weight-regular);
+}
+
+.egd-myqueue-bulkbar__clear {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-muted);
+  background: none;
+  border: none;
+}
+
+.egd-myqueue-bulkbar__clear:hover {
+  color: var(--egd-ink);
+}
+
+.egd-myqueue-scroll {
+  overflow-x: auto;
+}
+
+/* Every column but "Last message" is a fixed pixel width, not an `fr` share
+   — the head row and every data row are independent grid containers, so a
+   trailing `fr`/`auto` column resolves to a different width in the head than
+   in a row with real content, which throws every later column out of
+   alignment (see explore-god-team.css's identical note, the lesson this
+   page starts from rather than re-learning). Only "Last message" is meant to
+   truncate, so it stays `minmax(0, 1fr)` and absorbs the remainder. */
+.egd-myqueue-head,
+.egd-myqueue-row {
+  display: grid;
+  grid-template-columns:
+    24px /* checkbox */
+    170px /* Seeker: avatar + "Seeker #NNNN" */
+    minmax(0, 1fr) /* Last message: intentionally truncates */
+    100px /* Journey stage chip */
+    190px /* Waiting chip: fits "Seeker replied 18m ago", the longest label */
+    90px /* Last activity date */
+    150px; /* Resume chat action */
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 980px;
+}
+
+.egd-myqueue-head {
+  padding: 0 var(--space-5) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.egd-myqueue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.egd-myqueue-row {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--egd-border);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-myqueue-row:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-myqueue-row__check {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--egd-accent);
+}
+
+.egd-myqueue-row__who {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.egd-myqueue-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-myqueue-row__lang {
+  display: block;
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+  margin-top: 1px;
+}
+
+.egd-myqueue-row__msg {
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.egd-stage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--stage-text);
+  background: var(--stage-soft);
+  padding: 3px 9px;
+  border-radius: var(--egd-radius-pill);
+  white-space: nowrap;
+}
+
+.egd-stage-chip::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--stage-color);
+  flex-shrink: 0;
+}
+
+.egd-myqueue-row__date {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+  white-space: nowrap;
+}
+
+.egd-myqueue-empty {
+  padding: var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-muted);
+  text-align: center;
+}
+
+/* ---------- Team Feed ---------- */
+
+.egd-feed-composer {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  margin: 0 var(--space-5) var(--space-4);
+}
+
+.egd-feed-composer__input {
+  flex: 1;
+  min-width: 0;
+  resize: vertical;
+  border: 1px solid var(--egd-border-strong);
+  border-radius: var(--egd-radius-md);
+  background: var(--egd-surface-alt);
+  padding: var(--space-3);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink);
+}
+
+.egd-feed-composer__input:focus-visible {
+  outline: 2px solid var(--egd-accent);
+  outline-offset: 1px;
+}
+
+.egd-feed-composer .egd-btn-cta {
+  margin-top: 2px;
+}
+
+.egd-feed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.egd-feed-post {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--egd-radius-md);
+  background: var(--egd-surface-alt);
+  border: 1px solid transparent;
+}
+
+/* Vero and Siji's posts get a distinct treatment — an accent-colored left
+   edge, a role tag, and (when present) a recommended-material chip — so a
+   directional note from a coordinator never blends into a peer's question. */
+.egd-feed-post--lead {
+  background: var(--egd-ai-soft);
+  border-color: transparent;
+  border-left: 3px solid var(--egd-ai-text);
+}
+
+.egd-feed-post__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.egd-feed-post__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.egd-feed-post__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-feed-post__role {
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ai-text);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 1px 7px;
+  border-radius: var(--egd-radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.egd-feed-post__time {
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+}
+
+.egd-feed-post__text {
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--space-2);
+}
+
+.egd-feed-post__attachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ai-text);
+  background: var(--egd-surface);
+  border: 1px solid var(--egd-border);
+  padding: 5px 11px;
+  border-radius: var(--egd-radius-pill);
+  margin-bottom: var(--space-3);
+}
+
+.egd-feed-post__attachment svg {
+  width: 13px;
+  height: 13px;
+}
+
+.egd-feed-post__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.egd-feed-post__reply-toggle {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink-muted);
+  background: none;
+  border: none;
+}
+
+.egd-feed-post__reply-toggle:hover {
+  color: var(--egd-ink);
+}
+
+.egd-feed-comments {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--egd-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.egd-feed-comments[hidden] {
+  display: none;
+}
+
+.egd-feed-comment {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  line-height: var(--line-height-normal);
+}
+
+.egd-feed-comment strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-feed-reply {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.egd-feed-reply[hidden] {
+  display: none;
+}
+
+.egd-feed-reply__input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--egd-border-strong);
+  border-radius: var(--egd-radius-pill);
+  background: var(--egd-surface);
+  padding: 7px 14px;
+  font: inherit;
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink);
+}
+
+.egd-feed-reply__input:focus-visible {
+  outline: 2px solid var(--egd-accent);
+  outline-offset: 1px;
+}
+
+.egd-feed-reply__send {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-accent-text);
+  background: none;
+  border: none;
+  padding: 0 var(--space-2);
+}
+
+/* ---------- My Team ---------- */
+
+.egd-myteam-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-3) var(--space-4);
+}
+
+.egd-myteam-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--egd-radius-md);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+.egd-myteam-row:hover {
+  background: var(--egd-surface-alt);
+}
+
+.egd-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--egd-ink-muted);
+}
+
+.egd-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--egd-ink-muted);
+}
+
+.egd-status--online {
+  color: var(--egd-good-text);
+}
+
+.egd-status--online::before {
+  background: var(--egd-good);
+  box-shadow: 0 0 0 3px var(--egd-good-soft);
+}
+
+.egd-myteam-row__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.egd-myteam-row__name-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.egd-myteam-row__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+}
+
+.egd-myteam-row__role {
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+}
+
+.egd-myteam-row__msg {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--egd-radius-pill);
+  color: var(--egd-ink-muted);
+  background: var(--egd-surface-alt);
+  border: none;
+}
+
+.egd-myteam-row__msg:hover {
+  color: var(--egd-accent-text);
+  background: var(--egd-stage-new-soft);
+}
+
+.egd-myteam-row__msg svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---------- Formation & Training ---------- */
+
+.egd-onboard-progress {
+  padding: 0 var(--space-5) var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+}
+
+.egd-onboard-progress strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-onboard-tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-5) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.egd-onboard-task {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--egd-radius-sm);
+  background: var(--egd-surface-alt);
+}
+
+.egd-onboard-task__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--egd-border-strong);
+}
+
+.egd-onboard-task.is-done .egd-onboard-task__icon {
+  color: var(--egd-good);
+}
+
+.egd-onboard-task__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.egd-onboard-task__title {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink);
+}
+
+.egd-onboard-task.is-done .egd-onboard-task__title {
+  color: var(--egd-ink-soft);
+}
+
+.egd-onboard-task__meta {
+  display: block;
+  font-size: 11px;
+  color: var(--egd-ink-muted);
+}
+
+.egd-onboard-task__toggle {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-accent-text);
+  background: none;
+  border: none;
+  padding: 4px 8px;
+}
+
+.egd-onboard-task.is-done .egd-onboard-task__toggle {
+  color: var(--egd-ink-muted);
+}
+
+.egd-onboard-note {
+  margin: var(--space-3) var(--space-5) var(--space-5);
+  padding: var(--space-3);
+  border-radius: var(--egd-radius-sm);
+  background: var(--egd-surface-alt);
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-soft);
+  line-height: var(--line-height-normal);
+}
+
+.egd-onboard-note strong {
+  color: var(--egd-ink);
+}
+
+/* ---------- How I'm Doing ---------- */
+
+.egd-wellbeing-body {
+  padding: 0 var(--space-5) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.egd-wellbeing-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--egd-ink-soft);
+  padding-block: 4px;
+}
+
+.egd-wellbeing-row strong {
+  color: var(--egd-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+.egd-wellbeing-note {
+  font-size: var(--font-size-xs);
+  color: var(--egd-ink-muted);
+  line-height: var(--line-height-normal);
+  padding-top: var(--space-1);
+}
+
+.egd-wellbeing-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: calc(100% - 2 * var(--space-5));
+  margin: 0 var(--space-5);
+  padding: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--egd-ink);
+  background: var(--egd-surface-alt);
+  border: 1px solid var(--egd-border-strong);
+  border-radius: var(--egd-radius-md);
+}
+
+.egd-wellbeing-flag:hover {
+  background: var(--egd-surface);
+}
+
+.egd-wellbeing-flag svg {
+  width: 16px;
+  height: 16px;
+}
+
+.egd-wellbeing-hint {
+  margin: var(--space-2) var(--space-5) var(--space-5);
+  font-size: var(--font-size-xs);
+  color: var(--egd-good-text);
+}
+
+/* ---------- Quick Actions ---------- */
+
+.egd-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.egd-quick-action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--egd-ink);
+  background: var(--egd-surface-alt);
+  border: 1px solid transparent;
+  border-radius: var(--egd-radius-md);
+  padding: var(--space-3);
+  text-align: left;
+  transition: background var(--duration-fast) var(--easing-standard), border-color var(--duration-fast) var(--easing-standard);
+}
+
+.egd-quick-action:hover {
+  background: var(--egd-surface);
+  border-color: var(--egd-border-strong);
+}
+
+.egd-quick-action__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--egd-radius-sm);
+  background: var(--egd-stage-new-soft);
+  color: var(--egd-accent-text);
+}
+
+.egd-quick-action__icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---------- Bulk-close toast ---------- */
+
+.egd-bulk-toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-6);
+  transform: translate(-50%, 12px);
+  background: var(--egd-ink);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: 10px 20px;
+  border-radius: var(--egd-radius-pill);
+  box-shadow: var(--egd-shadow-lift);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--easing-standard), transform var(--duration-slow) var(--easing-standard);
+  z-index: 200;
+}
+
+.egd-bulk-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1180px) {
+  .egd-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .egd-scroll {
+    padding: var(--space-5) var(--space-4) var(--space-7);
+  }
+
+  .egd-shift-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    row-gap: var(--space-2);
+  }
+
+  .egd-shift-row__arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .egd-feed-composer {
+    flex-direction: column;
+  }
+
+  .egd-feed-composer .egd-btn-cta {
+    align-self: flex-end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .egd-quick-action,
+  .egd-btn-cta,
+  .egd-bulk-toast {
+    transition: none;
+  }
+}

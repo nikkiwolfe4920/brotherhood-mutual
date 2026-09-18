@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneHope CRM Dashboard — Conversation</title>
+  <meta
+    name="description"
+    content="OneHope CRM — Joseph's conversation workspace: chat with a seeker, get AI guidance and a note from Vero, and keep several conversations open at once."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../design-system/tokens.css" />
+  <link rel="stylesheet" href="../design-system/base.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-dashboard.css" />
+  <link rel="stylesheet" href="../design-system/explore-god-om-chat.css" />
+</head>
+<body class="egd">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="egd-shell">
+    <aside class="egd-rail" aria-label="Primary">
+      <a class="egd-rail__mark" href="../ExploreGod-CRM-Dashboard/" aria-label="OneHope CRM home">OH</a>
+
+      <nav class="egd-rail__nav" aria-label="Sections">
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard/" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-Global/" aria-label="Global Engagement Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.4 4 5.6 4 9s-1.5 6.6-4 9c-2.5-2.4-4-5.6-4-9s1.5-6.6 4-9z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-CRM-Dashboard-2/" aria-label="Command Center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M7 12h2.5l1.5-3.5L13 15l1.5-3H17" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-OM-Dashboard/" aria-current="page" aria-label="Online Missionary Dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-team/" aria-label="Team Engagement Operations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c0-3.6 3-5.5 6.5-5.5s6.5 1.9 6.5 5.5" /><circle cx="18" cy="7.5" r="2.5" /><path d="M15.8 14.5c2.9.3 5.7 2 5.7 5.5" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Journeys">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.5 9.5-2 5-5 2 2-5z" /></svg>
+        </a>
+        <a class="egd-rail__link" href="../ExploreGod-OM-Dashboard/#onboarding-title" aria-label="Formation &amp; training">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4" /><path d="M9 13h6" /><path d="M9 17h6" /></svg>
+        </a>
+        <a class="egd-rail__link" href="#" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </a>
+      </nav>
+
+      <button class="egd-rail__avatar" type="button" aria-label="Joseph Wijaya — account">JW</button>
+    </aside>
+
+    <div class="egd-main">
+      <header class="egd-topbar">
+        <a class="egd-topbar__back" href="../ExploreGod-OM-Dashboard/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+          Back to My Dashboard
+        </a>
+        <div class="egd-topbar__actions">
+          <button class="egd-icon-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          </button>
+          <button class="egd-icon-btn" type="button" aria-label="Notifications — 3 unread">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
+            <span class="egd-icon-btn__dot" aria-hidden="true"></span>
+          </button>
+          <button class="egd-topbar__avatar" type="button" aria-label="Joseph Wijaya — account">JW</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="egd-chat-page">
+        <div class="egd-chat-tabs" aria-label="Open conversations" id="chat-tabs"></div>
+
+        <div class="egd-chat-body" id="chat-body">
+          <aside class="egd-chat-ai" aria-label="AI recommendations">
+            <div class="egd-chat-ai__head">
+              <span class="egd-ai-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /></svg>
+              </span>
+              <div>
+                <h2 class="egd-chat-ai__title">AI Recommendations</h2>
+                <p class="egd-ai-sub">Guidance, never a script</p>
+              </div>
+            </div>
+            <div class="egd-chat-ai__search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+              <label class="visually-hidden" for="learn-search-input">Search what you've been taught</label>
+              <input class="egd-chat-ai__search-input" type="search" id="learn-search-input" placeholder="Search what you've been taught…" />
+            </div>
+            <div id="learn-results" class="egd-chat-ai__learn" hidden></div>
+            <div id="ai-recs"></div>
+          </aside>
+
+          <section class="egd-chat-main" aria-label="Conversation" id="chat-main">
+            <div class="egd-chat-empty" id="chat-empty" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
+              <p>No conversation selected.</p>
+              <a class="egd-btn-cta" href="../ExploreGod-OM-Dashboard/#queue-title">Open one from My Conversations</a>
+            </div>
+            <div id="chat-active">
+              <header class="egd-chat-header" id="chat-header"></header>
+              <div class="egd-chat-translate-bar" id="translate-bar"></div>
+              <div class="egd-chat-messages" id="chat-messages"></div>
+              <form class="egd-chat-composer" id="chat-composer">
+                <div class="egd-chat-composer__attachments" id="composer-attachments"></div>
+                <div class="egd-chat-composer__row">
+                  <button class="egd-chat-composer__tool" type="button" id="attach-btn" aria-label="Add attachment">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.6-8.9 8.9a5 5 0 0 1-7.1-7.1l8.9-8.9a3.5 3.5 0 0 1 5 5l-8.9 8.9a2 2 0 0 1-2.8-2.8l8.2-8.2" /></svg>
+                  </button>
+                  <label class="visually-hidden" for="attach-input">Add attachment</label>
+                  <input type="file" id="attach-input" class="visually-hidden" multiple />
+                  <div class="egd-chat-composer__emoji-wrap">
+                    <button class="egd-chat-composer__tool" type="button" id="emoji-btn" aria-haspopup="true" aria-expanded="false" aria-label="Add emoji">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><path d="M9 9h.01" /><path d="M15 9h.01" /></svg>
+                    </button>
+                    <div class="egd-emoji-picker" id="emoji-picker" role="menu" hidden></div>
+                  </div>
+                  <label class="visually-hidden" for="composer-input">Message</label>
+                  <textarea class="egd-chat-composer__input" id="composer-input" rows="1" placeholder="Write a message…"></textarea>
+                  <button class="egd-chat-composer__send" type="submit" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7z" /></svg>
+                  </button>
+                </div>
+                <label class="egd-chat-composer__translate-toggle" id="translate-outgoing-label">
+                  <input type="checkbox" id="translate-outgoing-toggle" />
+                  Translate before sending
+                </label>
+              </form>
+            </div>
+          </section>
+
+          <aside class="egd-chat-context" aria-label="Context and support" id="chat-context"></aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/explore-god-om-chat.js" type="module"></script>
+</body>
+</html>
