@@ -73,7 +73,7 @@ const QUEUE = [
     stage: "new",
     language: "Bahasa Indonesia",
     message: "Feeling anxious about exams, asked for prayer",
-    waitLabel: "Seeker replied 18m ago",
+    waitLabel: "Replied 18m ago",
     waitLevel: "critical",
     date: "May 14",
     flags: ["waiting"],
@@ -93,7 +93,7 @@ const QUEUE = [
     stage: "growing",
     language: "Bahasa Indonesia",
     message: "Said they'd share their story of coming to faith",
-    waitLabel: "Follow-up due today",
+    waitLabel: "Follow-up today",
     waitLevel: "warning",
     date: "May 14",
     flags: ["followup"],
@@ -113,7 +113,7 @@ const QUEUE = [
     stage: "handoff",
     language: "Bahasa Indonesia",
     message: "Shared they were baptized last month!",
-    waitLabel: "Waiting on seeker · today",
+    waitLabel: "With seeker · today",
     waitLevel: "good",
     date: "May 14",
     flags: [],
@@ -123,7 +123,7 @@ const QUEUE = [
     stage: "handoff",
     language: "Bahasa Indonesia",
     message: "Ready to connect with a local church in Surabaya",
-    waitLabel: "Waiting on seeker · 1 day",
+    waitLabel: "With seeker · 1d",
     waitLevel: "good",
     date: "May 13",
     flags: [],
@@ -133,7 +133,7 @@ const QUEUE = [
     stage: "active",
     language: "Javanese",
     message: "Asked what the Bible says about forgiveness",
-    waitLabel: "Waiting on seeker · 2 days",
+    waitLabel: "With seeker · 2d",
     waitLevel: "good",
     date: "May 12",
     flags: [],
@@ -143,7 +143,7 @@ const QUEUE = [
     stage: "new",
     language: "English",
     message: "First message — curious about who Jesus is",
-    waitLabel: "Seeker replied 3 days ago",
+    waitLabel: "Replied 3d ago",
     waitLevel: "warning",
     date: "May 11",
     flags: ["waiting"],
@@ -153,7 +153,7 @@ const QUEUE = [
     stage: "growing",
     language: "Bahasa Indonesia",
     message: "Quiet since last week, hasn't replied",
-    waitLabel: "No response in 6 days",
+    waitLabel: "No response · 6d",
     waitLevel: "warning",
     date: "May 8",
     flags: ["followup"],
@@ -238,9 +238,13 @@ function renderMyQueue() {
           </span>
           <span class="egd-myqueue-row__msg">${escapeHtml(row.message)}</span>
           ${stageChip(row.stage)}
-          <span class="egd-wait egd-wait--${row.waitLevel}">${escapeHtml(row.waitLabel)}</span>
-          <span class="egd-myqueue-row__date">${escapeHtml(row.date)}</span>
-          <a class="egd-btn-cta" href="../ExploreGod-OM-Chat/?seeker=${row.id}">Resume chat ${CTA_ARROW}</a>
+          <span class="egd-myqueue-row__waiting">
+            <span class="egd-wait egd-wait--${row.waitLevel}">${escapeHtml(row.waitLabel)}</span>
+            <span class="egd-myqueue-row__date">${escapeHtml(row.date)}</span>
+          </span>
+          <span class="egd-myqueue-row__action">
+            <a class="egd-btn-cta" href="../ExploreGod-OM-Chat/?seeker=${row.id}">Resume chat ${CTA_ARROW}</a>
+          </span>
         </li>
       `;
     })
