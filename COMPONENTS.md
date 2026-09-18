@@ -1522,3 +1522,175 @@ triggers immediately closed it again, because that trigger's own click bubbles u
 document listener, which didn't recognize it and closed what had just opened. Fixed by listing every
 valid trigger (`.egd-cq-more`, `#triage-reassign-btn`, `[data-send-id]`) in the one guard condition —
 see DESIGN.md's "Eleventh page" note.
+
+## Online Missionary Dashboard — `/ExploreGod-OM-Dashboard`
+
+Joseph's homepage — see DESIGN.md's "Twelfth page" note for why this lens is task-focused rather
+than metrics-driven, and for the mapping from the originating brief's ten design principles to this
+page's modules vs. `/ExploreGod-OM-Chat`'s. Loads `explore-god-dashboard.css` unchanged for the
+shell/tokens/`.egd-panel`/`.egd-avatar`/`.egd-tabs`/`.egd-wait`, and
+`design-system/explore-god-om-dashboard.css` for everything unique to this lens;
+`js/explore-god-om-dashboard.js` follows the one-file-per-page convention (helpers, `.egd-btn-cta`,
+`.egd-status`/`.egd-status--online`, `.egd-quick-action*`, and the bulk-close bar are duplicated,
+not cross-loaded).
+
+### Motivational header — `.egd-motivate`
+
+A single warm sentence under the greeting ("You've helped 14 people take a next step this week —
+keep going"), styled as a soft AI-tinted callout, not a stat tile — no count badge, no delta arrow.
+Deliberately not built as a metric: the brief is explicit that this dashboard should never feel like
+a productivity score, and a number sitting in prose reads differently than the same number in a
+`.egd-stat__value`.
+
+### My Shift — `.egd-shift-row`
+
+Four rows (`SHIFT_REASONS`), one per category the brief calls out — a seeker who replied and is
+waiting, a conversation expiring inside its window, a follow-up due today, something escalated back
+by Vero — each a direct link into `/ExploreGod-OM-Chat/?seeker=NNNN`. The panel header's
+`.egd-shift-badge` is the *only* count badge anywhere on this page, on purpose (design principle
+#1: "the only module that should ever carry a count badge") — every other list here (My
+Conversations, My Team, Formation) shows plain rows instead.
+
+### My Conversations — `.egd-myqueue-row`
+
+Joseph's full assigned queue (`QUEUE`), personal-scope version of `/ExploreGod-team`'s Conversation
+Queue: search by keyword/seeker number/date (`.egd-myqueue-search`, a plain substring match across
+id/message/date — no separate search index), tab filters mirroring My Shift's four categories,
+row-level "Resume chat" links into the chat workspace, and a checkbox + bulk-close bar
+(`.egd-myqueue-bulkbar`, same No Response/Resolved/Follow-up outcomes and toast pattern as Team's
+queue) for clearing several conversations at once. Columns are fixed pixel widths except "Last
+message" (`minmax(0, 1fr)`, the one column meant to truncate) — the same head/row grid-alignment
+fix DESIGN.md's "table alignment pass" note documents for `/ExploreGod-team`, applied from the start
+here rather than re-discovered; the table's 980px min-width is wider than its ~854px panel share at
+a 1440px viewport, so it scrolls horizontally within `.egd-myqueue-scroll` by default — the same
+accepted trade-off as Team's Conversation Queue, not a bug.
+
+### Team Feed — `.egd-feed-post`
+
+A composer (`#feed-composer`) plus a list (`FEED`) of posts with inline reply threads
+(`.egd-feed-comments`/`.egd-feed-reply`, toggled open per post). Vero's and Siji's posts get
+`.egd-feed-post--lead` — an AI-soft tint, an accent left border, and (when present) a recommended-
+material chip (`.egd-feed-post__attachment`) — so a coordinator's directional note never blends into
+a peer's question; every other post shares one plain treatment regardless of author. My Team's
+message icon (below) jumps here and pre-addresses the composer with `@Name` rather than opening a
+second messaging surface — this product already has a rule against a second chat/assistant surface
+(the Shep widget), and the same logic applies to teammate-to-teammate messaging.
+
+### My Team — `.egd-myteam-row`
+
+The "module on the homepage that reflects a team" the brief asked for, separate from Team Feed:
+Vero plus a handful of fellow OMs, online/offline status (`.egd-status--online`), and a message
+icon into Team Feed. Deliberately not a caseload/workload roster like `/ExploreGod-CRM-Dashboard-2`'s
+Team Health — that's Vero's tool for managing Joseph, not Joseph's tool for seeing his peers, so no
+numbers are shown here at all.
+
+### Formation & Training — `.egd-onboard-task`
+
+Joseph's own view of the same onboarding/training concept `/ExploreGod-team`'s "Onboarding &
+Training" panel manages from Siji's side (`ONBOARD_STATE`): week X of Y, QA monitoring weeks left,
+a task checklist with a "Mark done" toggle, and one coaching note. This is design principle #5
+("Formation of the missionary... the same signal, shown to the person being scored") — the same
+underlying data Siji's roster view would show for Joseph specifically, reframed as his own progress
+view rather than a manager's monitoring list.
+
+### How I'm Doing — `.egd-wellbeing-row`
+
+Design principle #10, built to its two stated constraints: Joseph's own view first (no manager
+content-visibility here at all — the copy says so explicitly), and never a productivity score — load
+is shown as plain sentences ("6 active · 2 heavy," "3h 40m today"), not a percentage, bar, or badge.
+"Flag that I need support" posts a plain note into Team Feed rather than opening a second, hidden
+channel to Vero — the same one-feed-not-two-surfaces reasoning as My Team's message icon.
+
+## Online Missionary Conversation Workspace — `/ExploreGod-OM-Chat`
+
+Where Joseph actually chats with a seeker — reached only from a "Resume chat"/"Start chat" link
+elsewhere in the product (never a rail destination of its own), with an optional `?seeker=NNNN`
+query param that opens and activates that seeker's tab on load. See DESIGN.md's "Thirteenth page"
+note. Loads `explore-god-dashboard.css` for the shell/tokens and
+`design-system/explore-god-om-chat.css` for everything else; `js/explore-god-om-chat.js` follows the
+one-file-per-page convention. Unlike every sibling page, this one is a fixed-height app workspace
+(`.egd-main`/`.egd-chat-page` are given an explicit `height: 100vh` in this page's own CSS) rather
+than a long scrolling page, since the tab strip, AI panel, and Vero panel all need to stay visible
+while the conversation itself scrolls independently.
+
+### Conversation tabs — `.egd-chat-tab`
+
+Several conversations can stay open at once (`openTabs`), each a pill showing a priority-colored
+status dot (`PRIORITY_META` — waiting/expiring/followup/escalated/none, the same colored-dot
+language `.egd-wait`/`.egd-priority` use elsewhere on this CRM), the seeker's anonymized id, and a
+close control. Each tab item is a plain `<div>` wrapping two sibling `<button>`s (select, close) —
+not the strict ARIA tabs pattern (`role="tab"` inside `role="tablist"`), because a tab that also
+needs an independent close button can't validly nest one interactive control inside another; an
+automated accessibility pass (axe-core) is what caught the first version of this doing exactly that.
+Closing the active tab activates its neighbor; closing the last tab shows `.egd-chat-empty` with a
+link back into My Conversations. Sending a reply from an open tab whose priority was "Waiting for
+you" flips it to "You replied" immediately (`renderTabs()` re-runs on send) — the chip reflects who
+actually owes the next message, not a static label.
+
+### AI Recommendations — `.egd-chat-ai-card`
+
+Three cards per active conversation (`aiNextTopic`, `aiGuidance`, `aiExamples`) — design principle
+#4's three pieces: a suggested next topic, in-the-moment composing guidance, and 2–3 anonymized
+"what good looked like" examples from experienced missionaries. Capped at three cards and 2–3
+examples on purpose, per the brief's own constraint ("nine-out-of-ten on simplicity... a nudge, not
+a curriculum") — this is not a scrollable feed of tips.
+
+### Learn at the point of need — `.egd-chat-ai__search`
+
+A small search box at the top of the AI panel (`LEARN_LIBRARY`, a plain substring filter) —
+design principle #6, deliberately placed inside the conversation workspace rather than as a separate
+help page or LMS, per the brief's own framing that a separate course is exactly the split this
+module should end.
+
+### Inline translation — `.egd-chat-header__translate-btn` / `.egd-chat-bubble__translation`
+
+"Show original language" reveals each seeker bubble's message in an approximation of their own
+language/dialect below the default (already-in-English) text; "Translate before sending" previews
+what Joseph's own reply would look like once translated, shown under his own bubble after sending.
+Both directions share one mock word-substitution function (`mockLocalize` — no real translation
+service exists anywhere in this product, same honesty-about-mocking standard as every other page's
+data), and both controls are hidden entirely for an English-speaking seeker (`needsTranslation()`),
+since there's nothing to translate. A `.egd-chat-translate-bar` dialect `<select>`
+(`CHAT_DIALECTS`) covers "language conversion and dialects" specifically for Bahasa Indonesia's
+formal/Javanese-dialect split.
+
+### Composer — `.egd-chat-composer`
+
+Text (auto-growing `<textarea>`, Enter to send/Shift+Enter for a newline), attachments (a hidden
+file input triggered by a paperclip button, rendered as removable name chips — no real upload,
+consistent with this being a prototype), and emoji (`.egd-emoji-picker`, a fixed 12-emoji grid
+inserted at the cursor). The attach button's hidden file input has its own visually-hidden
+`<label>` — another axe-caught gap the first version shipped without.
+
+### Message from Vero / Ask AI — `.egd-vero-card`
+
+The brief's "Message from Vero: so Vero can actively send a message to Joseph because she has a
+lens into the conversation" — a per-conversation note (`vero.text`) plus a reply field and a
+separate "Ask AI a question" mini-form beneath it. Both are distinct asks (replying to Vero vs.
+asking the AI) so they get visually separate rows rather than one shared input trying to do both
+jobs; this whole card is unique per conversation, not a single fixed panel, per the brief's explicit
+"the right panel needs to be unique to every conversation."
+
+### Seeker Journey flag — `.egd-journey-flag`
+
+The same four-stage New/Active/Growing/Handoff identity and color mapping used everywhere else on
+this CRM (see `/ExploreGod-CRM-Dashboard-2`'s stage-mapping note) — automated per conversation
+(`conversation.stage`), with a one-line blurb (`JOURNEY_BLURB`) on what that stage means for what
+to do next, not just a bare label.
+
+### Get help with this one — `.egd-help-btn`
+
+Design principle #8 (Vero's "flagged a conversation as too difficult to handle alone," Brittany's
+transfer problem): an "Escalate to Vero" button and an "Ask a teammate" picker
+(`.egd-help-picker`, the same lightweight inline-list pattern as other body-portal-free pickers on
+this CRM), both reachable without leaving the conversation. Confirmation is a plain inline sentence
+(`.egd-help-confirm`), not a dialog or a page navigation — escalating shouldn't interrupt the chat
+Joseph is still in.
+
+### Capture what happened — `.egd-outcome-chip`
+
+Deliberately minimal, per the brief's own caution that this module exists to become unnecessary once
+a proper capture flow (its "D2") ships, and that anything built here in the meantime shouldn't
+harden the wrong model: four one-tap outcome chips, no history log, no multi-field form. "Other"
+reveals a single optional one-line note (`.egd-outcome-note`) — the brief's own described escape
+hatch ("put the truth in a note") — rather than a second decision tree.

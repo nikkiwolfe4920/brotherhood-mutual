@@ -493,6 +493,85 @@ raise it rather than silently deviating.
 > Regional Health and Campaign Intelligence tables already use deliberately for dense data — correct,
 > legible, unclipped columns that scroll internally beat columns narrow enough to fit but too
 > cramped to read.
+>
+> **Twelfth page — Online Missionary Dashboard:** `/ExploreGod-OM-Dashboard` is a fifth lens on the
+> same OneHope CRM, built for **Joseph**, an Online Missionary (OM) managed by Vero
+> (`/ExploreGod-CRM-Dashboard-2`) — the person actually chatting with seekers, not someone overseeing
+> a roster of them. This is a different kind of role from every other lens on the CRM: task-focused
+> rather than metrics-driven, explicitly per the request that shaped it — no KPI row, no scored
+> "spiritual health," nothing ranked, no badges or streaks. The page is organized around the
+> originating brief's ten design principles for this role, split between what belongs on the
+> homepage (what needs Joseph *before* he's in a conversation) and what belongs in the conversation
+> itself (`/ExploreGod-OM-Chat`, see the note below): **My Shift** (four rows, one per urgent
+> category, the only module on the page carrying a count badge — principle #1), **My Conversations**
+> (Joseph's full queue with search by keyword/seeker number/date, tab filters, and a bulk-close bar —
+> principle #2), **My Team** (a plain roster of who's around, deliberately un-scored, unlike Vero's
+> Team Health), **Team Feed** (a request that arrived attached to this brief, not one of the ten
+> numbered principles — Vero's and Siji's posts get a distinct visually-led treatment so a
+> coordinator's directional note never blends into a peer's question), **Formation & Training**
+> (Joseph's own view of the same onboarding/QA-monitoring concept Siji's roster already tracks from
+> the other side — principle #5), and **How I'm Doing** (Joseph's own load, never a manager-visible
+> content feed and never a productivity score, down to using plain sentences instead of a percentage
+> bar — principle #10). A motivational line under the greeting ("You've helped 14 people..." —
+> another request outside the ten numbered principles) is deliberately prose, not a stat tile, so it
+> can't be mistaken for the productivity score the brief explicitly warns against. Reuses
+> `explore-god-dashboard.css` unchanged for the shell/tokens/shared components, with
+> `design-system/explore-god-om-dashboard.css` and `js/explore-god-om-dashboard.js` following the
+> established one-file-per-page convention. Joseph was also added to Vero's Team Health roster on
+> `/ExploreGod-CRM-Dashboard-2` (`TEAM` in `js/explore-god-dashboard-2.js`), since a program
+> coordinator's roster that omitted the missionary whose own dashboard exists would be an
+> inconsistency, not a scoping choice. See `COMPONENTS.md`'s "Online Missionary Dashboard" entry for
+> the full component/data breakdown.
+>
+> **Thirteenth page — Online Missionary Conversation Workspace:** `/ExploreGod-OM-Chat` is where
+> Joseph actually talks to a seeker — reached only from a "Resume chat"/"Start chat" link (his queue,
+> his My Shift list), never a rail destination of its own, with an optional `?seeker=NNNN` query
+> param that opens and activates that seeker's tab on load. It covers the remaining design
+> principles that only make sense *inside* a conversation: several conversations open as closeable
+> tabs at once, each carrying a priority status chip (principle #3's "one seeker across channels,"
+> scoped down here to what the tab strip needs — a full 360° profile view was out of scope for this
+> build); **AI Recommendations** on the left (suggested next topic, in-the-moment guidance, and 2–3
+> anonymized "what good looked like" examples — principle #4, capped exactly as the brief asks,
+> "a nudge, not a curriculum"), with **Learn at the point of need** folded into the same panel as a
+> small search box rather than a separate help page (principle #6); a **Message from Vero** card
+> unique to each conversation, with a reply field and a separate "Ask AI a question" mini-form; a
+> **Seeker Journey** flag using the CRM's one fixed New/Active/Growing/Handoff mapping; **Get help
+> with this one** (escalate to Vero, or ask a teammate — principle #8); and a deliberately minimal
+> **Capture what happened** (four one-tap outcome chips, one optional note field for "Other," no
+> history log — principle #9, built small on purpose per the brief's own caution that a fuller
+> version here would harden the wrong model before its real fix ships). Inline translation
+> ("Show original language" on incoming messages, "Translate before sending" as an outgoing preview)
+> shares one mock word-substitution function for both directions and hides itself entirely for an
+> English-speaking seeker. Unlike every sibling page, this one is a fixed-height app workspace
+> (`.egd-main`/`.egd-chat-page` given an explicit `height: 100vh` in this page's own CSS) rather than
+> a long scrolling page, so the tab strip and both side panels stay visible while the conversation
+> scrolls independently. Seeker identity keeps the CRM's existing anonymized "Seeker #NNNN"
+> convention throughout, including on the tabs — no real seeker name is invented anywhere. Building
+> this surfaced two real accessibility bugs an axe-core pass caught that a visual review alone
+> hadn't: the first version of the conversation tabs nested a `role="button"` close control inside a
+> real `<button>` (invalid — fixed by making each tab a plain wrapper around two sibling buttons
+> instead of the strict ARIA tabs pattern, which can't accommodate an independent close control
+> anyway), and the hidden attachment `<input type="file">` had no associated `<label>`. See
+> `COMPONENTS.md`'s "Online Missionary Conversation Workspace" entry for the full component/data
+> breakdown.
+>
+> **Rail nav — a ninth destination without a ninth icon:** both new pages are reached from the rail's
+> previously-inert "Live queue" stub (`href="#"` on every sibling page since the very first one),
+> repurposed to link here — the same "reuse an already-reserved nav slot" move `/ExploreGod-team`
+> made for its own rail icon, rather than reopening the mobile-wrap fix a ninth icon would force.
+> `/ExploreGod-OM-Chat` carries no rail icon of its own (it's reached only from within the product,
+> never as a rail destination), so no rail link is marked current there — a "Back to My Dashboard"
+> link replaces the shared topbar's live-dot meta text instead.
+>
+> **A pre-existing accessibility debt, not introduced here:** an axe-core pass against both new pages
+> found only one remaining violation category, color-contrast, and every instance of it traces back
+> to design tokens already shipped and used identically on `/ExploreGod-CRM-Dashboard-2`'s baseline
+> (the stage-colored `.egd-avatar` fills with white initials — as low as 2.81:1 for the green stage —
+> the `--egd-accent` blue `.egd-btn-cta` fill at 4.41:1, the `--egd-critical`/`--egd-critical-soft`
+> chip pairing at 4.45:1, and `--egd-ink-muted` small text at 4.02–4.34:1 against several surfaces).
+> These two new pages reuse those tokens exactly as every other `.egd` page already does; fixing them
+> would mean re-tuning shared tokens across the whole OneHope CRM product, well outside this task's
+> scope, so it's flagged here rather than patched silently on just these two pages.
 
 ## Design Principles
 
