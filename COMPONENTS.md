@@ -1561,9 +1561,19 @@ row-level "Resume chat" links into the chat workspace, and a checkbox + bulk-clo
 queue) for clearing several conversations at once. Columns are fixed pixel widths except "Last
 message" (`minmax(0, 1fr)`, the one column meant to truncate) — the same head/row grid-alignment
 fix DESIGN.md's "table alignment pass" note documents for `/ExploreGod-team`, applied from the start
-here rather than re-discovered; the table's 980px min-width is wider than its ~854px panel share at
-a 1440px viewport, so it scrolls horizontally within `.egd-myqueue-scroll` by default — the same
-accepted trade-off as Team's Conversation Queue, not a bug.
+here rather than re-discovered.
+
+Unlike Team's Conversation Queue, this table is sized to need **no horizontal scroll** at a common
+1440px viewport — "Resume chat" is the one thing this whole panel exists to let Joseph reach, so
+requiring a scroll to find it (Team's queue accepts exactly that trade-off, deliberately) wasn't
+acceptable here. "Last activity" was folded into a stacked subline under the Waiting chip instead of
+its own column, wait-chip copy was shortened ("Seeker replied 18m ago" → "Replied 18m ago," "Waiting
+on seeker · 2 days" → "With seeker · 2d," etc.), and every column width was set from measured
+worst-case rendered text, not estimated — six columns plus a legible message column now fit the
+panel's ~854px share exactly. `min-width: 800px` remains as a floor for unusually narrow viewports;
+below it, `.egd-myqueue-row__action` (`position: sticky; right: 0`) keeps "Resume chat" pinned in
+view rather than requiring a hunt through a scrolled table — a fallback for the rare case, not the
+mechanism the common case relies on.
 
 ### Team Feed — `.egd-feed-post`
 

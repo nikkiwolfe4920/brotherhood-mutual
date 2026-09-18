@@ -279,21 +279,30 @@
    in a row with real content, which throws every later column out of
    alignment (see explore-god-team.css's identical note, the lesson this
    page starts from rather than re-learning). Only "Last message" is meant to
-   truncate, so it stays `minmax(0, 1fr)` and absorbs the remainder. */
+   truncate, so it stays `minmax(0, 1fr)` and absorbs the remainder.
+   Widths are sized to the actual widest rendered value per column (measured,
+   not guessed — see the git history for this file), with "Last activity"
+   folded into a stacked subline under the Waiting chip rather than its own
+   column: that was the fix for the real problem here, which was that seven
+   fixed columns plus a legible message column added up to more than this
+   panel's ~854px share of the layout at a common 1440px viewport, forcing
+   "Resume chat" — the one thing this table exists to let Joseph do — behind
+   a horizontal scroll. Six columns fit the panel width exactly with no
+   scrolling needed at all; `min-width` below is a floor for unusually narrow
+   viewports, not the expected case. */
 .egd-myqueue-head,
 .egd-myqueue-row {
   display: grid;
   grid-template-columns:
     24px /* checkbox */
-    170px /* Seeker: avatar + "Seeker #NNNN" */
+    165px /* Seeker: avatar + "Seeker #NNNN" + language line */
     minmax(0, 1fr) /* Last message: intentionally truncates */
-    100px /* Journey stage chip */
-    190px /* Waiting chip: fits "Seeker replied 18m ago", the longest label */
-    90px /* Last activity date */
+    90px /* Journey stage chip: fits "Growing"/"Handoff", the longest labels */
+    160px /* Waiting: chip + stacked date, fits "With seeker · today" */
     150px; /* Resume chat action */
   align-items: center;
   gap: var(--space-3);
-  min-width: 980px;
+  min-width: 800px;
 }
 
 .egd-myqueue-head {
@@ -377,10 +386,30 @@
   flex-shrink: 0;
 }
 
+.egd-myqueue-row__waiting {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .egd-myqueue-row__date {
-  font-size: var(--font-size-xs);
+  font-size: 11px;
   color: var(--egd-ink-muted);
   white-space: nowrap;
+}
+
+/* `min-width` above keeps this table legible on narrow viewports at the
+   cost of horizontal scroll — a `right: 0` sticky fallback keeps "Resume
+   chat" reachable without hunting for it in that scrolled state, the same
+   way the panel-width fix above keeps it reachable with no scroll at all in
+   the common case. Harmless when nothing overflows: sticky has no visible
+   effect until the element's static position would otherwise leave the
+   scrollport. */
+.egd-myqueue-row__action {
+  position: sticky;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .egd-myqueue-empty {
